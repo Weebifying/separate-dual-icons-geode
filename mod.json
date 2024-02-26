@@ -1,0 +1,174 @@
+{
+	"geode": "2.0.0-beta.21",
+	"gd": {
+		"win": "2.204",
+		"android": "2.205"
+	},
+	"version": "v1.0.0",
+	"id": "weebify.separate_dual_icons",
+	"name": "Separate Dual Icons",
+	"developer": "Weebify",
+	"description": "alot of work",
+	"dependencies": [
+		
+	],
+	"settings": {
+		"cube": {
+            "name": "Cube",
+            "type": "int",
+            "default": 1,
+			"min": 1,
+			"max": 484,
+            "control": {
+                "slider": false
+            }
+        },
+		"ship": {
+            "name": "Ship",
+            "type": "int",
+            "default": 1,
+			"min": 1,
+			"max": 169,
+            "control": {
+                "slider": false
+            }
+        },
+		"roll": {
+            "name": "Ball",
+            "type": "int",
+            "default": 1,
+			"min": 1,
+			"max": 118,
+            "control": {
+                "slider": false
+            }
+        },
+		"bird": {
+            "name": "UFO",
+            "type": "int",
+            "default": 1,
+			"min": 1,
+			"max": 149,
+            "control": {
+                "slider": false
+            }
+        },
+		"dart": {
+            "name": "Wave",
+            "type": "int",
+            "default": 1,
+			"min": 1,
+			"max": 96,
+            "control": {
+                "slider": false
+            }
+        },
+		"robot": {
+            "name": "Robot",
+            "type": "int",
+            "default": 1,
+			"min": 1,
+			"max": 68,
+            "control": {
+                "slider": false
+            }
+        },
+		"spider": {
+            "name": "Spider",
+            "type": "int",
+            "default": 1,
+			"min": 1,
+			"max": 69,
+            "control": {
+                "slider": false
+            }
+        },
+		"swing": {
+            "name": "Swing",
+            "type": "int",
+            "default": 1,
+			"min": 1,
+			"max": 43,
+            "control": {
+                "slider": false
+            }
+        },
+		"jetpack": {
+            "name": "Jetpack",
+            "type": "int",
+            "default": 1,
+			"min": 1,
+			"max": 5,
+            "control": {
+                "slider": false
+            }
+        },
+		"color1": {
+            "name": "Color 1",
+            "type": "int",
+            "default": 1,
+			"min": 1,
+			"max": 107,
+            "control": {
+                "slider": false
+            }
+        },
+		"color2": {
+            "name": "Color 2",
+            "type": "int",
+            "default": 1,
+			"min": 1,
+			"max": 107,
+            "control": {
+                "slider": false
+            }
+        },
+		"colorglow": {
+            "name": "Color glow",
+            "type": "int",
+            "default": 1,
+			"min": 1,
+			"max": 107,
+            "control": {
+                "slider": false
+            }
+        },
+		"glow": {
+            "name": "Glow",
+            "type": "bool",
+            "default": false
+        },
+		"trail": {
+            "name": "Trail",
+            "type": "int",
+            "default": 1,
+			"min": 1,
+			"max": 7,
+            "control": {
+                "slider": false
+            }
+        },
+		"death": {
+            "name": "Death effect",
+            "type": "int",
+            "default": 1,
+			"min": 1,
+			"max": 20,
+            "platforms": ["windows"],
+            "control": {
+                "slider": false
+            }
+        },
+		"shiptrail": {
+            "name": "Ship trail",
+            "type": "int",
+            "default": 1,
+			"min": 1,
+			"max": 6,
+            "control": {
+                "slider": false
+            }
+        }
+		
+	}
+}
