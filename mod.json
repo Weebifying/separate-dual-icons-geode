@@ -9,8 +9,13 @@
 	"name": "Separate Dual Icons",
 	"developer": "Weebify",
 	"description": "alot of work",
+    "tags": ["Gameplay", "Interface", "Customization"],
 	"dependencies": [
-		
+		{
+			"id": "geode.node-ids",
+			"version": ">=1.6.1",
+			"importance": "required"
+		}
 	],
 	"settings": {
 		"cube": {
