@@ -26,6 +26,9 @@ class $modify(MyGarageLayer, GJGarageLayer) {
             int tag = 0;
             int tag2 = 0;
 
+            as<CCSprite*>(cursor1)->setColor({0, 255, 255});
+            as<CCSprite*>(cursor2)->setColor({0, 255, 255});
+
             switch (type) {
                 case IconType::Cube:
                     tag = PlayerData::player2Cube;
@@ -95,6 +98,9 @@ class $modify(MyGarageLayer, GJGarageLayer) {
         } else {
             int tag = 0;
             int tag2 = 0;
+
+            as<CCSprite*>(cursor1)->setColor({255, 255, 0});
+            as<CCSprite*>(cursor2)->setColor({255, 255, 0});
 
             switch (type) {
                 case IconType::Cube:
@@ -194,6 +200,7 @@ class $modify(MyGarageLayer, GJGarageLayer) {
         label->setScale(0.6f);
         toggleMenu->addChild(label);
 
+        as<CCSprite*>(this->getChildByID("cursor-1"))->setColor({255, 255, 0});
 
         SimplePlayer* player1 = as<SimplePlayer*>(this->getChildByID("player-icon"));
         player1->setPositionX(player1->getPositionX() - winSize.width/12);
@@ -284,11 +291,6 @@ class $modify(MyGarageLayer, GJGarageLayer) {
             auto cursor1 = this->getChildByID("cursor-1");
             auto cursor2 = this->getChildByID("cursor-2");
 
-            // log::error("{} {}", cursor1->getPositionX(), cursor1->getPositionY());
-            // log::error("{} {}", cursor2->getPositionX(), cursor2->getPositionY());
-
-            // log::warn("{} {} {}", tag, tag2, menu->getChildrenCount());
-
             bool tagIsHere = false;
             bool tag2IsHere = false;
 
@@ -329,9 +331,8 @@ class $modify(MyGarageLayer, GJGarageLayer) {
 
             if (as<int>(type) < 10) {
                 player2->updatePlayerFrame(n, type);
+                player2->updateColors();
             }
-
-            
 
             switch (type) {
                 case IconType::Cube:
@@ -398,7 +399,5 @@ class $modify(MyGarageLayer, GJGarageLayer) {
             GJGarageLayer::onSelect(sender);
 
         }
-
-        log::error("{} {}", as<int>(type), sender->getTag());
     }
 };
