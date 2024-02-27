@@ -22,5 +22,6 @@ namespace PlayerData {
     extern int player2ShipTrail;
 
     extern int callPosStreak;
+    extern bool player2Selected;
 
 };
