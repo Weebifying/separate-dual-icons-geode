@@ -12,11 +12,11 @@ class $modify(MyGarageLayer, GJGarageLayer) {
     }
 
     bool init() {
+        PlayerData::player2Selected = false;
 		if (!GJGarageLayer::init()) return false;
 
         auto winSize = CCDirector::get()->getWinSize();
 
-        PlayerData::player2Selected = false;
 
         auto toggleMenu = CCMenu::create();
         toggleMenu->setPosition({winSize.width*8.75f/10, winSize.height/2.5f});
@@ -67,87 +67,100 @@ class $modify(MyGarageLayer, GJGarageLayer) {
 
     void setupPage(int p1, IconType p2) {
         GJGarageLayer::setupPage(p1, p2);
-        log::info("balls");
         
         page = p1;
         type = p2;
         if (p1 == -1) page = 0;
 
-        auto winSize = CCDirector::get()->getWinSize();
+        if (PlayerData::player2Selected) {
+            auto winSize = CCDirector::get()->getWinSize();
 
-        auto iconBar = getChildOfType<ListButtonBar>(this, 0);
-        auto menu = getChildOfType<CCMenu>(getChildOfType<ListButtonPage>(getChildOfType<ExtendedLayer>(getChildOfType<BoomScrollLayer>(iconBar, 0), 0), 0), 0);
-        CCMenu* menu2 = nullptr;
+            auto iconBar = getChildOfType<ListButtonBar>(this, 0);
+            auto menu = getChildOfType<CCMenu>(getChildOfType<ListButtonPage>(getChildOfType<ExtendedLayer>(getChildOfType<BoomScrollLayer>(iconBar, 0), 0), 0), 0);
+            CCMenu* menu2 = nullptr;
 
-        if (p2 == IconType::Special) 
-            menu2 = getChildOfType<CCMenu>(getChildOfType<ListButtonPage>(getChildOfType<ExtendedLayer>(getChildOfType<BoomScrollLayer>(getChildOfType<ListButtonBar>(iconBar, 0), 0), 0), 0), 0);
-        
-        int tag = 0;
-        int tag2 = 0;
+            if (type == IconType::Special) 
+                menu2 = getChildOfType<CCMenu>(getChildOfType<ListButtonPage>(getChildOfType<ExtendedLayer>(getChildOfType<BoomScrollLayer>(getChildOfType<ListButtonBar>(iconBar, 0), 0), 0), 0), 0);
+            
+            int tag = 0;
+            int tag2 = 0;
 
-        switch (p2) {
-            case IconType::Cube:
-                tag = PlayerData::player2Cube;
-                break;
-            case IconType::Ship:
-                tag = PlayerData::player2Ship;
-                break;
-            case IconType::Ball:
-                tag = PlayerData::player2Roll;
-                break;
-            case IconType::Ufo:
-                tag = PlayerData::player2Bird;
-                break;
-            case IconType::Wave:
-                tag = PlayerData::player2Dart;
-                break;
-            case IconType::Robot:
-                tag = PlayerData::player2Robot;
-                break;
-            case IconType::Spider:
-                tag = PlayerData::player2Spider;
-                break;
-            case IconType::Swing:
-                tag = PlayerData::player2Swing;
-                break;
-            case IconType::Jetpack:
-                tag = PlayerData::player2Jetpack;
-                break;
-            case IconType::Special:
-                tag = PlayerData::player2Trail;
-                tag2 = PlayerData::player2ShipTrail;
-                break;
-            case IconType::DeathEffect:
-                tag = PlayerData::player2Death;
-                break;
-            default:
-                break;
+            switch (type) {
+                case IconType::Cube:
+                    tag = PlayerData::player2Cube;
+                    break;
+                case IconType::Ship:
+                    tag = PlayerData::player2Ship;
+                    break;
+                case IconType::Ball:
+                    tag = PlayerData::player2Roll;
+                    break;
+                case IconType::Ufo:
+                    tag = PlayerData::player2Bird;
+                    break;
+                case IconType::Wave:
+                    tag = PlayerData::player2Dart;
+                    break;
+                case IconType::Robot:
+                    tag = PlayerData::player2Robot;
+                    break;
+                case IconType::Spider:
+                    tag = PlayerData::player2Spider;
+                    break;
+                case IconType::Swing:
+                    tag = PlayerData::player2Swing;
+                    break;
+                case IconType::Jetpack:
+                    tag = PlayerData::player2Jetpack;
+                    break;
+                case IconType::Special:
+                    tag = PlayerData::player2Trail;
+                    tag2 = PlayerData::player2ShipTrail;
+                    break;
+                case IconType::DeathEffect:
+                    tag = PlayerData::player2Death;
+                    break;
+                default:
+                    break;
+            }
+
+            auto cursor1 = this->getChildByID("cursor-1");
+            auto cursor2 = this->getChildByID("cursor-2");
+
+            // log::error("{} {}", cursor1->getPositionX(), cursor1->getPositionY());
+            // log::error("{} {}", cursor2->getPositionX(), cursor2->getPositionY());
+
+            // log::warn("{} {} {}", tag, tag2, menu->getChildrenCount());
+
+            bool tagIsHere = false;
+            bool tag2IsHere = false;
+
+            // i cant use getChildByTag bc crashes lol
+            if (menu) {
+                CCArrayExt<CCMenuItemSpriteExtra*> children = menu->getChildren();
+                for (auto* child : children) {
+                    if (child->getTag() == tag) {
+                        tagIsHere = true;
+                        cursor1->setVisible(true);
+                        cursor1->setPosition({child->getPositionX() + winSize.width/2, child->getPositionY() + winSize.height/2});
+                    }
+                }
+                if (!tagIsHere) cursor1->setVisible(false);
+            }
+
+            if (menu2) {
+                CCArrayExt<CCMenuItemSpriteExtra*> children2 = menu2->getChildren();
+                for (auto* child : children2) {
+                    if (child->getTag() == tag2) {
+                        tag2IsHere = true;
+                        cursor2->setVisible(true);
+                        cursor2->setPosition({child->getPositionX() + winSize.width/2, child->getPositionY() + winSize.height/2});
+                    }
+                }
+                if (!tag2IsHere) cursor2->setVisible(false);
+            }
         }
-
-        auto cursor1 = this->getChildByID("cursor-1");
-        auto cursor2 = this->getChildByID("cursor-2");
-
-        log::warn("{} {} {}", tag, tag2, menu->getChildrenCount());
-        // if (menu) {
-        //     if (menu->getChildByTag(tag)) {
-        //         cursor1->setVisible(true);
-        //         cursor1->setPosition({menu->getChildByTag(tag)->getPositionX() + winSize.width/2, menu->getChildByTag(tag)->getPositionY() + winSize.height/2});
-        //     } else {
-        //         cursor1->setVisible(false);
-        //     }
-        // }
-
-        // if (menu2) {
-        //     if (menu2->getChildByTag(tag2)) {
-        //         cursor2->setVisible(true);
-        //         cursor2->setPosition({menu2->getChildByTag(tag2)->getPositionX() + winSize.width/2, menu2->getChildByTag(tag2)->getPositionY() + winSize.height/2});
-        //     } else {
-        //         cursor2->setVisible(false);
-        //     }
-        // }
-
     }
-
 
     void onSelect(CCObject* sender) {
         int n = sender->getTag();
