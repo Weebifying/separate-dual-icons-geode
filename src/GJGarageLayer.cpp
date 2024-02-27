@@ -128,23 +128,23 @@ class $modify(MyGarageLayer, GJGarageLayer) {
         auto cursor2 = this->getChildByID("cursor-2");
 
         log::warn("{} {} {}", tag, tag2, menu->getChildrenCount());
-        if (menu) {
-            if (menu->getChildByTag(tag)) {
-                cursor1->setVisible(true);
-                cursor1->setPosition({menu->getChildByTag(tag)->getPositionX() + winSize.width/2, menu->getChildByTag(tag)->getPositionY() + winSize.height/2});
-            } else {
-                cursor1->setVisible(false);
-            }
-        }
+        // if (menu) {
+        //     if (menu->getChildByTag(tag)) {
+        //         cursor1->setVisible(true);
+        //         cursor1->setPosition({menu->getChildByTag(tag)->getPositionX() + winSize.width/2, menu->getChildByTag(tag)->getPositionY() + winSize.height/2});
+        //     } else {
+        //         cursor1->setVisible(false);
+        //     }
+        // }
 
-        if (menu2) {
-            if (menu2->getChildByTag(tag2)) {
-                cursor2->setVisible(true);
-                cursor2->setPosition({menu2->getChildByTag(tag2)->getPositionX() + winSize.width/2, menu2->getChildByTag(tag2)->getPositionY() + winSize.height/2});
-            } else {
-                cursor2->setVisible(false);
-            }
-        }
+        // if (menu2) {
+        //     if (menu2->getChildByTag(tag2)) {
+        //         cursor2->setVisible(true);
+        //         cursor2->setPosition({menu2->getChildByTag(tag2)->getPositionX() + winSize.width/2, menu2->getChildByTag(tag2)->getPositionY() + winSize.height/2});
+        //     } else {
+        //         cursor2->setVisible(false);
+        //     }
+        // }
 
     }
 
