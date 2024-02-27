@@ -26,21 +26,21 @@ class $modify(PlayerObject) {
     //     return true;
     // }
 
-    #ifndef GEODE_IS_ANDROID
-    void playDeathEffect() {
-        int orgDeath = GameManager::sharedState()->getPlayerDeathEffect();
+    // #ifndef GEODE_IS_ANDROID
+    // void playDeathEffect() {
+    //     int orgDeath = GameManager::sharedState()->getPlayerDeathEffect();
 
-        if (PlayLayer::get()) {
-            if (this == PlayLayer::get()->m_player2) {
-                GameManager::sharedState()->setPlayerDeathEffect(PlayerData::player2Death); // culprit
-            }
-        }
+    //     if (PlayLayer::get()) {
+    //         if (this == PlayLayer::get()->m_player2) {
+    //             GameManager::sharedState()->setPlayerDeathEffect(PlayerData::player2Death); // culprit
+    //         }
+    //     }
 
-        PlayerObject::playDeathEffect();
+    //     PlayerObject::playDeathEffect();
 
-        GameManager::sharedState()->setPlayerDeathEffect(orgDeath);
-    }
-    #endif
+    //     GameManager::sharedState()->setPlayerDeathEffect(orgDeath);
+    // }
+    // #endif
 
     void setupStreak() {
         // thanks alphalaneous for the fucking genius code

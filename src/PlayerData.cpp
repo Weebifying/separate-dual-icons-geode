@@ -12,7 +12,7 @@ int PlayerData::player2Jetpack = 1;
 
 int PlayerData::player2Color1 = 1;
 int PlayerData::player2Color2 = 1;
-int PlayerData::player2ColorGlow = 1;//
+int PlayerData::player2ColorGlow = 1;
 bool PlayerData::player2Glow = false;//
 
 int PlayerData::player2Trail = 1;
