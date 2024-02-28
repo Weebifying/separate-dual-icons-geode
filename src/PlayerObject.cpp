@@ -150,4 +150,3 @@ class $modify(PlayerObject) {
 
     }
 };
-
