@@ -336,51 +336,63 @@ class $modify(MyGarageLayer, GJGarageLayer) {
 
             switch (type) {
                 case IconType::Cube:
-                    Mod::get()->setSettingValue<int64_t>("cube", n);
+                    Mod::get()->setSavedValue<int64_t>("cube", n);
+                    PlayerData::player2Cube = n;
                     player2->setScale(1.6f);
                     break;
                 case IconType::Ship:
-                    Mod::get()->setSettingValue<int64_t>("ship", n);
+                    Mod::get()->setSavedValue<int64_t>("ship", n);
+                    PlayerData::player2Ship = n;
                     player2->setScale(1.6f);
                     break;
                 case IconType::Ball:
-                    Mod::get()->setSettingValue<int64_t>("roll", n);
+                    Mod::get()->setSavedValue<int64_t>("roll", n);
+                    PlayerData::player2Roll = n;
                     player2->setScale(1.6f);
                     break;
                 case IconType::Ufo:
-                    Mod::get()->setSettingValue<int64_t>("bird", n);
+                    Mod::get()->setSavedValue<int64_t>("bird", n);
+                    PlayerData::player2Bird = n;
                     player2->setScale(1.6f);
                     break;
                 case IconType::Wave:
-                    Mod::get()->setSettingValue<int64_t>("dart", n);
+                    Mod::get()->setSavedValue<int64_t>("dart", n);
+                    PlayerData::player2Dart = n;
                     player2->setScale(1.6f);
                     break;
                 case IconType::Robot:
-                    Mod::get()->setSettingValue<int64_t>("robot", n);
+                    Mod::get()->setSavedValue<int64_t>("robot", n);
+                    PlayerData::player2Robot = n;
                     player2->setScale(1.6f);
                     break;
                 case IconType::Spider:
-                    Mod::get()->setSettingValue<int64_t>("spider", n);
+                    Mod::get()->setSavedValue<int64_t>("spider", n);
+                    PlayerData::player2Spider = n;
                     player2->setScale(1.6f);
                     break;
                 case IconType::Swing:
-                    Mod::get()->setSettingValue<int64_t>("swing", n);
+                    Mod::get()->setSavedValue<int64_t>("swing", n);
+                    PlayerData::player2Swing = n;
                     player2->setScale(1.6f);
                     break;
                 case IconType::Jetpack:
-                    Mod::get()->setSettingValue<int64_t>("jetpack", n);
+                    Mod::get()->setSavedValue<int64_t>("jetpack", n);
+                    PlayerData::player2Jetpack = n;
                     player2->setScale(1.5f);
                     break;
                 case IconType::Special:
                     if (as<CCNode*>(sender)->getParent()->getChildrenCount() == 7) {
-                        Mod::get()->setSettingValue<int64_t>("trail", n);
+                        Mod::get()->setSavedValue<int64_t>("trail", n);
+                        PlayerData::player2Trail = n;
                     } else if (as<CCNode*>(sender)->getParent()->getChildrenCount() == 6) {
-                        Mod::get()->setSettingValue<int64_t>("shiptrail", n);
+                        Mod::get()->setSavedValue<int64_t>("shiptrail", n);
+                        PlayerData::player2ShipTrail = n;
                         isShipTrail = true;
                     }
                     break;
                 case IconType::DeathEffect:
-                    Mod::get()->setSettingValue<int64_t>("death", n);
+                    Mod::get()->setSavedValue<int64_t>("death", n);
+                    PlayerData::player2Death = n;
                     break;
                 default:
                     log::error("what the hell lmao");

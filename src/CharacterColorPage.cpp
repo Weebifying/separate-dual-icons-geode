@@ -208,7 +208,8 @@ class $modify(CharacterColorPage) {
                     }
                     player2->setColor(GameManager::get()->colorForIdx(sender->getTag()));
 
-                    Mod::get()->setSettingValue<int64_t>("color1", sender->getTag());
+                    Mod::get()->setSavedValue<int64_t>("color1", sender->getTag());
+                    PlayerData::player2Color1 = sender->getTag();
                     break;
                 case 1:
                     cursor = layer->getChildByID("cursor-col2");
@@ -222,7 +223,8 @@ class $modify(CharacterColorPage) {
                     }
                     player2->setSecondColor(GameManager::get()->colorForIdx(sender->getTag()));
 
-                    Mod::get()->setSettingValue<int64_t>("color2", sender->getTag());
+                    Mod::get()->setSavedValue<int64_t>("color2", sender->getTag());
+                    PlayerData::player2Color2 = sender->getTag();
                     break;
                 case 2:
                     cursor = layer->getChildByID("cursor-glow");
@@ -238,7 +240,8 @@ class $modify(CharacterColorPage) {
                         player2->setGlowOutline(GameManager::get()->colorForIdx(sender->getTag()));
                     }
 
-                    Mod::get()->setSettingValue<int64_t>("colorglow", sender->getTag());
+                    Mod::get()->setSavedValue<int64_t>("colorglow", sender->getTag());
+                    PlayerData::player2ColorGlow = sender->getTag();
                     break;
                 default:
                     log::error("what did you do lmao");
@@ -267,7 +270,8 @@ class $modify(CharacterColorPage) {
 
             auto player2 = as<SimplePlayer*>(CCDirector::get()->getRunningScene()->getChildByID("GJGarageLayer")->getChildByID("player2-icon"));
 
-            Mod::get()->setSettingValue<bool>("glow", as<CCMenuItemToggler*>(sender)->isOn());
+            Mod::get()->setSavedValue<bool>("glow", as<CCMenuItemToggler*>(sender)->isOn());
+            PlayerData::player2Glow = as<CCMenuItemToggler*>(sender)->isOn();
 
             for (auto* icon : icons) {
                 if (PlayerData::player2Glow) {
