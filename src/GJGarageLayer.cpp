@@ -7,7 +7,7 @@ IconType type;
 class $modify(MyGarageLayer, GJGarageLayer) {
     void on2PToggle(CCObject* sender) {
         auto btn = as<CCMenuItemToggler*>(sender);
-        PlayerData::player2Selected = !btn->isToggled();
+        PlayerData::player2Selected = !btn->isOn();
 
         auto winSize = CCDirector::get()->getWinSize();
 
@@ -95,6 +95,10 @@ class $modify(MyGarageLayer, GJGarageLayer) {
                 }
                 if (!tag2IsHere) cursor2->setVisible(false);
             }
+
+            this->getChildByID("arrow-1")->setVisible(false);
+            this->getChildByID("arrow-2")->setVisible(true);
+
         } else {
             int tag = 0;
             int tag2 = 0;
@@ -168,6 +172,10 @@ class $modify(MyGarageLayer, GJGarageLayer) {
                 }
                 if (!tag2IsHere) cursor2->setVisible(false);
             }
+
+            this->getChildByID("arrow-1")->setVisible(true);
+            this->getChildByID("arrow-2")->setVisible(false);
+
         }
     }
 
@@ -224,7 +232,35 @@ class $modify(MyGarageLayer, GJGarageLayer) {
         player2->updatePlayerFrame(PlayerData::player2Cube, IconType::Cube);
 
         this->addChild(player2);
-        
+
+
+        auto arrow1 = CCSprite::createWithSpriteFrameName("navArrowBtn_001.png");
+        auto arrow2 = CCSprite::createWithSpriteFrameName("navArrowBtn_001.png");
+
+        arrow1->setScale(0.4f);
+        arrow1->setPosition({player1->getPositionX() - winSize.width/12, player1->getPositionY()});
+        arrow1->setID("arrow-1");
+
+        arrow2->setScale(0.4f);
+        arrow2->setFlipX(true);
+        arrow2->setPosition({player2->getPositionX() + winSize.width/12, player2->getPositionY()});
+        arrow2->setID("arrow-2");
+
+        arrow2->setVisible(false);
+
+        auto actions1 = CCArray::create();
+        actions1->addObject(CCMoveBy::create(0.5, {5, 0}));
+        actions1->addObject(CCMoveBy::create(0.5, {-5, 0}));
+
+        auto actions2 = CCArray::create();
+        actions2->addObject(CCMoveBy::create(0.5, {-5, 0}));
+        actions2->addObject(CCMoveBy::create(0.5, {5, 0}));
+
+        arrow1->runAction(CCRepeatForever::create(CCSequence::create(actions1)));
+        arrow2->runAction(CCRepeatForever::create(CCSequence::create(actions2)));
+
+        this->addChild(arrow1);
+        this->addChild(arrow2);
 
         return true;
     }
