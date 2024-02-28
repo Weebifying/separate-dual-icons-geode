@@ -442,6 +442,7 @@ class $modify(MyGarageLayer, GJGarageLayer) {
                 cursor = this->getChildByID("cursor-1");
 
             cursor->setPosition({as<CCNode*>(sender)->getPositionX() + winSize.width/2, as<CCNode*>(sender)->getPositionY() + winSize.height/2});
+            cursor->setVisible(true);
 
         } else {
             GJGarageLayer::onSelect(sender);

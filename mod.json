@@ -8,7 +8,7 @@
 	"id": "weebify.separate_dual_icons",
 	"name": "Separate Dual Icons",
 	"developer": "Weebify",
-	"description": "alot of work",
+	"description": "Allows you to customize your 2nd player",
     "tags": ["Gameplay", "Interface", "Customization"],
 	"dependencies": [
 		{
@@ -16,5 +16,11 @@
 			"version": ">=1.7.1",
 			"importance": "required"
 		}
-	]
+	],
+    "resources": {
+		"files": [
+			"./image.png"
+		]
+	},
+    "repository": "https://github.com/Weebifying/separate-dual-icons-geode"
 }

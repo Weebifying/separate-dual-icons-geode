@@ -1,3 +1,5 @@
-# Template Mod
+# Separate Dual Icons
 
-Edit about.md to change this
+Allows you to customize your 2nd player
+
+![Showcase](weebify.separate_dual_icons/image.png)
