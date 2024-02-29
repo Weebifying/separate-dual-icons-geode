@@ -10,27 +10,40 @@ class $modify(PlayLayer) {
 
         PlayerObject* player2 = this->m_player2;
         if (player2->m_isShip) {
+
             if (this->m_level->isPlatformer())
                 player2->updatePlayerJetpackFrame(PlayerData::player2Jetpack);
             else
                 player2->updatePlayerShipFrame(PlayerData::player2Ship);
+
             player2->updatePlayerFrame(PlayerData::player2Cube);
+
         } else if (player2->m_isBall) {
+
             player2->updatePlayerRollFrame(PlayerData::player2Roll);
+
         } else if (player2->m_isBird) {
+
             player2->updatePlayerBirdFrame(PlayerData::player2Bird);
             player2->updatePlayerFrame(PlayerData::player2Cube);
+
         } else if (player2->m_isDart) {
+
             player2->updatePlayerDartFrame(PlayerData::player2Dart);
-        } else if (player2->m_isRobot) {
-            player2->updatePlayerRobotFrame(PlayerData::player2Robot);
-        } else if (player2->m_isSpider) {
-            player2->updatePlayerSpiderFrame(PlayerData::player2Spider);
+
         } else if (player2->m_isSwing) {
+
             player2->updatePlayerSwingFrame(PlayerData::player2Swing);
+
         } else {
+
             player2->updatePlayerFrame(PlayerData::player2Cube);
+
         }
+
+        // required
+        player2->updatePlayerRobotFrame(PlayerData::player2Robot);
+        player2->updatePlayerSpiderFrame(PlayerData::player2Spider);
 
         player2->setColor(GameManager::get()->colorForIdx(PlayerData::player2Color1));
         player2->setSecondColor(GameManager::get()->colorForIdx(PlayerData::player2Color2));
