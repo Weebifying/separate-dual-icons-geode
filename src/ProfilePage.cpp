@@ -1,11 +1,19 @@
 #include "PlayerData.hpp"
 #include <Geode/modify/ProfilePage.hpp>
+#include <Geode/modify/MenuLayer.hpp>
 
+bool ownProfile = false;
+
+class $modify(MenuLayer) {
+    void onMyProfile(cocos2d::CCObject* sender) {
+        ownProfile = true;
+        MenuLayer::onMyProfile(sender);
+    }
+};
 
 class $modify(MyProfilePage, ProfilePage) {
 
     // make ship/jetpack toggle
-    bool ownProfile = false;
     bool hasLoaded = false;
     IconType shipType = IconType::Ship;
 
@@ -213,7 +221,7 @@ class $modify(MyProfilePage, ProfilePage) {
 
     bool init(int accountID, bool myProfile) {
         if (!ProfilePage::init(accountID, myProfile)) return false;
-        if (myProfile) m_fields->ownProfile = true;
+        ownProfile = myProfile;
         PlayerData::player2Selected = false;
 
         return true;
@@ -221,6 +229,8 @@ class $modify(MyProfilePage, ProfilePage) {
 
     void loadPageFromUserInfo(GJUserScore* p0){
         ProfilePage::loadPageFromUserInfo(p0);
+
+        log::error("{} {}", ownProfile, m_fields->hasLoaded);
 
         if (auto menu = as<CCLayer*>(this->getChildren()->objectAtIndex(0))->getChildByID("player-menu")) {
             auto ship = menu->getChildByID("player-ship");
@@ -244,7 +254,7 @@ class $modify(MyProfilePage, ProfilePage) {
 
         }
         
-        if (m_fields->ownProfile && !m_fields->hasLoaded) {
+        if (ownProfile && !m_fields->hasLoaded) {
             
             m_fields->hasLoaded = true;
             auto layer = as<CCLayer*>(this->getChildren()->objectAtIndex(0));
