@@ -1,14 +1,13 @@
 #include "PlayerData.hpp"
 #include <Geode/modify/CharacterColorPage.hpp>
 
-IconType shipType = IconType::Ship;
-int colorMode = 0;
 
 class $modify(CharacterColorPage) {
+    IconType shipType = IconType::Ship;
+    int colorMode = 0;
+
     bool init() {
         if (!CharacterColorPage::init()) return false;
-        shipType = IconType::Ship;
-        colorMode = 0;
 
         if (PlayerData::player2Selected) {
             auto layer = this->getChildByID("colors-layer");
@@ -120,14 +119,16 @@ class $modify(CharacterColorPage) {
         if (PlayerData::player2Selected) {
             auto ship = getChildOfType<SimplePlayer>(as<CCMenuItemSpriteExtra*>(sender), 0);
 
-            switch (shipType) {
+            switch (m_fields->shipType) {
                 case IconType::Ship:
-                    shipType = IconType::Jetpack;
-                    ship->updatePlayerFrame(PlayerData::player2Jetpack, shipType);
+                    m_fields->shipType = IconType::Jetpack;
+                    ship->updatePlayerFrame(PlayerData::player2Jetpack, m_fields->shipType);
+                    ship->setScale(1.05f);
                     break;
                 case IconType::Jetpack:
-                    shipType = IconType::Ship;
-                    ship->updatePlayerFrame(PlayerData::player2Ship, shipType);
+                    m_fields->shipType = IconType::Ship;
+                    ship->updatePlayerFrame(PlayerData::player2Ship, m_fields->shipType);
+                    ship->setScale(1.15f);
                     break;
                 default:
                     log::error("what???");
@@ -162,14 +163,14 @@ class $modify(CharacterColorPage) {
                 menu->getChildByID(std::to_string(PlayerData::player2ColorGlow))->getPositionY() + menu->getPositionY()
             });
 
-            colorMode = as<CCMenuItemSpriteExtra*>(sender)->getTag();
-            log::warn("mode {}", colorMode);
+            m_fields->colorMode = as<CCMenuItemSpriteExtra*>(sender)->getTag();
+            log::warn("mode {}", m_fields->colorMode);
         }
     }
 
     void onPlayerColor(CCObject* sender) {
         UnlockType ut;
-        switch (colorMode) {
+        switch (m_fields->colorMode) {
             case 0:
                 ut = UnlockType::Col1;
                 break;
@@ -195,7 +196,7 @@ class $modify(CharacterColorPage) {
             auto player2 = as<SimplePlayer*>(CCDirector::get()->getRunningScene()->getChildByID("GJGarageLayer")->getChildByID("player2-icon"));
             CCNode* cursor = nullptr;
 
-            switch (colorMode) {
+            switch (m_fields->colorMode) {
                 case 0:
                     cursor = layer->getChildByID("cursor-col1");
                     cursor->setPosition({

@@ -1,10 +1,12 @@
 #include "PlayerData.hpp"
 #include <Geode/modify/GJGarageLayer.hpp>
 
-int page;
-IconType type;
+
 
 class $modify(MyGarageLayer, GJGarageLayer) {
+    int page;
+    IconType type;
+    
     void on2PToggle(CCObject* sender) {
         auto btn = as<CCMenuItemToggler*>(sender);
         PlayerData::player2Selected = !btn->isOn();
@@ -15,7 +17,7 @@ class $modify(MyGarageLayer, GJGarageLayer) {
 
         auto menu = getChildOfType<CCMenu>(getChildOfType<ListButtonPage>(getChildOfType<ExtendedLayer>(getChildOfType<BoomScrollLayer>(iconBar, 0), 0), 0), 0);
         CCMenu* menu2 = nullptr;
-        if (type == IconType::Special) 
+        if (m_fields->type == IconType::Special) 
             menu2 = getChildOfType<CCMenu>(getChildOfType<ListButtonPage>(getChildOfType<ExtendedLayer>(getChildOfType<BoomScrollLayer>(getChildOfType<ListButtonBar>(iconBar, 0), 0), 0), 0), 0);
 
         auto cursor1 = this->getChildByID("cursor-1");
@@ -29,7 +31,7 @@ class $modify(MyGarageLayer, GJGarageLayer) {
             as<CCSprite*>(cursor1)->setColor({0, 255, 255});
             as<CCSprite*>(cursor2)->setColor({0, 255, 255});
 
-            switch (type) {
+            switch (m_fields->type) {
                 case IconType::Cube:
                     tag = PlayerData::player2Cube;
                     break;
@@ -106,7 +108,7 @@ class $modify(MyGarageLayer, GJGarageLayer) {
             as<CCSprite*>(cursor1)->setColor({255, 255, 0});
             as<CCSprite*>(cursor2)->setColor({255, 255, 0});
 
-            switch (type) {
+            switch (m_fields->type) {
                 case IconType::Cube:
                     tag = GameManager::get()->getPlayerFrame();
                     break;
@@ -181,8 +183,8 @@ class $modify(MyGarageLayer, GJGarageLayer) {
 
     bool init() {
         PlayerData::player2Selected = false;
-        page = 0;
-        type = IconType::Cube;
+        m_fields->page = 0;
+        m_fields->type = IconType::Cube;
 
 		if (!GJGarageLayer::init()) return false;
 
@@ -268,9 +270,9 @@ class $modify(MyGarageLayer, GJGarageLayer) {
     void setupPage(int p1, IconType p2) {
         GJGarageLayer::setupPage(p1, p2);
         
-        page = p1;
-        type = p2;
-        if (p1 == -1) page = 0;
+        m_fields->page = p1;
+        m_fields->type = p2;
+        if (p1 == -1) m_fields->page = 0;
 
         if (PlayerData::player2Selected) {
             auto winSize = CCDirector::get()->getWinSize();
@@ -279,13 +281,13 @@ class $modify(MyGarageLayer, GJGarageLayer) {
             auto menu = getChildOfType<CCMenu>(getChildOfType<ListButtonPage>(getChildOfType<ExtendedLayer>(getChildOfType<BoomScrollLayer>(iconBar, 0), 0), 0), 0);
             CCMenu* menu2 = nullptr;
 
-            if (type == IconType::Special) 
+            if (m_fields->type == IconType::Special) 
                 menu2 = getChildOfType<CCMenu>(getChildOfType<ListButtonPage>(getChildOfType<ExtendedLayer>(getChildOfType<BoomScrollLayer>(getChildOfType<ListButtonBar>(iconBar, 0), 0), 0), 0), 0);
             
             int tag = 0;
             int tag2 = 0;
 
-            switch (type) {
+            switch (m_fields->type) {
                 case IconType::Cube:
                     tag = PlayerData::player2Cube;
                     break;
@@ -359,18 +361,18 @@ class $modify(MyGarageLayer, GJGarageLayer) {
 
     void onSelect(CCObject* sender) {
         int n = sender->getTag();
-        if (PlayerData::player2Selected && GameManager::get()->isIconUnlocked(n, type)) {
+        if (PlayerData::player2Selected && GameManager::get()->isIconUnlocked(n, m_fields->type)) {
             auto player2 = as<SimplePlayer*>(this->getChildByID("player2-icon"));
             auto winSize = CCDirector::get()->getWinSize();
             bool isShipTrail = false;
 
 
-            if (as<int>(type) < 10) {
-                player2->updatePlayerFrame(n, type);
+            if (as<int>(m_fields->type) < 10) {
+                player2->updatePlayerFrame(n, m_fields->type);
                 player2->updateColors();
             }
 
-            switch (type) {
+            switch (m_fields->type) {
                 case IconType::Cube:
                     Mod::get()->setSavedValue<int64_t>("cube", n);
                     PlayerData::player2Cube = n;

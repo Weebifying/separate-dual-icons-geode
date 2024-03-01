@@ -5,7 +5,46 @@
 class $modify(MyProfilePage, ProfilePage) {
 
     // make ship/jetpack toggle
+    bool ownProfile = false;
+    bool hasLoaded = false;
+    IconType shipType = IconType::Ship;
 
+    static void onModify(auto& self) {
+        self.setHookPriority("CharacterColorPage::loadPageFromUserInfo", 1000000);
+    }
+
+    void onShipToggle(CCObject* sender) {
+        auto ship = getChildOfType<SimplePlayer>(as<CCNode*>(sender), 0);
+        if (PlayerData::player2Selected) {
+            switch (m_fields->shipType) {
+                case IconType::Ship:
+                    m_fields->shipType = IconType::Jetpack;
+                    ship->updatePlayerFrame(PlayerData::player2Jetpack, m_fields->shipType);
+                    ship->setScale(0.9f);
+                    break;
+                case IconType::Jetpack:
+                    m_fields->shipType = IconType::Ship;
+                    ship->updatePlayerFrame(PlayerData::player2Ship, m_fields->shipType);
+                    ship->setScale(0.95f);
+                    break;
+            }
+
+        } else {
+            switch (m_fields->shipType) {
+                case IconType::Ship:
+                    m_fields->shipType = IconType::Jetpack;
+                    ship->updatePlayerFrame(GameManager::get()->getPlayerShip(), m_fields->shipType);
+                    ship->setScale(0.9f);
+                    break;
+                case IconType::Jetpack:
+                    m_fields->shipType = IconType::Ship;
+                    ship->updatePlayerFrame(GameManager::get()->getPlayerJetpack(), m_fields->shipType);
+                    ship->setScale(0.95f);
+                    break;
+            }
+
+        }
+    }
 
     void on2PToggle(CCObject* sender) {
         auto layer = as<CCLayer*>(this->getChildren()->objectAtIndex(0));
@@ -20,10 +59,10 @@ class $modify(MyProfilePage, ProfilePage) {
         auto spider = getChildOfType<SimplePlayer>(menu->getChildByID("player-spider"), 0);
         auto swing = getChildOfType<SimplePlayer>(menu->getChildByID("player-swing"), 0);
 
-        
-            
 
         if (as<CCMenuItemToggler*>(sender)->isOn()) {
+            PlayerData::player2Selected = false;
+
             cube->updatePlayerFrame(GameManager::get()->getPlayerFrame(), IconType::Cube);
             cube->setColor(GameManager::get()->colorForIdx(GameManager::get()->getPlayerColor()));
             cube->setSecondColor(GameManager::get()->colorForIdx(GameManager::get()->getPlayerColor2()));
@@ -96,6 +135,8 @@ class $modify(MyProfilePage, ProfilePage) {
                 swing->disableGlowOutline();
             }
         } else {
+            PlayerData::player2Selected = true;
+
             cube->updatePlayerFrame(PlayerData::player2Cube, IconType::Cube);
             cube->setColor(GameManager::get()->colorForIdx(PlayerData::player2Color1));
             cube->setSecondColor(GameManager::get()->colorForIdx(PlayerData::player2Color2));
@@ -170,40 +211,62 @@ class $modify(MyProfilePage, ProfilePage) {
         }
     };
 
-    bool init(int accountID, bool ownProfile) {
-        if (!ProfilePage::init(accountID, ownProfile)) return false;
+    bool init(int accountID, bool myProfile) {
+        if (!ProfilePage::init(accountID, myProfile)) return false;
+        if (myProfile) m_fields->ownProfile = true;
+        PlayerData::player2Selected = false;
 
-        if (ownProfile) {
+        return true;
+    }
+
+    void loadPageFromUserInfo(GJUserScore* p0){
+        ProfilePage::loadPageFromUserInfo(p0);
+
+        if (auto menu = as<CCLayer*>(this->getChildren()->objectAtIndex(0))->getChildByID("player-menu")) {
+            auto ship = menu->getChildByID("player-ship");
+
+            auto myShipSprite = SimplePlayer::create(GameManager::get()->getPlayerShip());
+            myShipSprite->setScale(0.95f);
+            myShipSprite->updatePlayerFrame(GameManager::get()->getPlayerShip(), IconType::Ship);
+            myShipSprite->setColor(GameManager::get()->colorForIdx(GameManager::get()->getPlayerColor()));
+            myShipSprite->setSecondColor(GameManager::get()->colorForIdx(GameManager::get()->getPlayerColor2()));
+            if (GameManager::get()->getPlayerGlow()) {
+                myShipSprite->setGlowOutline(GameManager::get()->colorForIdx(GameManager::get()->getPlayerGlowColor()));
+            }
+
+            auto myShip = CCMenuItemSpriteExtra::create(myShipSprite, this, menu_selector(MyProfilePage::onShipToggle));
+            myShip->setPosition(ship->getPosition());
+            myShip->setContentSize(ship->getContentSize());
+            myShipSprite->setPosition({myShip->getContentWidth()/2, myShip->getContentHeight()/2});
+            menu->addChild(myShip);
+            menu->removeChild(ship);
+            myShip->setID("player-ship");
+
+        }
+        
+        if (m_fields->ownProfile && !m_fields->hasLoaded) {
+            
+            m_fields->hasLoaded = true;
             auto layer = as<CCLayer*>(this->getChildren()->objectAtIndex(0));
             auto winSize = CCDirector::get()->getWinSize();
 
-            auto menu = CCMenu::create();
-            layer->addChild(menu);
-            menu->setID("right-menu");
-            menu->setContentSize({32.2f, 90.f});
-            menu->setTouchPriority(-504);
-            menu->setZOrder(10);
-            menu->setPosition({winSize.width - layer->getChildByID("left-menu")->getPositionX(), layer->getChildByID("left-menu")->getPositionY()});
-            menu->setLayout(
-                ColumnLayout::create()
-                    ->setAxisReverse(true)
-                    ->setAxisAlignment(AxisAlignment::End)
-                    ->setGap(6.f)
-            );
+            if (auto menu = layer->getChildByID("left-menu")) {
+                
+                menu->setContentHeight(menu->getContentHeight()*2);
+                menu->setPositionY(menu->getPositionY() - menu->getContentHeight()/4);
 
-            auto label = CCLabelBMFont::create("2P", "bigFont.fnt");
-            auto sprite2POff = CircleButtonSprite::create(label, CircleBaseColor::Green, CircleBaseSize::Medium);
-            sprite2POff->setScale(0.7f);
-            auto sprite2POn = CircleButtonSprite::create(label, CircleBaseColor::Cyan, CircleBaseSize::Medium);
-            sprite2POn->setScale(0.7f);
+                auto label = CCLabelBMFont::create("2P", "bigFont.fnt");
+                auto sprite2POff = CircleButtonSprite::create(label, CircleBaseColor::Green, CircleBaseSize::Medium);
+                sprite2POff->setScale(0.7f);
+                auto sprite2POn = CircleButtonSprite::create(label, CircleBaseColor::Cyan, CircleBaseSize::Medium);
+                sprite2POn->setScale(0.7f);
 
-            auto toggler = CCMenuItemToggler::create(sprite2POff, sprite2POn, this, menu_selector(MyProfilePage::on2PToggle));
-            toggler->setID("2p-toggler");
-            menu->addChild(toggler);
-            menu->updateLayout();
+                auto toggler = CCMenuItemToggler::create(sprite2POff, sprite2POn, this, menu_selector(MyProfilePage::on2PToggle));
+                toggler->setID("2p-toggler");
+                menu->addChild(toggler);
+                menu->updateLayout();
 
+            }
         }
-
-        return true;
     }
 };
