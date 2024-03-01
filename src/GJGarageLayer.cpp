@@ -429,6 +429,7 @@ class $modify(MyGarageLayer, GJGarageLayer) {
                     }
                     break;
                 case IconType::DeathEffect:
+                    GameManager::get()->setPlayerDeathEffect(n);
                     Mod::get()->setSavedValue<int64_t>("death", n);
                     PlayerData::player2Death = n;
                     break;
@@ -448,6 +449,12 @@ class $modify(MyGarageLayer, GJGarageLayer) {
 
         } else {
             GJGarageLayer::onSelect(sender);
+
+            // same death effect cuz not working rn :(
+            if (m_fields->type == IconType::DeathEffect) {
+                Mod::get()->setSavedValue<int64_t>("death", n);
+                PlayerData::player2Death = n;
+            }
 
         }
     }

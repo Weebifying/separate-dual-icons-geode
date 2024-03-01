@@ -232,26 +232,28 @@ class $modify(MyProfilePage, ProfilePage) {
 
         log::error("{} {}", ownProfile, m_fields->hasLoaded);
 
-        if (auto menu = as<CCLayer*>(this->getChildren()->objectAtIndex(0))->getChildByID("player-menu")) {
-            auto ship = menu->getChildByID("player-ship");
+        if (ownProfile) {
+            if (auto menu = as<CCLayer*>(this->getChildren()->objectAtIndex(0))->getChildByID("player-menu")) {
+                auto ship = menu->getChildByID("player-ship");
 
-            auto myShipSprite = SimplePlayer::create(GameManager::get()->getPlayerShip());
-            myShipSprite->setScale(0.95f);
-            myShipSprite->updatePlayerFrame(GameManager::get()->getPlayerShip(), IconType::Ship);
-            myShipSprite->setColor(GameManager::get()->colorForIdx(GameManager::get()->getPlayerColor()));
-            myShipSprite->setSecondColor(GameManager::get()->colorForIdx(GameManager::get()->getPlayerColor2()));
-            if (GameManager::get()->getPlayerGlow()) {
-                myShipSprite->setGlowOutline(GameManager::get()->colorForIdx(GameManager::get()->getPlayerGlowColor()));
+                auto myShipSprite = SimplePlayer::create(GameManager::get()->getPlayerShip());
+                myShipSprite->setScale(0.95f);
+                myShipSprite->updatePlayerFrame(GameManager::get()->getPlayerShip(), IconType::Ship);
+                myShipSprite->setColor(GameManager::get()->colorForIdx(GameManager::get()->getPlayerColor()));
+                myShipSprite->setSecondColor(GameManager::get()->colorForIdx(GameManager::get()->getPlayerColor2()));
+                if (GameManager::get()->getPlayerGlow()) {
+                    myShipSprite->setGlowOutline(GameManager::get()->colorForIdx(GameManager::get()->getPlayerGlowColor()));
+                }
+
+                auto myShip = CCMenuItemSpriteExtra::create(myShipSprite, this, menu_selector(MyProfilePage::onShipToggle));
+                myShip->setPosition(ship->getPosition());
+                myShip->setContentSize(ship->getContentSize());
+                myShipSprite->setPosition({myShip->getContentWidth()/2, myShip->getContentHeight()/2});
+                menu->addChild(myShip);
+                menu->removeChild(ship);
+                myShip->setID("player-ship");
+
             }
-
-            auto myShip = CCMenuItemSpriteExtra::create(myShipSprite, this, menu_selector(MyProfilePage::onShipToggle));
-            myShip->setPosition(ship->getPosition());
-            myShip->setContentSize(ship->getContentSize());
-            myShipSprite->setPosition({myShip->getContentWidth()/2, myShip->getContentHeight()/2});
-            menu->addChild(myShip);
-            menu->removeChild(ship);
-            myShip->setID("player-ship");
-
         }
         
         if (ownProfile && !m_fields->hasLoaded) {
