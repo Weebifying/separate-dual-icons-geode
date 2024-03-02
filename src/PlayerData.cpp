@@ -21,3 +21,4 @@ int PlayerData::player2ShipTrail = 1;
 
 int PlayerData::callPosStreak = 0;
 bool PlayerData::player2Selected = false;
+int PlayerData::lastType = 0;

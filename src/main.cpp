@@ -25,4 +25,5 @@ $on_mod(Loaded) {
     PlayerData::player2Trail = Mod::get()->getSavedValue<int64_t>("trail");
     PlayerData::player2Death = Mod::get()->getSavedValue<int64_t>("death");
     PlayerData::player2ShipTrail = Mod::get()->getSavedValue<int64_t>("shiptrail");
+    PlayerData::lastType = Mod::get()->getSavedValue<int64_t>("lasttype");
 }

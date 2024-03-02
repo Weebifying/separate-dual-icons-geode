@@ -8,8 +8,9 @@ class $modify(MyGarageLayer, GJGarageLayer) {
     IconType type;
     
     void on2PToggle(CCObject* sender) {
-        auto btn = as<CCMenuItemToggler*>(sender);
-        PlayerData::player2Selected = !btn->isOn();
+        auto btn = as<CCMenuItemSpriteExtra*>(sender);
+        if (btn->getID() == "player1-button") PlayerData::player2Selected = false;
+        else PlayerData::player2Selected = true;
 
         auto winSize = CCDirector::get()->getWinSize();
 
@@ -190,31 +191,10 @@ class $modify(MyGarageLayer, GJGarageLayer) {
 
         auto winSize = CCDirector::get()->getWinSize();
 
-
-        auto toggleMenu = CCMenu::create();
-        toggleMenu->setPosition({winSize.width*8.75f/10, winSize.height/2.5f});
-        toggleMenu->setContentSize({35.f, 70.f});
-        toggleMenu->setID("2p-toggle-menu");
-        this->addChild(toggleMenu);
-
-
-        auto toggler = CCMenuItemToggler::createWithStandardSprites(this, menu_selector(MyGarageLayer::on2PToggle), 1.f);
-        toggler->setPositionX(toggleMenu->getContentWidth());
-        toggler->setID("2p-toggler");
-        toggleMenu->addChild(toggler);
-
-        auto label = CCLabelBMFont::create("2P", "bigFont.fnt");
-        label->setPositionX(toggleMenu->getContentWidth());
-        label->setPositionY(toggler->getContentHeight());
-        label->setID("2p-label");
-        label->setScale(0.6f);
-        toggleMenu->addChild(label);
-
         as<CCSprite*>(this->getChildByID("cursor-1"))->setColor({255, 255, 0});
 
         SimplePlayer* player1 = as<SimplePlayer*>(this->getChildByID("player-icon"));
         player1->setPositionX(player1->getPositionX() - winSize.width/12);
-        player1->updatePlayerFrame(GameManager::get()->getPlayerFrame(), IconType::Cube);
 
         auto player2 = SimplePlayer::create(0);
         player2->setID("player2-icon");
@@ -231,9 +211,60 @@ class $modify(MyGarageLayer, GJGarageLayer) {
             player2->disableGlowOutline();
         }
 
-        player2->updatePlayerFrame(PlayerData::player2Cube, IconType::Cube);
+        switch (PlayerData::lastType) {
+            case 0:
+                player2->updatePlayerFrame(PlayerData::player2Cube, IconType::Cube);
+                break;
+            case 1:
+                player2->updatePlayerFrame(PlayerData::player2Ship, IconType::Ship);
+                break;
+            case 2:
+                player2->updatePlayerFrame(PlayerData::player2Roll, IconType::Ball);
+                break;
+            case 3:
+                player2->updatePlayerFrame(PlayerData::player2Bird, IconType::Ufo);
+                break;
+            case 4:
+                player2->updatePlayerFrame(PlayerData::player2Dart, IconType::Wave);
+                break;
+            case 5:
+                player2->updatePlayerFrame(PlayerData::player2Robot, IconType::Robot);
+                break;
+            case 6:
+                player2->updatePlayerFrame(PlayerData::player2Spider, IconType::Spider);
+                break;
+            case 7:
+                player2->updatePlayerFrame(PlayerData::player2Swing, IconType::Swing);
+                break;
+            case 8:
+                player2->updatePlayerFrame(PlayerData::player2Jetpack, IconType::Jetpack);
+                break;
+        }
 
+        player2->updateColors();
         this->addChild(player2);
+
+
+        auto playerMenu = CCMenu::create();
+        playerMenu->setContentSize(winSize);
+        playerMenu->setPosition({0, 0});
+        playerMenu->setID("player-buttons-menu");
+        this->addChild(playerMenu);
+
+        auto sprite = CCSprite::create("GJ_button_01.png");
+        sprite->setOpacity(0);
+        auto button1 = CCMenuItemSpriteExtra::create(sprite, this, menu_selector(MyGarageLayer::on2PToggle));
+        auto button2 = CCMenuItemSpriteExtra::create(sprite, this, menu_selector(MyGarageLayer::on2PToggle));
+
+        button1->setPosition(player1->getPosition());
+        button2->setPosition(player2->getPosition());
+        button1->setContentSize({70.f, 50.f});
+        button1->setID("player1-button");
+        button2->setContentSize({70.f, 50.f});
+        button2->setID("player2-button");
+
+        playerMenu->addChild(button1);
+        playerMenu->addChild(button2);
 
 
         auto arrow1 = CCSprite::createWithSpriteFrameName("navArrowBtn_001.png");
@@ -375,46 +406,64 @@ class $modify(MyGarageLayer, GJGarageLayer) {
             switch (m_fields->type) {
                 case IconType::Cube:
                     Mod::get()->setSavedValue<int64_t>("cube", n);
+                    Mod::get()->setSavedValue<int64_t>("lasttype", 0);
+                    PlayerData::lastType = 0;
                     PlayerData::player2Cube = n;
                     player2->setScale(1.6f);
                     break;
                 case IconType::Ship:
                     Mod::get()->setSavedValue<int64_t>("ship", n);
+                    Mod::get()->setSavedValue<int64_t>("lasttype", 1);
+                    PlayerData::lastType = 1;
                     PlayerData::player2Ship = n;
                     player2->setScale(1.6f);
                     break;
                 case IconType::Ball:
                     Mod::get()->setSavedValue<int64_t>("roll", n);
+                    Mod::get()->setSavedValue<int64_t>("lasttype", 2);
+                    PlayerData::lastType = 2;
                     PlayerData::player2Roll = n;
                     player2->setScale(1.6f);
                     break;
                 case IconType::Ufo:
                     Mod::get()->setSavedValue<int64_t>("bird", n);
+                    Mod::get()->setSavedValue<int64_t>("lasttype", 3);
+                    PlayerData::lastType = 3;
                     PlayerData::player2Bird = n;
                     player2->setScale(1.6f);
                     break;
                 case IconType::Wave:
                     Mod::get()->setSavedValue<int64_t>("dart", n);
+                    Mod::get()->setSavedValue<int64_t>("lasttype", 4);
+                    PlayerData::lastType = 4;
                     PlayerData::player2Dart = n;
                     player2->setScale(1.6f);
                     break;
                 case IconType::Robot:
                     Mod::get()->setSavedValue<int64_t>("robot", n);
+                    Mod::get()->setSavedValue<int64_t>("lasttype", 5);
+                    PlayerData::lastType = 5;
                     PlayerData::player2Robot = n;
                     player2->setScale(1.6f);
                     break;
                 case IconType::Spider:
                     Mod::get()->setSavedValue<int64_t>("spider", n);
+                    Mod::get()->setSavedValue<int64_t>("lasttype", 6);
+                    PlayerData::lastType = 6;
                     PlayerData::player2Spider = n;
                     player2->setScale(1.6f);
                     break;
                 case IconType::Swing:
                     Mod::get()->setSavedValue<int64_t>("swing", n);
+                    Mod::get()->setSavedValue<int64_t>("lasttype", 7);
+                    PlayerData::lastType = 7;
                     PlayerData::player2Swing = n;
                     player2->setScale(1.6f);
                     break;
                 case IconType::Jetpack:
                     Mod::get()->setSavedValue<int64_t>("jetpack", n);
+                    Mod::get()->setSavedValue<int64_t>("lasttype", 8);
+                    PlayerData::lastType = 8;
                     PlayerData::player2Jetpack = n;
                     player2->setScale(1.5f);
                     break;
