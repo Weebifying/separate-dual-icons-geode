@@ -12,6 +12,7 @@ class $modify(MyGarageLayer, GJGarageLayer) {
         if (btn->getID() == "player1-button") PlayerData::player2Selected = false;
         else PlayerData::player2Selected = true;
 
+        auto GM = GameManager::get();
         auto winSize = CCDirector::get()->getWinSize();
 
         auto iconBar = getChildOfType<ListButtonBar>(this, 0);
@@ -111,38 +112,38 @@ class $modify(MyGarageLayer, GJGarageLayer) {
 
             switch (m_fields->type) {
                 case IconType::Cube:
-                    tag = GameManager::get()->getPlayerFrame();
+                    tag = GM->getPlayerFrame();
                     break;
                 case IconType::Ship:
-                    tag = GameManager::get()->getPlayerShip();
+                    tag = GM->getPlayerShip();
                     break;
                 case IconType::Ball:
-                    tag = GameManager::get()->getPlayerBall();
+                    tag = GM->getPlayerBall();
                     break;
                 case IconType::Ufo:
-                    tag = GameManager::get()->getPlayerBird();
+                    tag = GM->getPlayerBird();
                     break;
                 case IconType::Wave:
-                    tag = GameManager::get()->getPlayerDart();
+                    tag = GM->getPlayerDart();
                     break;
                 case IconType::Robot:
-                    tag = GameManager::get()->getPlayerRobot();
+                    tag = GM->getPlayerRobot();
                     break;
                 case IconType::Spider:
-                    tag = GameManager::get()->getPlayerSpider();
+                    tag = GM->getPlayerSpider();
                     break;
                 case IconType::Swing:
-                    tag = GameManager::get()->getPlayerSwing();
+                    tag = GM->getPlayerSwing();
                     break;
                 case IconType::Jetpack:
-                    tag = GameManager::get()->getPlayerJetpack();
+                    tag = GM->getPlayerJetpack();
                     break;
                 case IconType::Special:
-                    tag = GameManager::get()->getPlayerStreak();
-                    tag2 = GameManager::get()->getPlayerShipFire();
+                    tag = GM->getPlayerStreak();
+                    tag2 = GM->getPlayerShipFire();
                     break;
                 case IconType::DeathEffect:
-                    tag = GameManager::get()->getPlayerDeathEffect();
+                    tag = GM->getPlayerDeathEffect();
                     break;
                 default:
                     break;
@@ -189,6 +190,7 @@ class $modify(MyGarageLayer, GJGarageLayer) {
 
 		if (!GJGarageLayer::init()) return false;
 
+        auto GM = GameManager::get();
         auto winSize = CCDirector::get()->getWinSize();
 
         as<CCSprite*>(this->getChildByID("cursor-1"))->setColor({255, 255, 0});
@@ -202,11 +204,11 @@ class $modify(MyGarageLayer, GJGarageLayer) {
         player2->setPosition(player1->getPosition());
         player2->setPositionX(player2->getPositionX() + winSize.width/6);
 
-        player2->setColor(GameManager::get()->colorForIdx(PlayerData::player2Color1));
-        player2->setSecondColor(GameManager::get()->colorForIdx(PlayerData::player2Color2));
+        player2->setColor(GM->colorForIdx(PlayerData::player2Color1));
+        player2->setSecondColor(GM->colorForIdx(PlayerData::player2Color2));
 
         if (PlayerData::player2Glow) {
-            player2->setGlowOutline(GameManager::get()->colorForIdx(PlayerData::player2ColorGlow));
+            player2->setGlowOutline(GM->colorForIdx(PlayerData::player2ColorGlow));
         } else {
             player2->disableGlowOutline();
         }
@@ -391,8 +393,10 @@ class $modify(MyGarageLayer, GJGarageLayer) {
     }
 
     void onSelect(CCObject* sender) {
+        auto GM = GameManager::get();
+        
         int n = sender->getTag();
-        if (PlayerData::player2Selected && GameManager::get()->isIconUnlocked(n, m_fields->type)) {
+        if (PlayerData::player2Selected && GM->isIconUnlocked(n, m_fields->type)) {
             auto player2 = as<SimplePlayer*>(this->getChildByID("player2-icon"));
             auto winSize = CCDirector::get()->getWinSize();
             bool isShipTrail = false;
@@ -478,7 +482,7 @@ class $modify(MyGarageLayer, GJGarageLayer) {
                     }
                     break;
                 case IconType::DeathEffect:
-                    GameManager::get()->setPlayerDeathEffect(n);
+                    GM->setPlayerDeathEffect(n);
                     Mod::get()->setSavedValue<int64_t>("death", n);
                     PlayerData::player2Death = n;
                     break;

@@ -23,6 +23,8 @@ class $modify(MyProfilePage, ProfilePage) {
 
     void onShipToggle(CCObject* sender) {
         auto ship = getChildOfType<SimplePlayer>(as<CCNode*>(sender), 0);
+        auto GM = GameManager::get();
+
         if (PlayerData::player2Selected) {
             switch (m_fields->shipType) {
                 case IconType::Ship:
@@ -41,12 +43,12 @@ class $modify(MyProfilePage, ProfilePage) {
             switch (m_fields->shipType) {
                 case IconType::Ship:
                     m_fields->shipType = IconType::Jetpack;
-                    ship->updatePlayerFrame(GameManager::get()->getPlayerShip(), m_fields->shipType);
+                    ship->updatePlayerFrame(GM->getPlayerShip(), m_fields->shipType);
                     ship->setScale(0.9f);
                     break;
                 case IconType::Jetpack:
                     m_fields->shipType = IconType::Ship;
-                    ship->updatePlayerFrame(GameManager::get()->getPlayerJetpack(), m_fields->shipType);
+                    ship->updatePlayerFrame(GM->getPlayerJetpack(), m_fields->shipType);
                     ship->setScale(0.95f);
                     break;
             }
@@ -55,6 +57,8 @@ class $modify(MyProfilePage, ProfilePage) {
     }
 
     void on2PToggle(CCObject* sender) {
+        auto GM = GameManager::get();
+
         auto layer = as<CCLayer*>(this->getChildren()->objectAtIndex(0));
         auto menu = layer->getChildByID("player-menu");
 
@@ -71,74 +75,75 @@ class $modify(MyProfilePage, ProfilePage) {
         if (as<CCMenuItemToggler*>(sender)->isOn()) {
             PlayerData::player2Selected = false;
 
-            cube->updatePlayerFrame(GameManager::get()->getPlayerFrame(), IconType::Cube);
-            cube->setColor(GameManager::get()->colorForIdx(GameManager::get()->getPlayerColor()));
-            cube->setSecondColor(GameManager::get()->colorForIdx(GameManager::get()->getPlayerColor2()));
-            if (GameManager::get()->getPlayerGlow()) {
-                cube->setGlowOutline(GameManager::get()->colorForIdx(GameManager::get()->getPlayerGlowColor()));
+            cube->updatePlayerFrame(GM->getPlayerFrame(), IconType::Cube);
+            cube->setColor(GM->colorForIdx(GM->getPlayerColor()));
+            cube->setSecondColor(GM->colorForIdx(GM->getPlayerColor2()));
+            if (GM->getPlayerGlow()) {
+                cube->setGlowOutline(GM->colorForIdx(GM->getPlayerGlowColor()));
             } else {
                 cube->disableGlowOutline();
             }
 
-            ship->updatePlayerFrame(GameManager::get()->getPlayerShip(), IconType::Ship);
-            ship->setColor(GameManager::get()->colorForIdx(GameManager::get()->getPlayerColor()));
-            ship->setSecondColor(GameManager::get()->colorForIdx(GameManager::get()->getPlayerColor2()));
-            if (GameManager::get()->getPlayerGlow()) {
-                ship->setGlowOutline(GameManager::get()->colorForIdx(GameManager::get()->getPlayerGlowColor()));
+            if (m_fields->shipType == IconType::Ship) ship->updatePlayerFrame(GM->getPlayerShip(), IconType::Ship);
+            else ship->updatePlayerFrame(GM->getPlayerJetpack(), IconType::Jetpack);
+            ship->setColor(GM->colorForIdx(GM->getPlayerColor()));
+            ship->setSecondColor(GM->colorForIdx(GM->getPlayerColor2()));
+            if (GM->getPlayerGlow()) {
+                ship->setGlowOutline(GM->colorForIdx(GM->getPlayerGlowColor()));
             } else {
                 ship->disableGlowOutline();
             }
 
-            ball->updatePlayerFrame(GameManager::get()->getPlayerBall(), IconType::Ball);
-            ball->setColor(GameManager::get()->colorForIdx(GameManager::get()->getPlayerColor()));
-            ball->setSecondColor(GameManager::get()->colorForIdx(GameManager::get()->getPlayerColor2()));
-            if (GameManager::get()->getPlayerGlow()) {
-                ball->setGlowOutline(GameManager::get()->colorForIdx(GameManager::get()->getPlayerGlowColor()));
+            ball->updatePlayerFrame(GM->getPlayerBall(), IconType::Ball);
+            ball->setColor(GM->colorForIdx(GM->getPlayerColor()));
+            ball->setSecondColor(GM->colorForIdx(GM->getPlayerColor2()));
+            if (GM->getPlayerGlow()) {
+                ball->setGlowOutline(GM->colorForIdx(GM->getPlayerGlowColor()));
             } else {
                 ball->disableGlowOutline();
             }
 
-            ufo->updatePlayerFrame(GameManager::get()->getPlayerBird(), IconType::Ufo);
-            ufo->setColor(GameManager::get()->colorForIdx(GameManager::get()->getPlayerColor()));
-            ufo->setSecondColor(GameManager::get()->colorForIdx(GameManager::get()->getPlayerColor2()));
-            if (GameManager::get()->getPlayerGlow()) {
-                ufo->setGlowOutline(GameManager::get()->colorForIdx(GameManager::get()->getPlayerGlowColor()));
+            ufo->updatePlayerFrame(GM->getPlayerBird(), IconType::Ufo);
+            ufo->setColor(GM->colorForIdx(GM->getPlayerColor()));
+            ufo->setSecondColor(GM->colorForIdx(GM->getPlayerColor2()));
+            if (GM->getPlayerGlow()) {
+                ufo->setGlowOutline(GM->colorForIdx(GM->getPlayerGlowColor()));
             } else {
                 ufo->disableGlowOutline();
             }
 
-            wave->updatePlayerFrame(GameManager::get()->getPlayerDart(), IconType::Wave);
-            wave->setColor(GameManager::get()->colorForIdx(GameManager::get()->getPlayerColor()));
-            wave->setSecondColor(GameManager::get()->colorForIdx(GameManager::get()->getPlayerColor2()));
-            if (GameManager::get()->getPlayerGlow()) {
-                wave->setGlowOutline(GameManager::get()->colorForIdx(GameManager::get()->getPlayerGlowColor()));
+            wave->updatePlayerFrame(GM->getPlayerDart(), IconType::Wave);
+            wave->setColor(GM->colorForIdx(GM->getPlayerColor()));
+            wave->setSecondColor(GM->colorForIdx(GM->getPlayerColor2()));
+            if (GM->getPlayerGlow()) {
+                wave->setGlowOutline(GM->colorForIdx(GM->getPlayerGlowColor()));
             } else {
                 wave->disableGlowOutline();
             }
 
-            robot->updatePlayerFrame(GameManager::get()->getPlayerRobot(), IconType::Robot);
-            robot->setColor(GameManager::get()->colorForIdx(GameManager::get()->getPlayerColor()));
-            robot->setSecondColor(GameManager::get()->colorForIdx(GameManager::get()->getPlayerColor2()));
-            if (GameManager::get()->getPlayerGlow()) {
-                robot->setGlowOutline(GameManager::get()->colorForIdx(GameManager::get()->getPlayerGlowColor()));
+            robot->updatePlayerFrame(GM->getPlayerRobot(), IconType::Robot);
+            robot->setColor(GM->colorForIdx(GM->getPlayerColor()));
+            robot->setSecondColor(GM->colorForIdx(GM->getPlayerColor2()));
+            if (GM->getPlayerGlow()) {
+                robot->setGlowOutline(GM->colorForIdx(GM->getPlayerGlowColor()));
             } else {
                 robot->disableGlowOutline();
             }
 
-            spider->updatePlayerFrame(GameManager::get()->getPlayerSpider(), IconType::Spider);
-            spider->setColor(GameManager::get()->colorForIdx(GameManager::get()->getPlayerColor()));
-            spider->setSecondColor(GameManager::get()->colorForIdx(GameManager::get()->getPlayerColor2()));
-            if (GameManager::get()->getPlayerGlow()) {
-                spider->setGlowOutline(GameManager::get()->colorForIdx(GameManager::get()->getPlayerGlowColor()));
+            spider->updatePlayerFrame(GM->getPlayerSpider(), IconType::Spider);
+            spider->setColor(GM->colorForIdx(GM->getPlayerColor()));
+            spider->setSecondColor(GM->colorForIdx(GM->getPlayerColor2()));
+            if (GM->getPlayerGlow()) {
+                spider->setGlowOutline(GM->colorForIdx(GM->getPlayerGlowColor()));
             } else {
                 spider->disableGlowOutline();
             }
 
-            swing->updatePlayerFrame(GameManager::get()->getPlayerSwing(), IconType::Swing);
-            swing->setColor(GameManager::get()->colorForIdx(GameManager::get()->getPlayerColor()));
-            swing->setSecondColor(GameManager::get()->colorForIdx(GameManager::get()->getPlayerColor2()));
-            if (GameManager::get()->getPlayerGlow()) {
-                swing->setGlowOutline(GameManager::get()->colorForIdx(GameManager::get()->getPlayerGlowColor()));
+            swing->updatePlayerFrame(GM->getPlayerSwing(), IconType::Swing);
+            swing->setColor(GM->colorForIdx(GM->getPlayerColor()));
+            swing->setSecondColor(GM->colorForIdx(GM->getPlayerColor2()));
+            if (GM->getPlayerGlow()) {
+                swing->setGlowOutline(GM->colorForIdx(GM->getPlayerGlowColor()));
             } else {
                 swing->disableGlowOutline();
             }
@@ -146,73 +151,74 @@ class $modify(MyProfilePage, ProfilePage) {
             PlayerData::player2Selected = true;
 
             cube->updatePlayerFrame(PlayerData::player2Cube, IconType::Cube);
-            cube->setColor(GameManager::get()->colorForIdx(PlayerData::player2Color1));
-            cube->setSecondColor(GameManager::get()->colorForIdx(PlayerData::player2Color2));
+            cube->setColor(GM->colorForIdx(PlayerData::player2Color1));
+            cube->setSecondColor(GM->colorForIdx(PlayerData::player2Color2));
             if (PlayerData::player2Glow) {
-                cube->setGlowOutline(GameManager::get()->colorForIdx(PlayerData::player2ColorGlow));
+                cube->setGlowOutline(GM->colorForIdx(PlayerData::player2ColorGlow));
             } else {
                 cube->disableGlowOutline();
             }
 
-            ship->updatePlayerFrame(PlayerData::player2Ship, IconType::Ship);
-            ship->setColor(GameManager::get()->colorForIdx(PlayerData::player2Color1));
-            ship->setSecondColor(GameManager::get()->colorForIdx(PlayerData::player2Color2));
+            if (m_fields->shipType == IconType::Ship) ship->updatePlayerFrame(PlayerData::player2Ship, IconType::Ship);
+            else ship->updatePlayerFrame(PlayerData::player2Jetpack, IconType::Jetpack);
+            ship->setColor(GM->colorForIdx(PlayerData::player2Color1));
+            ship->setSecondColor(GM->colorForIdx(PlayerData::player2Color2));
             if (PlayerData::player2Glow) {
-                ship->setGlowOutline(GameManager::get()->colorForIdx(PlayerData::player2ColorGlow));
+                ship->setGlowOutline(GM->colorForIdx(PlayerData::player2ColorGlow));
             } else {
                 ship->disableGlowOutline();
             }
 
             ball->updatePlayerFrame(PlayerData::player2Roll, IconType::Ball);
-            ball->setColor(GameManager::get()->colorForIdx(PlayerData::player2Color1));
-            ball->setSecondColor(GameManager::get()->colorForIdx(PlayerData::player2Color2));
+            ball->setColor(GM->colorForIdx(PlayerData::player2Color1));
+            ball->setSecondColor(GM->colorForIdx(PlayerData::player2Color2));
             if (PlayerData::player2Glow) {
-                ball->setGlowOutline(GameManager::get()->colorForIdx(PlayerData::player2ColorGlow));
+                ball->setGlowOutline(GM->colorForIdx(PlayerData::player2ColorGlow));
             } else {
                 ball->disableGlowOutline();
             }
 
             ufo->updatePlayerFrame(PlayerData::player2Bird, IconType::Ufo);
-            ufo->setColor(GameManager::get()->colorForIdx(PlayerData::player2Color1));
-            ufo->setSecondColor(GameManager::get()->colorForIdx(PlayerData::player2Color2));
+            ufo->setColor(GM->colorForIdx(PlayerData::player2Color1));
+            ufo->setSecondColor(GM->colorForIdx(PlayerData::player2Color2));
             if (PlayerData::player2Glow) {
-                ufo->setGlowOutline(GameManager::get()->colorForIdx(PlayerData::player2ColorGlow));
+                ufo->setGlowOutline(GM->colorForIdx(PlayerData::player2ColorGlow));
             } else {
                 ufo->disableGlowOutline();
             }
 
             wave->updatePlayerFrame(PlayerData::player2Dart, IconType::Wave);
-            wave->setColor(GameManager::get()->colorForIdx(PlayerData::player2Color1));
-            wave->setSecondColor(GameManager::get()->colorForIdx(PlayerData::player2Color2));
+            wave->setColor(GM->colorForIdx(PlayerData::player2Color1));
+            wave->setSecondColor(GM->colorForIdx(PlayerData::player2Color2));
             if (PlayerData::player2Glow) {
-                wave->setGlowOutline(GameManager::get()->colorForIdx(PlayerData::player2ColorGlow));
+                wave->setGlowOutline(GM->colorForIdx(PlayerData::player2ColorGlow));
             } else {
                 wave->disableGlowOutline();
             }
 
             robot->updatePlayerFrame(PlayerData::player2Robot, IconType::Robot);
-            robot->setColor(GameManager::get()->colorForIdx(PlayerData::player2Color1));
-            robot->setSecondColor(GameManager::get()->colorForIdx(PlayerData::player2Color2));
+            robot->setColor(GM->colorForIdx(PlayerData::player2Color1));
+            robot->setSecondColor(GM->colorForIdx(PlayerData::player2Color2));
             if (PlayerData::player2Glow) {
-                robot->setGlowOutline(GameManager::get()->colorForIdx(PlayerData::player2ColorGlow));
+                robot->setGlowOutline(GM->colorForIdx(PlayerData::player2ColorGlow));
             } else {
                 robot->disableGlowOutline();
             }
 
             spider->updatePlayerFrame(PlayerData::player2Spider, IconType::Spider);
-            spider->setColor(GameManager::get()->colorForIdx(PlayerData::player2Color1));
-            spider->setSecondColor(GameManager::get()->colorForIdx(PlayerData::player2Color2));
+            spider->setColor(GM->colorForIdx(PlayerData::player2Color1));
+            spider->setSecondColor(GM->colorForIdx(PlayerData::player2Color2));
             if (PlayerData::player2Glow) {
-                spider->setGlowOutline(GameManager::get()->colorForIdx(PlayerData::player2ColorGlow));
+                spider->setGlowOutline(GM->colorForIdx(PlayerData::player2ColorGlow));
             } else {
                 spider->disableGlowOutline();
             }
 
             swing->updatePlayerFrame(PlayerData::player2Swing, IconType::Swing);
-            swing->setColor(GameManager::get()->colorForIdx(PlayerData::player2Color1));
-            swing->setSecondColor(GameManager::get()->colorForIdx(PlayerData::player2Color2));
+            swing->setColor(GM->colorForIdx(PlayerData::player2Color1));
+            swing->setSecondColor(GM->colorForIdx(PlayerData::player2Color2));
             if (PlayerData::player2Glow) {
-                swing->setGlowOutline(GameManager::get()->colorForIdx(PlayerData::player2ColorGlow));
+                swing->setGlowOutline(GM->colorForIdx(PlayerData::player2ColorGlow));
             } else {
                 swing->disableGlowOutline();
             }
@@ -230,19 +236,19 @@ class $modify(MyProfilePage, ProfilePage) {
     void loadPageFromUserInfo(GJUserScore* p0){
         ProfilePage::loadPageFromUserInfo(p0);
 
-        log::error("{} {}", ownProfile, m_fields->hasLoaded);
+        auto GM = GameManager::get();
 
         if (ownProfile) {
             if (auto menu = as<CCLayer*>(this->getChildren()->objectAtIndex(0))->getChildByID("player-menu")) {
                 auto ship = menu->getChildByID("player-ship");
 
-                auto myShipSprite = SimplePlayer::create(GameManager::get()->getPlayerShip());
+                auto myShipSprite = SimplePlayer::create(GM->getPlayerShip());
                 myShipSprite->setScale(0.95f);
-                myShipSprite->updatePlayerFrame(GameManager::get()->getPlayerShip(), IconType::Ship);
-                myShipSprite->setColor(GameManager::get()->colorForIdx(GameManager::get()->getPlayerColor()));
-                myShipSprite->setSecondColor(GameManager::get()->colorForIdx(GameManager::get()->getPlayerColor2()));
-                if (GameManager::get()->getPlayerGlow()) {
-                    myShipSprite->setGlowOutline(GameManager::get()->colorForIdx(GameManager::get()->getPlayerGlowColor()));
+                myShipSprite->updatePlayerFrame(GM->getPlayerShip(), IconType::Ship);
+                myShipSprite->setColor(GM->colorForIdx(GM->getPlayerColor()));
+                myShipSprite->setSecondColor(GM->colorForIdx(GM->getPlayerColor2()));
+                if (GM->getPlayerGlow()) {
+                    myShipSprite->setGlowOutline(GM->colorForIdx(GM->getPlayerGlowColor()));
                 }
 
                 auto myShip = CCMenuItemSpriteExtra::create(myShipSprite, this, menu_selector(MyProfilePage::onShipToggle));
