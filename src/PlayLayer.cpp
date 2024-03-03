@@ -48,14 +48,13 @@ class $modify(PlayLayer) {
         player2->setColor(GameManager::get()->colorForIdx(PlayerData::player2Color1));
         player2->setSecondColor(GameManager::get()->colorForIdx(PlayerData::player2Color2));
         
-        log::warn("{}", PlayerData::player2Glow);
+
         if (PlayerData::player2Glow) {
             player2->m_hasGlow = true;
             player2->m_glowColor = GameManager::get()->colorForIdx(PlayerData::player2ColorGlow);
         } else {
             player2->m_hasGlow = false;
         }
-        log::warn("{}", PlayerData::player2ColorGlow);
 
         player2->updateGlowColor();
         player2->updatePlayerGlow();
