@@ -2,10 +2,15 @@
 #include <Geode/loader/SettingEvent.hpp>
 
 $on_mod(Loaded) {
-    gd::string types[] = {"cube", "ship", "roll", "bird", "dart", "robot", "spider", "swing", "jetpack", "color1", "color2", "colorglow", "trail", "death", "shiptrail"};
+    gd::string types[] = {"cube", "ship", "roll", "bird", "dart", "robot", "spider", "swing", "jetpack", "trail", "death", "shiptrail"};
     for (auto t : types) 
         if (!Mod::get()->getSavedValue<int64_t>(t)) 
             Mod::get()->setSavedValue<int64_t>(t, 1);
+
+    gd::string colorTypes[] = {"color1", "color2", "colorglow"};
+    for (auto t : types) 
+        if (!Mod::get()->getSavedValue<int64_t>(t)) 
+            Mod::get()->setSavedValue<int64_t>(t, 0);
 
     PlayerData::player2Cube = Mod::get()->getSavedValue<int64_t>("cube");
     PlayerData::player2Ship = Mod::get()->getSavedValue<int64_t>("ship");
