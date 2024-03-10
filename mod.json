@@ -17,6 +17,13 @@
 			"importance": "required"
 		}
 	],
+	"incompatibilities": [
+		{
+			"id": "rooot.custom-gamemode-colors",
+			"version": ">=0.1.3",
+			"importance": "conflicting"
+		}
+	],
     "resources": {
 		"files": [
 			"./image.png"
