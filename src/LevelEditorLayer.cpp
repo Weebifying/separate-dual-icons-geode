@@ -11,58 +11,58 @@ class $modify(LevelEditorLayer) {
         PlayerObject* player2 = this->m_player2;
         if (player2->m_isShip) {
 
-            if (lastType != 1) {
+            if (m_fields->lastType != 1) {
                 if (player2->m_isPlatformer)
                     player2->updatePlayerJetpackFrame(PlayerData::player2Jetpack);
                 else
                     player2->updatePlayerShipFrame(PlayerData::player2Ship);
 
                 player2->updatePlayerFrame(PlayerData::player2Cube);
-                lastType = 1;
+                m_fields->lastType = 1;
             }
 
         } else if (player2->m_isBall) {
             
-            if (lastType != 2) {
+            if (m_fields->lastType != 2) {
                 player2->updatePlayerRollFrame(PlayerData::player2Roll);
-                lastType = 2;
+                m_fields->lastType = 2;
             }
 
         } else if (player2->m_isBird) {
 
-            if (lastType != 3) {
+            if (m_fields->lastType != 3) {
                 player2->updatePlayerBirdFrame(PlayerData::player2Bird);
                 player2->updatePlayerFrame(PlayerData::player2Cube);
-                lastType = 3;
+                m_fields->lastType = 3;
             }
 
         } else if (player2->m_isDart) {
 
-            if (lastType != 4) {
+            if (m_fields->lastType != 4) {
                 player2->updatePlayerDartFrame(PlayerData::player2Dart);
-                lastType = 4;
+                m_fields->lastType = 4;
             }
 
         } else if (player2->m_isRobot) {
 
-            if (lastType != 5) lastType = 5;
+            if (m_fields->lastType != 5) m_fields->lastType = 5;
 
         } else if (player2->m_isSpider) {
 
-            if (lastType != 6) lastType = 6;
+            if (m_fields->lastType != 6) m_fields->lastType = 6;
 
         } else if (player2->m_isSwing) {
 
-            if (lastType != 7) {
+            if (m_fields->lastType != 7) {
                 player2->updatePlayerSwingFrame(PlayerData::player2Swing);
-                lastType = 7;
+                m_fields->lastType = 7;
             }
 
         } else {
 
-            if (lastType != 0) {
+            if (m_fields->lastType != 0) {
                 player2->updatePlayerFrame(PlayerData::player2Cube);
-                lastType = 0;
+                m_fields->lastType = 0;
             }
 
         }
@@ -77,19 +77,22 @@ class $modify(LevelEditorLayer) {
         PlayerObject* player2 = this->m_player2;
 
         if (player2->m_isShip) {
-
+            if (player2->m_isPlatformer)
+                player2->updatePlayerJetpackFrame(PlayerData::player2Jetpack);
+            else
+                player2->updatePlayerShipFrame(PlayerData::player2Ship);
             m_fields->lastType = 1;
 
         } else if (player2->m_isBall) {
-
+            player2->updatePlayerRollFrame(PlayerData::player2Roll);
             m_fields->lastType = 2;
 
         } else if (player2->m_isBird) {
-
+            player2->updatePlayerBirdFrame(PlayerData::player2Bird);
             m_fields->lastType = 3;
 
         } else if (player2->m_isDart) {
-
+            player2->updatePlayerDartFrame(PlayerData::player2Dart);
             m_fields->lastType = 4;
 
         } else if (player2->m_isRobot) {
@@ -101,11 +104,12 @@ class $modify(LevelEditorLayer) {
             m_fields->lastType = 6;
 
         } else if (player2->m_isSwing) {
-
+            player2->updatePlayerSwingFrame(PlayerData::player2Swing);
             m_fields->lastType = 7;
 
         } else {
 
+            player2->updatePlayerFrame(PlayerData::player2Cube);
             m_fields->lastType = 0;
 
         }

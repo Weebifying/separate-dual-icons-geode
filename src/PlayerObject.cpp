@@ -29,59 +29,65 @@ class $modify(PlayerObject) {
     void setColor(ccColor3B const &color) {
         PlayerObject::setColor(color);
 
-        if (PlayLayer::get()) 
+        if (PlayLayer::get()) {
             if (this == PlayLayer::get()->m_player2)
                 PlayerObject::setColor(GameManager::get()->colorForIdx(PlayerData::player2Color1));
-        else if (LevelEditorLayer::get()) 
+        } else if (LevelEditorLayer::get()) {
             if (this == LevelEditorLayer::get()->m_player2)
                 PlayerObject::setColor(GameManager::get()->colorForIdx(PlayerData::player2Color1));
+        }
     }
 
     void setSecondColor(ccColor3B const &color) {
         PlayerObject::setSecondColor(color);
 
-        if (PlayLayer::get()) 
+        if (PlayLayer::get()) {
             if (this == PlayLayer::get()->m_player2)
                 PlayerObject::setSecondColor(GameManager::get()->colorForIdx(PlayerData::player2Color2));
-        else if (LevelEditorLayer::get()) 
+        } else if (LevelEditorLayer::get()) {
             if (this == LevelEditorLayer::get()->m_player2)
                 PlayerObject::setSecondColor(GameManager::get()->colorForIdx(PlayerData::player2Color2));
+        }
     }
 
     void updatePlayerFrame(int p0) {
         PlayerObject::updatePlayerFrame(p0);
         
         
-        if (PlayLayer::get())
+        if (PlayLayer::get()) {
             if (this == PlayLayer::get()->m_player2)
                 PlayerObject::updatePlayerFrame(PlayerData::player2Cube);
-        else if (LevelEditorLayer::get())
+        } else if (LevelEditorLayer::get()) {
             if (this == LevelEditorLayer::get()->m_player2)
                 PlayerObject::updatePlayerFrame(PlayerData::player2Cube);
+        }
     }
     
 	void updatePlayerShipFrame(int p0) {
         PlayerObject::updatePlayerShipFrame(p0);
         
         
-        if (PlayLayer::get()) 
+        if (PlayLayer::get()) {
             if (this == PlayLayer::get()->m_player2)
                 PlayerObject::updatePlayerShipFrame(PlayerData::player2Ship);
-        else if (LevelEditorLayer::get()) 
+        } else if (LevelEditorLayer::get()) {
             if (this == LevelEditorLayer::get()->m_player2)
                 PlayerObject::updatePlayerShipFrame(PlayerData::player2Ship);
+        }
+        
     }
 
     void updatePlayerRollFrame(int p0) {
         PlayerObject::updatePlayerRollFrame(p0);
         
         
-        if (PlayLayer::get()) 
+        if (PlayLayer::get()) {
             if (this == PlayLayer::get()->m_player2)
                 PlayerObject::updatePlayerRollFrame(PlayerData::player2Roll);
-        else if (LevelEditorLayer::get()) 
+        } else if (LevelEditorLayer::get()) {
             if (this == LevelEditorLayer::get()->m_player2)
                 PlayerObject::updatePlayerRollFrame(PlayerData::player2Roll);
+        }
         
     }
 
@@ -89,12 +95,13 @@ class $modify(PlayerObject) {
         PlayerObject::updatePlayerBirdFrame(p0);
         
         
-        if (PlayLayer::get()) 
+        if (PlayLayer::get()) {
             if (this == PlayLayer::get()->m_player2)
                 PlayerObject::updatePlayerBirdFrame(PlayerData::player2Bird);
-        else if (LevelEditorLayer::get()) 
+        } else if (LevelEditorLayer::get()) {
             if (this == LevelEditorLayer::get()->m_player2)
                 PlayerObject::updatePlayerBirdFrame(PlayerData::player2Bird);
+        }
         
     }
 
@@ -102,12 +109,13 @@ class $modify(PlayerObject) {
         PlayerObject::updatePlayerDartFrame(p0);
         
         
-        if (PlayLayer::get()) 
+        if (PlayLayer::get()) {
             if (this == PlayLayer::get()->m_player2)
                 PlayerObject::updatePlayerDartFrame(PlayerData::player2Dart);
-        else if (LevelEditorLayer::get()) 
+        } else if (LevelEditorLayer::get()) {
             if (this == LevelEditorLayer::get()->m_player2)
                 PlayerObject::updatePlayerDartFrame(PlayerData::player2Dart);
+        }
         
     }
 
@@ -115,12 +123,13 @@ class $modify(PlayerObject) {
         PlayerObject::updatePlayerSwingFrame(p0);
         
         
-        if (PlayLayer::get()) 
+        if (PlayLayer::get()) {
             if (this == PlayLayer::get()->m_player2)
                 PlayerObject::updatePlayerSwingFrame(PlayerData::player2Swing);
-        else if (LevelEditorLayer::get()) 
+        } else if (LevelEditorLayer::get()) {
             if (this == LevelEditorLayer::get()->m_player2)
                 PlayerObject::updatePlayerSwingFrame(PlayerData::player2Swing);
+        }
 
     }
 
@@ -128,12 +137,13 @@ class $modify(PlayerObject) {
         PlayerObject::updatePlayerJetpackFrame(p0);
         
         
-        if (PlayLayer::get()) 
+        if (PlayLayer::get()) {
             if (this == PlayLayer::get()->m_player2)
                 PlayerObject::updatePlayerJetpackFrame(PlayerData::player2Jetpack);
-        else if (LevelEditorLayer::get()) 
+        } else if (LevelEditorLayer::get()) {
             if (this == LevelEditorLayer::get()->m_player2)
-                PlayerObject::updatePlayerSwingFrame(PlayerData::player2Swing);
+                PlayerObject::updatePlayerSwingFrame(PlayerData::player2Jetpack);
+        }
 
     }
 };
