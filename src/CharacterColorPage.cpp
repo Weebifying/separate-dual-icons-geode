@@ -209,51 +209,66 @@ class $modify(CharacterColorPage) {
 
             switch (m_fields->colorMode) {
                 case 0:
-                    cursor = layer->getChildByID("cursor-col1");
-                    cursor->setPosition({
-                        menu->getChildByID(std::to_string(sender->getTag()))->getPositionX() + menu->getPositionX(),
-                        menu->getChildByID(std::to_string(sender->getTag()))->getPositionY() + menu->getPositionY()
-                    });
+                    if (PlayerData::player2Color1 != sender->getTag()) {
+                        cursor = layer->getChildByID("cursor-col1");
+                        cursor->setPosition({
+                            menu->getChildByID(std::to_string(sender->getTag()))->getPositionX() + menu->getPositionX(),
+                            menu->getChildByID(std::to_string(sender->getTag()))->getPositionY() + menu->getPositionY()
+                        });
 
-                    for (auto* icon : icons) {
-                        icon->setColor(GM->colorForIdx(sender->getTag()));
+                        for (auto* icon : icons) {
+                            icon->setColor(GM->colorForIdx(sender->getTag()));
+                        }
+                        player2->setColor(GM->colorForIdx(sender->getTag()));
+
+                        Mod::get()->setSavedValue<int64_t>("color1", sender->getTag());
+                        PlayerData::player2Color1 = sender->getTag();
+                    } else {
+                        ItemInfoPopup::create(sender->getTag(), UnlockType::Col1)->show();
+                        return;
                     }
-                    player2->setColor(GM->colorForIdx(sender->getTag()));
-
-                    Mod::get()->setSavedValue<int64_t>("color1", sender->getTag());
-                    PlayerData::player2Color1 = sender->getTag();
                     break;
                 case 1:
-                    cursor = layer->getChildByID("cursor-col2");
-                    cursor->setPosition({
-                        menu->getChildByID(std::to_string(sender->getTag()))->getPositionX() + menu->getPositionX(),
-                        menu->getChildByID(std::to_string(sender->getTag()))->getPositionY() + menu->getPositionY()
-                    });
+                    if (PlayerData::player2Color2 != sender->getTag()) {
+                        cursor = layer->getChildByID("cursor-col2");
+                        cursor->setPosition({
+                            menu->getChildByID(std::to_string(sender->getTag()))->getPositionX() + menu->getPositionX(),
+                            menu->getChildByID(std::to_string(sender->getTag()))->getPositionY() + menu->getPositionY()
+                        });
 
-                    for (auto* icon : icons) {
-                        icon->setSecondColor(GM->colorForIdx(sender->getTag()));
+                        for (auto* icon : icons) {
+                            icon->setSecondColor(GM->colorForIdx(sender->getTag()));
+                        }
+                        player2->setSecondColor(GM->colorForIdx(sender->getTag()));
+
+                        Mod::get()->setSavedValue<int64_t>("color2", sender->getTag());
+                        PlayerData::player2Color2 = sender->getTag();
+                    } else {
+                        ItemInfoPopup::create(sender->getTag(), UnlockType::Col2)->show();
+                        return;
                     }
-                    player2->setSecondColor(GM->colorForIdx(sender->getTag()));
-
-                    Mod::get()->setSavedValue<int64_t>("color2", sender->getTag());
-                    PlayerData::player2Color2 = sender->getTag();
                     break;
                 case 2:
-                    cursor = layer->getChildByID("cursor-glow");
-                    cursor->setPosition({
-                        menu->getChildByID(std::to_string(sender->getTag()))->getPositionX() + menu->getPositionX(),
-                        menu->getChildByID(std::to_string(sender->getTag()))->getPositionY() + menu->getPositionY()
-                    });
+                    if (PlayerData::player2ColorGlow != sender->getTag()) {
+                        cursor = layer->getChildByID("cursor-glow");
+                        cursor->setPosition({
+                            menu->getChildByID(std::to_string(sender->getTag()))->getPositionX() + menu->getPositionX(),
+                            menu->getChildByID(std::to_string(sender->getTag()))->getPositionY() + menu->getPositionY()
+                        });
 
-                    if (PlayerData::player2Glow) {
-                        for (auto* icon : icons) {
-                            icon->setGlowOutline(GM->colorForIdx(sender->getTag()));
+                        if (PlayerData::player2Glow) {
+                            for (auto* icon : icons) {
+                                icon->setGlowOutline(GM->colorForIdx(sender->getTag()));
+                            }
+                            player2->setGlowOutline(GM->colorForIdx(sender->getTag()));
                         }
-                        player2->setGlowOutline(GM->colorForIdx(sender->getTag()));
-                    }
 
-                    Mod::get()->setSavedValue<int64_t>("colorglow", sender->getTag());
-                    PlayerData::player2ColorGlow = sender->getTag();
+                        Mod::get()->setSavedValue<int64_t>("colorglow", sender->getTag());
+                        PlayerData::player2ColorGlow = sender->getTag();
+                    } else {
+                        ItemInfoPopup::create(sender->getTag(), UnlockType::Col2)->show();
+                        return;
+                    }
                     break;
                 default:
                     log::error("what did you do lmao");
