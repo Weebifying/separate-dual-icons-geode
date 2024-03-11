@@ -194,6 +194,7 @@ class $modify(MyGarageLayer, GJGarageLayer) {
         auto winSize = CCDirector::get()->getWinSize();
 
         as<CCSprite*>(this->getChildByID("cursor-1"))->setColor({255, 255, 0});
+        as<CCSprite*>(this->getChildByID("cursor-2"))->setColor({255, 255, 0});
 
         SimplePlayer* player1 = as<SimplePlayer*>(this->getChildByID("player-icon"));
         player1->setPositionX(player1->getPositionX() - winSize.width/12);
@@ -394,9 +395,14 @@ class $modify(MyGarageLayer, GJGarageLayer) {
 
     void onSelect(CCObject* sender) {
         auto GM = GameManager::get();
-        
+
         int n = sender->getTag();
-        if (PlayerData::player2Selected && GM->isIconUnlocked(n, m_fields->type)) {
+        bool hehe = GM->isIconUnlocked(n, m_fields->type);
+        if (m_fields->type == IconType::Special) 
+            hehe = true;
+        
+        // same death effect cuz not working rn :(
+        if (PlayerData::player2Selected &&  hehe  && m_fields->type != IconType::DeathEffect) {
             auto player2 = as<SimplePlayer*>(this->getChildByID("player2-icon"));
             auto winSize = CCDirector::get()->getWinSize();
             bool isShipTrail = false;
@@ -473,19 +479,29 @@ class $modify(MyGarageLayer, GJGarageLayer) {
                     break;
                 case IconType::Special:
                     if (as<CCNode*>(sender)->getParent()->getChildrenCount() == 7) {
-                        Mod::get()->setSavedValue<int64_t>("trail", n);
-                        PlayerData::player2Trail = n;
+                        if (GM->isIconUnlocked(n, IconType::Special)) {
+                            Mod::get()->setSavedValue<int64_t>("trail", n);
+                            PlayerData::player2Trail = n;
+                        } else {
+                            GJGarageLayer::showUnlockPopup(n, UnlockType::Streak);
+                            return;
+                        }
                     } else if (as<CCNode*>(sender)->getParent()->getChildrenCount() == 6) {
-                        Mod::get()->setSavedValue<int64_t>("shiptrail", n);
-                        PlayerData::player2ShipTrail = n;
-                        isShipTrail = true;
+                        if (GM->isIconUnlocked(n, IconType::ShipFire)) {
+                            Mod::get()->setSavedValue<int64_t>("shiptrail", n);
+                            PlayerData::player2ShipTrail = n;
+                            isShipTrail = true;
+                        } else {
+                            GJGarageLayer::showUnlockPopup(n, UnlockType::ShipFire);
+                            return;
+                        }
                     }
                     break;
-                case IconType::DeathEffect:
-                    GM->setPlayerDeathEffect(n);
-                    Mod::get()->setSavedValue<int64_t>("death", n);
-                    PlayerData::player2Death = n;
-                    break;
+                // case IconType::DeathEffect:
+                //     GM->setPlayerDeathEffect(n);
+                //     Mod::get()->setSavedValue<int64_t>("death", n);
+                //     PlayerData::player2Death = n;
+                //     break;
                 default:
                     log::error("what the hell lmao");
                     break;
@@ -502,13 +518,6 @@ class $modify(MyGarageLayer, GJGarageLayer) {
 
         } else {
             GJGarageLayer::onSelect(sender);
-
-            // same death effect cuz not working rn :(
-            if (m_fields->type == IconType::DeathEffect) {
-                Mod::get()->setSavedValue<int64_t>("death", n);
-                PlayerData::player2Death = n;
-            }
-
         }
     }
 };
