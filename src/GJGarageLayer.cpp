@@ -415,22 +415,14 @@ class $modify(MyGarageLayer, GJGarageLayer) {
 
             switch (m_fields->type) {
                 case IconType::Cube:
-                        log::warn("step -1");
                     if (PlayerData::lastType != 0 || PlayerData::player2Cube != n) {
-                        log::warn("step 0");
                         Mod::get()->setSavedValue<int64_t>("cube", n);
-                        log::warn("step 1");
                         Mod::get()->setSavedValue<int64_t>("lasttype", 0);
-                        log::warn("step 2");
                         PlayerData::lastType = 0;
-                        log::warn("step 3");
                         PlayerData::player2Cube = n;
-                        log::warn("step 4");
                         player2->setScale(1.6f);
                     } else {
-                        log::warn("step balls");
                         GJGarageLayer::showUnlockPopup(n, UnlockType::Cube);
-                        log::warn("step balls +1");
                         return;
                     }
                     break;
