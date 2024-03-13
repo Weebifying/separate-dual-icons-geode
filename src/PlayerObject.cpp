@@ -3,6 +3,7 @@
 
 
 class $modify(PlayerObject) {
+    bool isMini = false;
 
     void setupStreak() {
         // thanks alphalaneous for the fucking genius code
@@ -150,16 +151,21 @@ class $modify(PlayerObject) {
     // void togglePlayerScale(bool p0, bool p1) {
     //     PlayerObject::togglePlayerScale(p0, p1);
         
+    //     isMini = p0;
     //     if (p0) {
     //         if (PlayLayer::get()) {
     //             if (this == PlayLayer::get()->m_player2) {
-    //                 PlayerObject::updatePlayerFrame(0);
-    //                 PlayerObject::updatePlayerRollFrame(0);
+    //                 if (this->m_isBall)
+    //                     PlayerObject::updatePlayerRollFrame(0);
+    //                 else
+    //                     PlayerObject::updatePlayerFrame(0);
     //             }
     //         } else if (LevelEditorLayer::get()) {
     //             if (this == LevelEditorLayer::get()->m_player2)
-    //                 PlayerObject::updatePlayerFrame(0);
-    //                 PlayerObject::updatePlayerRollFrame(0);
+    //                 if (this->m_isBall)
+    //                     PlayerObject::updatePlayerRollFrame(0);
+    //                 else
+    //                     PlayerObject::updatePlayerFrame(0);
     //         }   
     //     }
     // }
