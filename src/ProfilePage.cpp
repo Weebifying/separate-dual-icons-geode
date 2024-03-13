@@ -1,15 +1,6 @@
 #include "PlayerData.hpp"
 #include <Geode/modify/ProfilePage.hpp>
-#include <Geode/modify/MenuLayer.hpp>
 
-bool ownProfile = false;
-
-class $modify(MenuLayer) {
-    void onMyProfile(cocos2d::CCObject* sender) {
-        ownProfile = true;
-        MenuLayer::onMyProfile(sender);
-    }
-};
 
 class $modify(MyProfilePage, ProfilePage) {
 
@@ -225,20 +216,13 @@ class $modify(MyProfilePage, ProfilePage) {
         }
     };
 
-    bool init(int accountID, bool myProfile) {
-        if (!ProfilePage::init(accountID, myProfile)) return false;
-        ownProfile = myProfile;
-        PlayerData::player2Selected = false;
-
-        return true;
-    }
-
     void loadPageFromUserInfo(GJUserScore* p0){
         ProfilePage::loadPageFromUserInfo(p0);
+        PlayerData::player2Selected = false;
 
         auto GM = GameManager::get();
 
-        if (ownProfile) {
+        if (this->m_ownProfile) {
             if (auto menu = as<CCLayer*>(this->getChildren()->objectAtIndex(0))->getChildByID("player-menu")) {
                 auto ship = menu->getChildByID("player-ship");
 
@@ -262,7 +246,7 @@ class $modify(MyProfilePage, ProfilePage) {
             }
         }
         
-        if (ownProfile && !m_fields->hasLoaded) {
+        if (this->m_ownProfile && !m_fields->hasLoaded) {
             
             m_fields->hasLoaded = true;
             auto layer = as<CCLayer*>(this->getChildren()->objectAtIndex(0));

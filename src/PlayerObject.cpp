@@ -142,8 +142,25 @@ class $modify(PlayerObject) {
                 PlayerObject::updatePlayerJetpackFrame(PlayerData::player2Jetpack);
         } else if (LevelEditorLayer::get()) {
             if (this == LevelEditorLayer::get()->m_player2)
-                PlayerObject::updatePlayerSwingFrame(PlayerData::player2Jetpack);
-        }
+                PlayerObject::updatePlayerJetpackFrame(PlayerData::player2Jetpack);
+        }   
 
     }
+
+    // void togglePlayerScale(bool p0, bool p1) {
+    //     PlayerObject::togglePlayerScale(p0, p1);
+        
+    //     if (p0) {
+    //         if (PlayLayer::get()) {
+    //             if (this == PlayLayer::get()->m_player2) {
+    //                 PlayerObject::updatePlayerFrame(0);
+    //                 PlayerObject::updatePlayerRollFrame(0);
+    //             }
+    //         } else if (LevelEditorLayer::get()) {
+    //             if (this == LevelEditorLayer::get()->m_player2)
+    //                 PlayerObject::updatePlayerFrame(0);
+    //                 PlayerObject::updatePlayerRollFrame(0);
+    //         }   
+    //     }
+    // }
 };
