@@ -35,38 +35,38 @@ class $modify(MyGarageLayer, GJGarageLayer) {
 
             switch (m_fields->type) {
                 case IconType::Cube:
-                    tag = PlayerData::player2Cube;
+                    tag = Mod::get()->getSavedValue<int64_t>("cube", 1);
                     break;
                 case IconType::Ship:
-                    tag = PlayerData::player2Ship;
+                    tag = Mod::get()->getSavedValue<int64_t>("ship", 1);
                     break;
                 case IconType::Ball:
-                    tag = PlayerData::player2Roll;
+                    tag = Mod::get()->getSavedValue<int64_t>("roll", 1);
                     break;
                 case IconType::Ufo:
-                    tag = PlayerData::player2Bird;
+                    tag = Mod::get()->getSavedValue<int64_t>("bird", 1);
                     break;
                 case IconType::Wave:
-                    tag = PlayerData::player2Dart;
+                    tag = Mod::get()->getSavedValue<int64_t>("dart", 1);
                     break;
                 case IconType::Robot:
-                    tag = PlayerData::player2Robot;
+                    tag = Mod::get()->getSavedValue<int64_t>("robot", 1);
                     break;
                 case IconType::Spider:
-                    tag = PlayerData::player2Spider;
+                    tag = Mod::get()->getSavedValue<int64_t>("spider", 1);
                     break;
                 case IconType::Swing:
-                    tag = PlayerData::player2Swing;
+                    tag = Mod::get()->getSavedValue<int64_t>("swing", 1);
                     break;
                 case IconType::Jetpack:
-                    tag = PlayerData::player2Jetpack;
+                    tag = Mod::get()->getSavedValue<int64_t>("jetpack", 1);
                     break;
                 case IconType::Special:
-                    tag = PlayerData::player2Trail;
-                    tag2 = PlayerData::player2ShipTrail;
+                    tag = Mod::get()->getSavedValue<int64_t>("trail", 1);
+                    tag2 = Mod::get()->getSavedValue<int64_t>("shiptrail", 1);
                     break;
                 case IconType::DeathEffect:
-                    tag = PlayerData::player2Death;
+                    tag = Mod::get()->getSavedValue<int64_t>("death", 1);
                     break;
                 default:
                     break;
@@ -205,42 +205,42 @@ class $modify(MyGarageLayer, GJGarageLayer) {
         player2->setPosition(player1->getPosition());
         player2->setPositionX(player2->getPositionX() + winSize.width/6);
 
-        player2->setColor(GM->colorForIdx(PlayerData::player2Color1));
-        player2->setSecondColor(GM->colorForIdx(PlayerData::player2Color2));
+        player2->setColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color1", 0)));
+        player2->setSecondColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color2", 0)));
 
-        if (PlayerData::player2Glow) {
-            player2->setGlowOutline(GM->colorForIdx(PlayerData::player2ColorGlow));
+        if (Mod::get()->getSavedValue<bool>("glow", false)) {
+            player2->setGlowOutline(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("colorglow", 0)));
         } else {
             player2->disableGlowOutline();
         }
 
-        switch (PlayerData::lastType) {
+        switch (Mod::get()->getSavedValue<int64_t>("lasttype", 0)) {
             case 0:
-                player2->updatePlayerFrame(PlayerData::player2Cube, IconType::Cube);
+                player2->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("cube", 1), IconType::Cube);
                 break;
             case 1:
-                player2->updatePlayerFrame(PlayerData::player2Ship, IconType::Ship);
+                player2->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("ship", 1), IconType::Ship);
                 break;
             case 2:
-                player2->updatePlayerFrame(PlayerData::player2Roll, IconType::Ball);
+                player2->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("roll", 1), IconType::Ball);
                 break;
             case 3:
-                player2->updatePlayerFrame(PlayerData::player2Bird, IconType::Ufo);
+                player2->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("bird", 1), IconType::Ufo);
                 break;
             case 4:
-                player2->updatePlayerFrame(PlayerData::player2Dart, IconType::Wave);
+                player2->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("dart", 1), IconType::Wave);
                 break;
             case 5:
-                player2->updatePlayerFrame(PlayerData::player2Robot, IconType::Robot);
+                player2->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("robot", 1), IconType::Robot);
                 break;
             case 6:
-                player2->updatePlayerFrame(PlayerData::player2Spider, IconType::Spider);
+                player2->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("spider", 1), IconType::Spider);
                 break;
             case 7:
-                player2->updatePlayerFrame(PlayerData::player2Swing, IconType::Swing);
+                player2->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("swing", 1), IconType::Swing);
                 break;
             case 8:
-                player2->updatePlayerFrame(PlayerData::player2Jetpack, IconType::Jetpack);
+                player2->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("jetpack", 1), IconType::Jetpack);
                 break;
         }
 
@@ -323,38 +323,38 @@ class $modify(MyGarageLayer, GJGarageLayer) {
 
             switch (m_fields->type) {
                 case IconType::Cube:
-                    tag = PlayerData::player2Cube;
+                    tag = Mod::get()->getSavedValue<int64_t>("cube", 1);
                     break;
                 case IconType::Ship:
-                    tag = PlayerData::player2Ship;
+                    tag = Mod::get()->getSavedValue<int64_t>("ship", 1);
                     break;
                 case IconType::Ball:
-                    tag = PlayerData::player2Roll;
+                    tag = Mod::get()->getSavedValue<int64_t>("roll", 1);
                     break;
                 case IconType::Ufo:
-                    tag = PlayerData::player2Bird;
+                    tag = Mod::get()->getSavedValue<int64_t>("bird", 1);
                     break;
                 case IconType::Wave:
-                    tag = PlayerData::player2Dart;
+                    tag = Mod::get()->getSavedValue<int64_t>("dart", 1);
                     break;
                 case IconType::Robot:
-                    tag = PlayerData::player2Robot;
+                    tag = Mod::get()->getSavedValue<int64_t>("robot", 1);
                     break;
                 case IconType::Spider:
-                    tag = PlayerData::player2Spider;
+                    tag = Mod::get()->getSavedValue<int64_t>("spider", 1);
                     break;
                 case IconType::Swing:
-                    tag = PlayerData::player2Swing;
+                    tag = Mod::get()->getSavedValue<int64_t>("swing", 1);
                     break;
                 case IconType::Jetpack:
-                    tag = PlayerData::player2Jetpack;
+                    tag = Mod::get()->getSavedValue<int64_t>("jetpack", 1);
                     break;
                 case IconType::Special:
-                    tag = PlayerData::player2Trail;
-                    tag2 = PlayerData::player2ShipTrail;
+                    tag = Mod::get()->getSavedValue<int64_t>("trail", 1);
+                    tag2 = Mod::get()->getSavedValue<int64_t>("shiptrail", 1);
                     break;
                 case IconType::DeathEffect:
-                    tag = PlayerData::player2Death;
+                    tag = Mod::get()->getSavedValue<int64_t>("death", 1);
                     break;
                 default:
                     break;
@@ -415,11 +415,9 @@ class $modify(MyGarageLayer, GJGarageLayer) {
 
             switch (m_fields->type) {
                 case IconType::Cube:
-                    if (PlayerData::lastType != 0 || PlayerData::player2Cube != n) {
+                    if (Mod::get()->getSavedValue<int64_t>("lasttype", 0) != 0 || Mod::get()->getSavedValue<int64_t>("cube", 1) != n) {
                         Mod::get()->setSavedValue<int64_t>("cube", n);
                         Mod::get()->setSavedValue<int64_t>("lasttype", 0);
-                        PlayerData::lastType = 0;
-                        PlayerData::player2Cube = n;
                         player2->setScale(1.6f);
                     } else {
                         GJGarageLayer::showUnlockPopup(n, UnlockType::Cube);
@@ -427,11 +425,9 @@ class $modify(MyGarageLayer, GJGarageLayer) {
                     }
                     break;
                 case IconType::Ship:
-                    if (PlayerData::lastType != 1 || PlayerData::player2Ship != n) {
+                    if (Mod::get()->getSavedValue<int64_t>("lasttype", 0) != 1 || Mod::get()->getSavedValue<int64_t>("ship", 1) != n) {
                         Mod::get()->setSavedValue<int64_t>("ship", n);
                         Mod::get()->setSavedValue<int64_t>("lasttype", 1);
-                        PlayerData::lastType = 1;
-                        PlayerData::player2Ship = n;
                         player2->setScale(1.6f);
                     } else {
                         GJGarageLayer::showUnlockPopup(n, UnlockType::Ship);
@@ -439,11 +435,9 @@ class $modify(MyGarageLayer, GJGarageLayer) {
                     }
                     break;
                 case IconType::Ball:
-                    if (PlayerData::lastType != 2 || PlayerData::player2Roll != n) {
+                    if (Mod::get()->getSavedValue<int64_t>("lasttype", 0) != 2 || Mod::get()->getSavedValue<int64_t>("roll", 1) != n) {
                         Mod::get()->setSavedValue<int64_t>("roll", n);
                         Mod::get()->setSavedValue<int64_t>("lasttype", 2);
-                        PlayerData::lastType = 2;
-                        PlayerData::player2Roll = n;
                         player2->setScale(1.6f);
                     } else {
                         GJGarageLayer::showUnlockPopup(n, UnlockType::Ball);
@@ -451,11 +445,9 @@ class $modify(MyGarageLayer, GJGarageLayer) {
                     }
                     break;
                 case IconType::Ufo:
-                    if (PlayerData::lastType != 3 || PlayerData::player2Bird != n) {
+                    if (Mod::get()->getSavedValue<int64_t>("lasttype", 0) != 3 || Mod::get()->getSavedValue<int64_t>("bird", 1) != n) {
                         Mod::get()->setSavedValue<int64_t>("bird", n);
                         Mod::get()->setSavedValue<int64_t>("lasttype", 3);
-                        PlayerData::lastType = 3;
-                        PlayerData::player2Bird = n;
                         player2->setScale(1.6f);
                     } else {
                         GJGarageLayer::showUnlockPopup(n, UnlockType::Bird);
@@ -463,11 +455,9 @@ class $modify(MyGarageLayer, GJGarageLayer) {
                     }
                     break;
                 case IconType::Wave:
-                    if (PlayerData::lastType != 4 || PlayerData::player2Dart != n) {
+                    if (Mod::get()->getSavedValue<int64_t>("lasttype", 0) != 4 || Mod::get()->getSavedValue<int64_t>("dart", 1) != n) {
                         Mod::get()->setSavedValue<int64_t>("dart", n);
                         Mod::get()->setSavedValue<int64_t>("lasttype", 4);
-                        PlayerData::lastType = 4;
-                        PlayerData::player2Dart = n;
                         player2->setScale(1.6f);
                     } else {
                         GJGarageLayer::showUnlockPopup(n, UnlockType::Dart);
@@ -475,11 +465,9 @@ class $modify(MyGarageLayer, GJGarageLayer) {
                     }
                     break;
                 case IconType::Robot:
-                    if (PlayerData::lastType != 5 || PlayerData::player2Robot != n) {
+                    if (Mod::get()->getSavedValue<int64_t>("lasttype", 0) != 5 || Mod::get()->getSavedValue<int64_t>("robot", 1) != n) {
                         Mod::get()->setSavedValue<int64_t>("robot", n);
                         Mod::get()->setSavedValue<int64_t>("lasttype", 5);
-                        PlayerData::lastType = 5;
-                        PlayerData::player2Robot = n;
                         player2->setScale(1.6f);
                     } else {
                         GJGarageLayer::showUnlockPopup(n, UnlockType::Robot);
@@ -487,11 +475,9 @@ class $modify(MyGarageLayer, GJGarageLayer) {
                     }
                     break;
                 case IconType::Spider:
-                    if (PlayerData::lastType != 6 || PlayerData::player2Spider != n) {
+                    if (Mod::get()->getSavedValue<int64_t>("lasttype", 0) != 6 || Mod::get()->getSavedValue<int64_t>("spider", 1) != n) {
                         Mod::get()->setSavedValue<int64_t>("spider", n);
                         Mod::get()->setSavedValue<int64_t>("lasttype", 6);
-                        PlayerData::lastType = 6;
-                        PlayerData::player2Spider = n;
                         player2->setScale(1.6f);
                     } else {
                         GJGarageLayer::showUnlockPopup(n, UnlockType::Spider);
@@ -499,11 +485,9 @@ class $modify(MyGarageLayer, GJGarageLayer) {
                     }
                     break;
                 case IconType::Swing:
-                    if (PlayerData::lastType != 7 || PlayerData::player2Swing != n) {
+                    if (Mod::get()->getSavedValue<int64_t>("lasttype", 0) != 7 || Mod::get()->getSavedValue<int64_t>("swing", 1) != n) {
                         Mod::get()->setSavedValue<int64_t>("swing", n);
                         Mod::get()->setSavedValue<int64_t>("lasttype", 7);
-                        PlayerData::lastType = 7;
-                        PlayerData::player2Swing = n;
                         player2->setScale(1.6f);
                     } else {
                         GJGarageLayer::showUnlockPopup(n, UnlockType::Swing);
@@ -511,11 +495,9 @@ class $modify(MyGarageLayer, GJGarageLayer) {
                     }
                     break;
                 case IconType::Jetpack:
-                    if (PlayerData::lastType != 8 || PlayerData::player2Jetpack != n) {
+                    if (Mod::get()->getSavedValue<int64_t>("lasttype", 0) != 8 || Mod::get()->getSavedValue<int64_t>("jetpack", 1) != n) {
                         Mod::get()->setSavedValue<int64_t>("jetpack", n);
                         Mod::get()->setSavedValue<int64_t>("lasttype", 8);
-                        PlayerData::lastType = 8;
-                        PlayerData::player2Jetpack = n;
                         player2->setScale(1.5f);
                     } else {
                         GJGarageLayer::showUnlockPopup(n, UnlockType::Jetpack);
@@ -524,22 +506,18 @@ class $modify(MyGarageLayer, GJGarageLayer) {
                     break;
                 case IconType::Special:
                     if (as<CCNode*>(sender)->getParent()->getChildrenCount() == 7) {
-                        if (GM->isIconUnlocked(n, IconType::Special) && (PlayerData::lastType != 99 || PlayerData::player2Trail != n)) {
+                        if (GM->isIconUnlocked(n, IconType::Special) && (Mod::get()->getSavedValue<int64_t>("lasttype", 0) != 99 || Mod::get()->getSavedValue<int64_t>("trail", 1) != n)) {
                             Mod::get()->setSavedValue<int64_t>("trail", n);
                             Mod::get()->setSavedValue<int64_t>("lasttype", 99);
-                            PlayerData::lastType = 99;
-                            PlayerData::player2Trail = n;
-                        } else {
+                            } else {
                             GJGarageLayer::showUnlockPopup(n, UnlockType::Streak);
                             return; 
                         }
                     } else if (as<CCNode*>(sender)->getParent()->getChildrenCount() == 6) {
-                        if (GM->isIconUnlocked(n, IconType::ShipFire) && (PlayerData::lastType != 101 || PlayerData::player2ShipTrail != n)) {
+                        if (GM->isIconUnlocked(n, IconType::ShipFire) && (Mod::get()->getSavedValue<int64_t>("lasttype", 0) != 101 || Mod::get()->getSavedValue<int64_t>("shiptrail", 1) != n)) {
                             Mod::get()->setSavedValue<int64_t>("shiptrail", n);
                             Mod::get()->setSavedValue<int64_t>("lasttype", 101);
-                            PlayerData::lastType = 101;
-                            PlayerData::player2ShipTrail = n;
-                            isShipTrail = true;
+                                isShipTrail = true;
                         } else {
                             GJGarageLayer::showUnlockPopup(n, UnlockType::ShipFire);
                             return;
@@ -549,7 +527,6 @@ class $modify(MyGarageLayer, GJGarageLayer) {
                 // case IconType::DeathEffect:
                 //     GM->setPlayerDeathEffect(n);
                 //     Mod::get()->setSavedValue<int64_t>("death", n);
-                //     PlayerData::player2Death = n;
                 //     break;
                 default:
                     log::error("what the hell lmao");

@@ -20,12 +20,12 @@ class $modify(MyProfilePage, ProfilePage) {
             switch (m_fields->shipType) {
                 case IconType::Ship:
                     m_fields->shipType = IconType::Jetpack;
-                    ship->updatePlayerFrame(PlayerData::player2Jetpack, m_fields->shipType);
+                    ship->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("jetpack", 1), m_fields->shipType);
                     ship->setScale(0.9f);
                     break;
                 case IconType::Jetpack:
                     m_fields->shipType = IconType::Ship;
-                    ship->updatePlayerFrame(PlayerData::player2Ship, m_fields->shipType);
+                    ship->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("ship", 1), m_fields->shipType);
                     ship->setScale(0.95f);
                     break;
             }
@@ -141,75 +141,75 @@ class $modify(MyProfilePage, ProfilePage) {
         } else {
             PlayerData::player2Selected = true;
 
-            cube->updatePlayerFrame(PlayerData::player2Cube, IconType::Cube);
-            cube->setColor(GM->colorForIdx(PlayerData::player2Color1));
-            cube->setSecondColor(GM->colorForIdx(PlayerData::player2Color2));
-            if (PlayerData::player2Glow) {
-                cube->setGlowOutline(GM->colorForIdx(PlayerData::player2ColorGlow));
+            cube->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("cube", 1), IconType::Cube);
+            cube->setColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color1", 0)));
+            cube->setSecondColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color2", 0)));
+            if (Mod::get()->getSavedValue<bool>("glow", false)) {
+                cube->setGlowOutline(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("colorglow", 0)));
             } else {
                 cube->disableGlowOutline();
             }
 
-            if (m_fields->shipType == IconType::Ship) ship->updatePlayerFrame(PlayerData::player2Ship, IconType::Ship);
-            else ship->updatePlayerFrame(PlayerData::player2Jetpack, IconType::Jetpack);
-            ship->setColor(GM->colorForIdx(PlayerData::player2Color1));
-            ship->setSecondColor(GM->colorForIdx(PlayerData::player2Color2));
-            if (PlayerData::player2Glow) {
-                ship->setGlowOutline(GM->colorForIdx(PlayerData::player2ColorGlow));
+            if (m_fields->shipType == IconType::Ship) ship->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("ship", 1), IconType::Ship);
+            else ship->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("jetpack", 1), IconType::Jetpack);
+            ship->setColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color1", 0)));
+            ship->setSecondColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color2", 0)));
+            if (Mod::get()->getSavedValue<bool>("glow", false)) {
+                ship->setGlowOutline(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("colorglow", 0)));
             } else {
                 ship->disableGlowOutline();
             }
 
-            ball->updatePlayerFrame(PlayerData::player2Roll, IconType::Ball);
-            ball->setColor(GM->colorForIdx(PlayerData::player2Color1));
-            ball->setSecondColor(GM->colorForIdx(PlayerData::player2Color2));
-            if (PlayerData::player2Glow) {
-                ball->setGlowOutline(GM->colorForIdx(PlayerData::player2ColorGlow));
+            ball->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("roll", 1), IconType::Ball);
+            ball->setColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color1", 0)));
+            ball->setSecondColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color2", 0)));
+            if (Mod::get()->getSavedValue<bool>("glow", false)) {
+                ball->setGlowOutline(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("colorglow", 0)));
             } else {
                 ball->disableGlowOutline();
             }
 
-            ufo->updatePlayerFrame(PlayerData::player2Bird, IconType::Ufo);
-            ufo->setColor(GM->colorForIdx(PlayerData::player2Color1));
-            ufo->setSecondColor(GM->colorForIdx(PlayerData::player2Color2));
-            if (PlayerData::player2Glow) {
-                ufo->setGlowOutline(GM->colorForIdx(PlayerData::player2ColorGlow));
+            ufo->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("bird", 1), IconType::Ufo);
+            ufo->setColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color1", 0)));
+            ufo->setSecondColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color2", 0)));
+            if (Mod::get()->getSavedValue<bool>("glow", false)) {
+                ufo->setGlowOutline(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("colorglow", 0)));
             } else {
                 ufo->disableGlowOutline();
             }
 
-            wave->updatePlayerFrame(PlayerData::player2Dart, IconType::Wave);
-            wave->setColor(GM->colorForIdx(PlayerData::player2Color1));
-            wave->setSecondColor(GM->colorForIdx(PlayerData::player2Color2));
-            if (PlayerData::player2Glow) {
-                wave->setGlowOutline(GM->colorForIdx(PlayerData::player2ColorGlow));
+            wave->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("dart", 1), IconType::Wave);
+            wave->setColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color1", 0)));
+            wave->setSecondColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color2", 0)));
+            if (Mod::get()->getSavedValue<bool>("glow", false)) {
+                wave->setGlowOutline(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("colorglow", 0)));
             } else {
                 wave->disableGlowOutline();
             }
 
-            robot->updatePlayerFrame(PlayerData::player2Robot, IconType::Robot);
-            robot->setColor(GM->colorForIdx(PlayerData::player2Color1));
-            robot->setSecondColor(GM->colorForIdx(PlayerData::player2Color2));
-            if (PlayerData::player2Glow) {
-                robot->setGlowOutline(GM->colorForIdx(PlayerData::player2ColorGlow));
+            robot->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("robot", 1), IconType::Robot);
+            robot->setColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color1", 0)));
+            robot->setSecondColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color2", 0)));
+            if (Mod::get()->getSavedValue<bool>("glow", false)) {
+                robot->setGlowOutline(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("colorglow", 0)));
             } else {
                 robot->disableGlowOutline();
             }
 
-            spider->updatePlayerFrame(PlayerData::player2Spider, IconType::Spider);
-            spider->setColor(GM->colorForIdx(PlayerData::player2Color1));
-            spider->setSecondColor(GM->colorForIdx(PlayerData::player2Color2));
-            if (PlayerData::player2Glow) {
-                spider->setGlowOutline(GM->colorForIdx(PlayerData::player2ColorGlow));
+            spider->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("spider", 1), IconType::Spider);
+            spider->setColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color1", 0)));
+            spider->setSecondColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color2", 0)));
+            if (Mod::get()->getSavedValue<bool>("glow", false)) {
+                spider->setGlowOutline(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("colorglow", 0)));
             } else {
                 spider->disableGlowOutline();
             }
 
-            swing->updatePlayerFrame(PlayerData::player2Swing, IconType::Swing);
-            swing->setColor(GM->colorForIdx(PlayerData::player2Color1));
-            swing->setSecondColor(GM->colorForIdx(PlayerData::player2Color2));
-            if (PlayerData::player2Glow) {
-                swing->setGlowOutline(GM->colorForIdx(PlayerData::player2ColorGlow));
+            swing->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("swing", 1), IconType::Swing);
+            swing->setColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color1", 0)));
+            swing->setSecondColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color2", 0)));
+            if (Mod::get()->getSavedValue<bool>("glow", false)) {
+                swing->setGlowOutline(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("colorglow", 0)));
             } else {
                 swing->disableGlowOutline();
             }

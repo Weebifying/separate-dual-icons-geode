@@ -8,13 +8,13 @@ class $modify(PlayerObject) {
     void setupStreak() {
         // thanks alphalaneous for the fucking genius code
         // theres no way i dont copy this
-        int origStreak = GameManager::sharedState()->getPlayerStreak();
-        int origShipStreak = GameManager::sharedState()->getPlayerShipFire();
+        int origStreak = GameManager::get()->m_playerStreak;
+        int origShipStreak = GameManager::get()->m_playerShipFire;
 
         if (PlayLayer::get()) {
             if (PlayerData::callPosStreak == 1) {
-                GameManager::sharedState()->setPlayerStreak(PlayerData::player2Trail);
-                GameManager::sharedState()->setPlayerShipStreak(PlayerData::player2ShipTrail);
+                GameManager::get()->m_playerStreak = Mod::get()->getSavedValue<int64_t>("trail", 1);
+                GameManager::get()->m_playerShipFire = Mod::get()->getSavedValue<int64_t>("shiptrail", 1);
             }
 
             PlayerData::callPosStreak++;
@@ -23,8 +23,8 @@ class $modify(PlayerObject) {
 
         PlayerObject::setupStreak();
 
-        GameManager::sharedState()->setPlayerStreak(origStreak);
-        GameManager::sharedState()->setPlayerShipStreak(origShipStreak);
+        GameManager::get()->m_playerStreak = origStreak;
+        GameManager::get()->m_playerShipFire = origShipStreak;
     }
 
     void setColor(ccColor3B const &color) {
@@ -32,10 +32,10 @@ class $modify(PlayerObject) {
 
         if (PlayLayer::get()) {
             if (this == PlayLayer::get()->m_player2)
-                PlayerObject::setColor(GameManager::get()->colorForIdx(PlayerData::player2Color1));
+                PlayerObject::setColor(GameManager::get()->colorForIdx(Mod::get()->getSavedValue<int64_t>("color1", 0)));
         } else if (LevelEditorLayer::get()) {
             if (this == LevelEditorLayer::get()->m_player2)
-                PlayerObject::setColor(GameManager::get()->colorForIdx(PlayerData::player2Color1));
+                PlayerObject::setColor(GameManager::get()->colorForIdx(Mod::get()->getSavedValue<int64_t>("color1", 0)));
         }
     }
 
@@ -44,10 +44,10 @@ class $modify(PlayerObject) {
 
         if (PlayLayer::get()) {
             if (this == PlayLayer::get()->m_player2)
-                PlayerObject::setSecondColor(GameManager::get()->colorForIdx(PlayerData::player2Color2));
+                PlayerObject::setSecondColor(GameManager::get()->colorForIdx(Mod::get()->getSavedValue<int64_t>("color2", 0)));
         } else if (LevelEditorLayer::get()) {
             if (this == LevelEditorLayer::get()->m_player2)
-                PlayerObject::setSecondColor(GameManager::get()->colorForIdx(PlayerData::player2Color2));
+                PlayerObject::setSecondColor(GameManager::get()->colorForIdx(Mod::get()->getSavedValue<int64_t>("color2", 0)));
         }
     }
 
@@ -57,10 +57,10 @@ class $modify(PlayerObject) {
         
         if (PlayLayer::get()) {
             if (this == PlayLayer::get()->m_player2)
-                PlayerObject::updatePlayerFrame(PlayerData::player2Cube);
+                PlayerObject::updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("cube", 1));
         } else if (LevelEditorLayer::get()) {
             if (this == LevelEditorLayer::get()->m_player2)
-                PlayerObject::updatePlayerFrame(PlayerData::player2Cube);
+                PlayerObject::updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("cube", 1));
         }
     }
     
@@ -70,10 +70,10 @@ class $modify(PlayerObject) {
         
         if (PlayLayer::get()) {
             if (this == PlayLayer::get()->m_player2)
-                PlayerObject::updatePlayerShipFrame(PlayerData::player2Ship);
+                PlayerObject::updatePlayerShipFrame(Mod::get()->getSavedValue<int64_t>("ship", 1));
         } else if (LevelEditorLayer::get()) {
             if (this == LevelEditorLayer::get()->m_player2)
-                PlayerObject::updatePlayerShipFrame(PlayerData::player2Ship);
+                PlayerObject::updatePlayerShipFrame(Mod::get()->getSavedValue<int64_t>("ship", 1));
         }
         
     }
@@ -84,10 +84,10 @@ class $modify(PlayerObject) {
         
         if (PlayLayer::get()) {
             if (this == PlayLayer::get()->m_player2)
-                PlayerObject::updatePlayerRollFrame(PlayerData::player2Roll);
+                PlayerObject::updatePlayerRollFrame(Mod::get()->getSavedValue<int64_t>("roll", 1));
         } else if (LevelEditorLayer::get()) {
             if (this == LevelEditorLayer::get()->m_player2)
-                PlayerObject::updatePlayerRollFrame(PlayerData::player2Roll);
+                PlayerObject::updatePlayerRollFrame(Mod::get()->getSavedValue<int64_t>("roll", 1));
         }
         
     }
@@ -98,10 +98,10 @@ class $modify(PlayerObject) {
         
         if (PlayLayer::get()) {
             if (this == PlayLayer::get()->m_player2)
-                PlayerObject::updatePlayerBirdFrame(PlayerData::player2Bird);
+                PlayerObject::updatePlayerBirdFrame(Mod::get()->getSavedValue<int64_t>("bird", 1));
         } else if (LevelEditorLayer::get()) {
             if (this == LevelEditorLayer::get()->m_player2)
-                PlayerObject::updatePlayerBirdFrame(PlayerData::player2Bird);
+                PlayerObject::updatePlayerBirdFrame(Mod::get()->getSavedValue<int64_t>("bird", 1));
         }
         
     }
@@ -112,10 +112,10 @@ class $modify(PlayerObject) {
         
         if (PlayLayer::get()) {
             if (this == PlayLayer::get()->m_player2)
-                PlayerObject::updatePlayerDartFrame(PlayerData::player2Dart);
+                PlayerObject::updatePlayerDartFrame(Mod::get()->getSavedValue<int64_t>("dart", 1));
         } else if (LevelEditorLayer::get()) {
             if (this == LevelEditorLayer::get()->m_player2)
-                PlayerObject::updatePlayerDartFrame(PlayerData::player2Dart);
+                PlayerObject::updatePlayerDartFrame(Mod::get()->getSavedValue<int64_t>("dart", 1));
         }
         
     }
@@ -126,10 +126,10 @@ class $modify(PlayerObject) {
         
         if (PlayLayer::get()) {
             if (this == PlayLayer::get()->m_player2)
-                PlayerObject::updatePlayerSwingFrame(PlayerData::player2Swing);
+                PlayerObject::updatePlayerSwingFrame(Mod::get()->getSavedValue<int64_t>("swing", 1));
         } else if (LevelEditorLayer::get()) {
             if (this == LevelEditorLayer::get()->m_player2)
-                PlayerObject::updatePlayerSwingFrame(PlayerData::player2Swing);
+                PlayerObject::updatePlayerSwingFrame(Mod::get()->getSavedValue<int64_t>("swing", 1));
         }
 
     }
@@ -140,10 +140,10 @@ class $modify(PlayerObject) {
         
         if (PlayLayer::get()) {
             if (this == PlayLayer::get()->m_player2)
-                PlayerObject::updatePlayerJetpackFrame(PlayerData::player2Jetpack);
+                PlayerObject::updatePlayerJetpackFrame(Mod::get()->getSavedValue<int64_t>("jetpack", 1));
         } else if (LevelEditorLayer::get()) {
             if (this == LevelEditorLayer::get()->m_player2)
-                PlayerObject::updatePlayerJetpackFrame(PlayerData::player2Jetpack);
+                PlayerObject::updatePlayerJetpackFrame(Mod::get()->getSavedValue<int64_t>("jetpack", 1));
         }   
 
     }

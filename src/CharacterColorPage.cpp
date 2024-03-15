@@ -17,81 +17,81 @@ class $modify(CharacterColorPage) {
             auto winSize = CCDirector::get()->getWinSize();
 
             auto cube = as<SimplePlayer*>(layer->getChildByID("cube-icon"));
-            cube->updatePlayerFrame(PlayerData::player2Cube, IconType::Cube);
-            cube->setColor(GM->colorForIdx(PlayerData::player2Color1));
-            cube->setSecondColor(GM->colorForIdx(PlayerData::player2Color2));
-            if (PlayerData::player2Glow) {
-                cube->setGlowOutline(GM->colorForIdx(PlayerData::player2ColorGlow));
+            cube->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("cube", 1), IconType::Cube);
+            cube->setColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color1", 0)));
+            cube->setSecondColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color2", 0)));
+            if (Mod::get()->getSavedValue<bool>("glow", false)) {
+                cube->setGlowOutline(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("colorglow", 0)));
             } else {
                 cube->disableGlowOutline();
             }
 
             auto ship = getChildOfType<SimplePlayer>(layer->getChildByID("buttons-menu")->getChildByID("ship-button"), 0);
-            ship->updatePlayerFrame(PlayerData::player2Ship, IconType::Ship);
-            ship->setColor(GM->colorForIdx(PlayerData::player2Color1));
-            ship->setSecondColor(GM->colorForIdx(PlayerData::player2Color2));
-            if (PlayerData::player2Glow) {
-                ship->setGlowOutline(GM->colorForIdx(PlayerData::player2ColorGlow));
+            ship->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("ship", 1), IconType::Ship);
+            ship->setColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color1", 0)));
+            ship->setSecondColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color2", 0)));
+            if (Mod::get()->getSavedValue<bool>("glow", false)) {
+                ship->setGlowOutline(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("colorglow", 0)));
             } else {
                 ship->disableGlowOutline();
             }
 
             auto ball = as<SimplePlayer*>(layer->getChildByID("ball-icon"));
-            ball->updatePlayerFrame(PlayerData::player2Roll, IconType::Ball);
-            ball->setColor(GM->colorForIdx(PlayerData::player2Color1));
-            ball->setSecondColor(GM->colorForIdx(PlayerData::player2Color2));
-            if (PlayerData::player2Glow) {
-                ball->setGlowOutline(GM->colorForIdx(PlayerData::player2ColorGlow));
+            ball->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("roll", 1), IconType::Ball);
+            ball->setColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color1", 0)));
+            ball->setSecondColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color2", 0)));
+            if (Mod::get()->getSavedValue<bool>("glow", false)) {
+                ball->setGlowOutline(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("colorglow", 0)));
             } else {
                 ball->disableGlowOutline();
             }
 
             auto ufo = as<SimplePlayer*>(layer->getChildByID("ufo-icon"));
-            ufo->updatePlayerFrame(PlayerData::player2Bird, IconType::Ufo);
-            ufo->setColor(GM->colorForIdx(PlayerData::player2Color1));
-            ufo->setSecondColor(GM->colorForIdx(PlayerData::player2Color2));
-            if (PlayerData::player2Glow) {
-                ufo->setGlowOutline(GM->colorForIdx(PlayerData::player2ColorGlow));
+            ufo->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("bird", 1), IconType::Ufo);
+            ufo->setColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color1", 0)));
+            ufo->setSecondColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color2", 0)));
+            if (Mod::get()->getSavedValue<bool>("glow", false)) {
+                ufo->setGlowOutline(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("colorglow", 0)));
             } else {
                 ufo->disableGlowOutline();
             }
 
             auto wave = as<SimplePlayer*>(layer->getChildByID("wave-icon"));
-            wave->updatePlayerFrame(PlayerData::player2Dart, IconType::Wave);
-            wave->setColor(GM->colorForIdx(PlayerData::player2Color1));
-            wave->setSecondColor(GM->colorForIdx(PlayerData::player2Color2));
-            if (PlayerData::player2Glow) {
-                wave->setGlowOutline(GM->colorForIdx(PlayerData::player2ColorGlow));
+            wave->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("dart", 1), IconType::Wave);
+            wave->setColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color1", 0)));
+            wave->setSecondColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color2", 0)));
+            if (Mod::get()->getSavedValue<bool>("glow", false)) {
+                wave->setGlowOutline(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("colorglow", 0)));
             } else {
                 wave->disableGlowOutline();
             }
 
             auto robot = as<SimplePlayer*>(layer->getChildByID("robot-icon"));
-            robot->updatePlayerFrame(PlayerData::player2Robot, IconType::Robot);
-            robot->setColor(GM->colorForIdx(PlayerData::player2Color1));
-            robot->setSecondColor(GM->colorForIdx(PlayerData::player2Color2));
-            if (PlayerData::player2Glow) {
-                robot->setGlowOutline(GM->colorForIdx(PlayerData::player2ColorGlow));
+            robot->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("robot", 1), IconType::Robot);
+            robot->setColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color1", 0)));
+            robot->setSecondColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color2", 0)));
+            if (Mod::get()->getSavedValue<bool>("glow", false)) {
+                robot->setGlowOutline(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("colorglow", 0)));
             } else {
                 robot->disableGlowOutline();
             }
 
             auto spider = as<SimplePlayer*>(layer->getChildByID("spider-icon"));
-            spider->updatePlayerFrame(PlayerData::player2Spider, IconType::Spider);
-            spider->setColor(GM->colorForIdx(PlayerData::player2Color1));
-            spider->setSecondColor(GM->colorForIdx(PlayerData::player2Color2));
-            if (PlayerData::player2Glow) {
-                spider->setGlowOutline(GM->colorForIdx(PlayerData::player2ColorGlow));
+            spider->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("spider", 1), IconType::Spider);
+            spider->setColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color1", 0)));
+            spider->setSecondColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color2", 0)));
+            if (Mod::get()->getSavedValue<bool>("glow", false)) {
+                spider->setGlowOutline(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("colorglow", 0)));
             } else {
                 spider->disableGlowOutline();
             }
 
             auto swing = as<SimplePlayer*>(layer->getChildByID("swing-icon"));
-            swing->updatePlayerFrame(PlayerData::player2Swing, IconType::Swing);
-            swing->setColor(GM->colorForIdx(PlayerData::player2Color1));
-            swing->setSecondColor(GM->colorForIdx(PlayerData::player2Color2));
-            if (PlayerData::player2Glow) {
-                swing->setGlowOutline(GM->colorForIdx(PlayerData::player2ColorGlow));
+            swing->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("swing", 1), IconType::Swing);
+            swing->setColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color1", 0)));
+            swing->setSecondColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color2", 0)));
+            if (Mod::get()->getSavedValue<bool>("glow", false)) {
+                swing->setGlowOutline(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("colorglow", 0)));
             } else {
                 swing->disableGlowOutline();
             }
@@ -101,22 +101,22 @@ class $modify(CharacterColorPage) {
             auto cursorglow = layer->getChildByID("cursor-glow");
 
             cursor1->setPosition({
-                menu->getChildByID(std::to_string(PlayerData::player2Color1))->getPositionX() + menu->getPositionX(),
-                menu->getChildByID(std::to_string(PlayerData::player2Color1))->getPositionY() + menu->getPositionY()
+                menu->getChildByID(std::to_string(Mod::get()->getSavedValue<int64_t>("color1", 0)))->getPositionX() + menu->getPositionX(),
+                menu->getChildByID(std::to_string(Mod::get()->getSavedValue<int64_t>("color1", 0)))->getPositionY() + menu->getPositionY()
             });
 
             cursor2->setPosition({
-                menu->getChildByID(std::to_string(PlayerData::player2Color2))->getPositionX() + menu->getPositionX(),
-                menu->getChildByID(std::to_string(PlayerData::player2Color2))->getPositionY() + menu->getPositionY()
+                menu->getChildByID(std::to_string(Mod::get()->getSavedValue<int64_t>("color2", 0)))->getPositionX() + menu->getPositionX(),
+                menu->getChildByID(std::to_string(Mod::get()->getSavedValue<int64_t>("color2", 0)))->getPositionY() + menu->getPositionY()
             });
 
             cursorglow->setPosition({
-                menu->getChildByID(std::to_string(PlayerData::player2ColorGlow))->getPositionX() + menu->getPositionX(),
-                menu->getChildByID(std::to_string(PlayerData::player2ColorGlow))->getPositionY() + menu->getPositionY()
+                menu->getChildByID(std::to_string(Mod::get()->getSavedValue<int64_t>("colorglow", 0)))->getPositionX() + menu->getPositionX(),
+                menu->getChildByID(std::to_string(Mod::get()->getSavedValue<int64_t>("colorglow", 0)))->getPositionY() + menu->getPositionY()
             });
 
             // ??? i have no idea why i need to do !player2Glow
-            as<CCMenuItemToggler*>(menu->getChildByID("glow-toggler"))->toggle(!PlayerData::player2Glow);
+            as<CCMenuItemToggler*>(menu->getChildByID("glow-toggler"))->toggle(!Mod::get()->getSavedValue<bool>("glow", false));
         }
 
         return true;
@@ -131,12 +131,12 @@ class $modify(CharacterColorPage) {
             switch (m_fields->shipType) {
                 case IconType::Ship:
                     m_fields->shipType = IconType::Jetpack;
-                    ship->updatePlayerFrame(PlayerData::player2Jetpack, m_fields->shipType);
+                    ship->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("jetpack", 1), m_fields->shipType);
                     ship->setScale(1.05f);
                     break;
                 case IconType::Jetpack:
                     m_fields->shipType = IconType::Ship;
-                    ship->updatePlayerFrame(PlayerData::player2Ship, m_fields->shipType);
+                    ship->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("ship", 1), m_fields->shipType);
                     ship->setScale(1.15f);
                     break;
                 default:
@@ -158,18 +158,18 @@ class $modify(CharacterColorPage) {
             auto cursorglow = layer->getChildByID("cursor-glow");
 
             cursor1->setPosition({
-                menu->getChildByID(std::to_string(PlayerData::player2Color1))->getPositionX() + menu->getPositionX(),
-                menu->getChildByID(std::to_string(PlayerData::player2Color1))->getPositionY() + menu->getPositionY()
+                menu->getChildByID(std::to_string(Mod::get()->getSavedValue<int64_t>("color1", 0)))->getPositionX() + menu->getPositionX(),
+                menu->getChildByID(std::to_string(Mod::get()->getSavedValue<int64_t>("color1", 0)))->getPositionY() + menu->getPositionY()
             });
 
             cursor2->setPosition({
-                menu->getChildByID(std::to_string(PlayerData::player2Color2))->getPositionX() + menu->getPositionX(),
-                menu->getChildByID(std::to_string(PlayerData::player2Color2))->getPositionY() + menu->getPositionY()
+                menu->getChildByID(std::to_string(Mod::get()->getSavedValue<int64_t>("color2", 0)))->getPositionX() + menu->getPositionX(),
+                menu->getChildByID(std::to_string(Mod::get()->getSavedValue<int64_t>("color2", 0)))->getPositionY() + menu->getPositionY()
             });
 
             cursorglow->setPosition({
-                menu->getChildByID(std::to_string(PlayerData::player2ColorGlow))->getPositionX() + menu->getPositionX(),
-                menu->getChildByID(std::to_string(PlayerData::player2ColorGlow))->getPositionY() + menu->getPositionY()
+                menu->getChildByID(std::to_string(Mod::get()->getSavedValue<int64_t>("colorglow", 0)))->getPositionX() + menu->getPositionX(),
+                menu->getChildByID(std::to_string(Mod::get()->getSavedValue<int64_t>("colorglow", 0)))->getPositionY() + menu->getPositionY()
             });
 
             m_fields->colorMode = as<CCMenuItemSpriteExtra*>(sender)->getTag();
@@ -209,7 +209,7 @@ class $modify(CharacterColorPage) {
 
             switch (m_fields->colorMode) {
                 case 0:
-                    if (PlayerData::player2Color1 != sender->getTag()) {
+                    if (Mod::get()->getSavedValue<int64_t>("color1", 0) != sender->getTag()) {
                         cursor = layer->getChildByID("cursor-col1");
                         cursor->setPosition({
                             menu->getChildByID(std::to_string(sender->getTag()))->getPositionX() + menu->getPositionX(),
@@ -222,14 +222,13 @@ class $modify(CharacterColorPage) {
                         player2->setColor(GM->colorForIdx(sender->getTag()));
 
                         Mod::get()->setSavedValue<int64_t>("color1", sender->getTag());
-                        PlayerData::player2Color1 = sender->getTag();
                     } else {
                         ItemInfoPopup::create(sender->getTag(), UnlockType::Col1)->show();
                         return;
                     }
                     break;
                 case 1:
-                    if (PlayerData::player2Color2 != sender->getTag()) {
+                    if (Mod::get()->getSavedValue<int64_t>("color2", 0) != sender->getTag()) {
                         cursor = layer->getChildByID("cursor-col2");
                         cursor->setPosition({
                             menu->getChildByID(std::to_string(sender->getTag()))->getPositionX() + menu->getPositionX(),
@@ -242,21 +241,20 @@ class $modify(CharacterColorPage) {
                         player2->setSecondColor(GM->colorForIdx(sender->getTag()));
 
                         Mod::get()->setSavedValue<int64_t>("color2", sender->getTag());
-                        PlayerData::player2Color2 = sender->getTag();
                     } else {
                         ItemInfoPopup::create(sender->getTag(), UnlockType::Col2)->show();
                         return;
                     }
                     break;
                 case 2:
-                    if (PlayerData::player2ColorGlow != sender->getTag()) {
+                    if (Mod::get()->getSavedValue<int64_t>("colorglow", 0) != sender->getTag()) {
                         cursor = layer->getChildByID("cursor-glow");
                         cursor->setPosition({
                             menu->getChildByID(std::to_string(sender->getTag()))->getPositionX() + menu->getPositionX(),
                             menu->getChildByID(std::to_string(sender->getTag()))->getPositionY() + menu->getPositionY()
                         });
 
-                        if (PlayerData::player2Glow) {
+                        if (Mod::get()->getSavedValue<bool>("glow", false)) {
                             for (auto* icon : icons) {
                                 icon->setGlowOutline(GM->colorForIdx(sender->getTag()));
                             }
@@ -264,7 +262,6 @@ class $modify(CharacterColorPage) {
                         }
 
                         Mod::get()->setSavedValue<int64_t>("colorglow", sender->getTag());
-                        PlayerData::player2ColorGlow = sender->getTag();
                     } else {
                         ItemInfoPopup::create(sender->getTag(), UnlockType::Col2)->show();
                         return;
@@ -300,17 +297,16 @@ class $modify(CharacterColorPage) {
             auto player2 = as<SimplePlayer*>(CCDirector::get()->getRunningScene()->getChildByID("GJGarageLayer")->getChildByID("player2-icon"));
 
             Mod::get()->setSavedValue<bool>("glow", as<CCMenuItemToggler*>(sender)->isOn());
-            PlayerData::player2Glow = as<CCMenuItemToggler*>(sender)->isOn();
 
             for (auto* icon : icons) {
-                if (PlayerData::player2Glow) {
-                    icon->setGlowOutline(GM->colorForIdx(PlayerData::player2ColorGlow));
+                if (Mod::get()->getSavedValue<bool>("glow", false)) {
+                    icon->setGlowOutline(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("colorglow", 0)));
                 } else {
                     icon->disableGlowOutline();
                 }
             }
-            if (PlayerData::player2Glow) 
-                player2->setGlowOutline(GM->colorForIdx(PlayerData::player2ColorGlow));
+            if (Mod::get()->getSavedValue<bool>("glow", false)) 
+                player2->setGlowOutline(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("colorglow", 0)));
             else
                 player2->disableGlowOutline();
 

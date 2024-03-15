@@ -13,33 +13,33 @@ class $modify(LevelEditorLayer) {
 
             if (m_fields->lastType != 1) {
                 if (player2->m_isPlatformer)
-                    player2->updatePlayerJetpackFrame(PlayerData::player2Jetpack);
+                    player2->updatePlayerJetpackFrame(Mod::get()->getSavedValue<int64_t>("jetpack", 1));
                 else
-                    player2->updatePlayerShipFrame(PlayerData::player2Ship);
+                    player2->updatePlayerShipFrame(Mod::get()->getSavedValue<int64_t>("ship", 1));
 
-                player2->updatePlayerFrame(PlayerData::player2Cube);
+                player2->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("cube", 1));
                 m_fields->lastType = 1;
             }
 
         } else if (player2->m_isBall) {
             
             if (m_fields->lastType != 2) {
-                player2->updatePlayerRollFrame(PlayerData::player2Roll);
+                player2->updatePlayerRollFrame(Mod::get()->getSavedValue<int64_t>("roll", 1));
                 m_fields->lastType = 2;
             }
 
         } else if (player2->m_isBird) {
 
             if (m_fields->lastType != 3) {
-                player2->updatePlayerBirdFrame(PlayerData::player2Bird);
-                player2->updatePlayerFrame(PlayerData::player2Cube);
+                player2->updatePlayerBirdFrame(Mod::get()->getSavedValue<int64_t>("bird", 1));
+                player2->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("cube", 1));
                 m_fields->lastType = 3;
             }
 
         } else if (player2->m_isDart) {
 
             if (m_fields->lastType != 4) {
-                player2->updatePlayerDartFrame(PlayerData::player2Dart);
+                player2->updatePlayerDartFrame(Mod::get()->getSavedValue<int64_t>("dart", 1));
                 m_fields->lastType = 4;
             }
 
@@ -54,14 +54,14 @@ class $modify(LevelEditorLayer) {
         } else if (player2->m_isSwing) {
 
             if (m_fields->lastType != 7) {
-                player2->updatePlayerSwingFrame(PlayerData::player2Swing);
+                player2->updatePlayerSwingFrame(Mod::get()->getSavedValue<int64_t>("swing", 1));
                 m_fields->lastType = 7;
             }
 
         } else {
 
             if (m_fields->lastType != 0) {
-                player2->updatePlayerFrame(PlayerData::player2Cube);
+                player2->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("cube", 1));
                 m_fields->lastType = 0;
             }
 
@@ -78,21 +78,21 @@ class $modify(LevelEditorLayer) {
 
         if (player2->m_isShip) {
             if (player2->m_isPlatformer)
-                player2->updatePlayerJetpackFrame(PlayerData::player2Jetpack);
+                player2->updatePlayerJetpackFrame(Mod::get()->getSavedValue<int64_t>("jetpack", 1));
             else
-                player2->updatePlayerShipFrame(PlayerData::player2Ship);
+                player2->updatePlayerShipFrame(Mod::get()->getSavedValue<int64_t>("ship", 1));
             m_fields->lastType = 1;
 
         } else if (player2->m_isBall) {
-            player2->updatePlayerRollFrame(PlayerData::player2Roll);
+            player2->updatePlayerRollFrame(Mod::get()->getSavedValue<int64_t>("roll", 1));
             m_fields->lastType = 2;
 
         } else if (player2->m_isBird) {
-            player2->updatePlayerBirdFrame(PlayerData::player2Bird);
+            player2->updatePlayerBirdFrame(Mod::get()->getSavedValue<int64_t>("bird", 1));
             m_fields->lastType = 3;
 
         } else if (player2->m_isDart) {
-            player2->updatePlayerDartFrame(PlayerData::player2Dart);
+            player2->updatePlayerDartFrame(Mod::get()->getSavedValue<int64_t>("dart", 1));
             m_fields->lastType = 4;
 
         } else if (player2->m_isRobot) {
@@ -104,27 +104,27 @@ class $modify(LevelEditorLayer) {
             m_fields->lastType = 6;
 
         } else if (player2->m_isSwing) {
-            player2->updatePlayerSwingFrame(PlayerData::player2Swing);
+            player2->updatePlayerSwingFrame(Mod::get()->getSavedValue<int64_t>("swing", 1));
             m_fields->lastType = 7;
 
         } else {
 
-            player2->updatePlayerFrame(PlayerData::player2Cube);
+            player2->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("cube", 1));
             m_fields->lastType = 0;
 
         }
 
         // // required
-        player2->updatePlayerRobotFrame(PlayerData::player2Robot);
-        player2->updatePlayerSpiderFrame(PlayerData::player2Spider);
+        player2->updatePlayerRobotFrame(Mod::get()->getSavedValue<int64_t>("robot", 1));
+        player2->updatePlayerSpiderFrame(Mod::get()->getSavedValue<int64_t>("spider", 1));
 
 
-        player2->setColor(GameManager::get()->colorForIdx(PlayerData::player2Color1));
-        player2->setSecondColor(GameManager::get()->colorForIdx(PlayerData::player2Color2));
+        player2->setColor(GameManager::get()->colorForIdx(Mod::get()->getSavedValue<int64_t>("color1", 0)));
+        player2->setSecondColor(GameManager::get()->colorForIdx(Mod::get()->getSavedValue<int64_t>("color2", 0)));
         
-        if (PlayerData::player2Glow) {
+        if (Mod::get()->getSavedValue<bool>("glow", false)) {
             player2->m_hasGlow = true;
-            player2->m_glowColor = GameManager::get()->colorForIdx(PlayerData::player2ColorGlow);
+            player2->m_glowColor = GameManager::get()->colorForIdx(Mod::get()->getSavedValue<int64_t>("colorglow", 0));
         } else {
             player2->m_hasGlow = false;
         }
