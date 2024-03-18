@@ -34,12 +34,12 @@ class $modify(MyProfilePage, ProfilePage) {
             switch (m_fields->shipType) {
                 case IconType::Ship:
                     m_fields->shipType = IconType::Jetpack;
-                    ship->updatePlayerFrame(GM->getPlayerShip(), m_fields->shipType);
+                    ship->updatePlayerFrame(GM->getPlayerJetpack(), m_fields->shipType);
                     ship->setScale(0.9f);
                     break;
                 case IconType::Jetpack:
                     m_fields->shipType = IconType::Ship;
-                    ship->updatePlayerFrame(GM->getPlayerJetpack(), m_fields->shipType);
+                    ship->updatePlayerFrame(GM->getPlayerShip(), m_fields->shipType);
                     ship->setScale(0.95f);
                     break;
             }
