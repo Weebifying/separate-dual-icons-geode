@@ -1,4 +1,8 @@
 # Separate Dual Icons Changelog
+## v1.0.3
+- Another bugfix :3
+- Removed incompatibility with rooot's custom gamemode colors mod
+  - This does NOT mean that it works properly with that mod, just the crash problem resolved
 ## v1.0.2
 - Bugfixes
 ## v1.0.1
