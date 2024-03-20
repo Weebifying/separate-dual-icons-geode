@@ -20,7 +20,7 @@ class $modify(CharacterColorPage) {
             cube->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("cube", 1), IconType::Cube);
             cube->setColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color1", 0)));
             cube->setSecondColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color2", 0)));
-            if (Mod::get()->getSavedValue<bool>("glow", false)) {
+            if (Mod::get()->getSavedValue<bool>("glow", false) || Mod::get()->getSavedValue<int64_t>("color1", 0) == 15) {
                 cube->setGlowOutline(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("colorglow", 0)));
             } else {
                 cube->disableGlowOutline();
@@ -30,7 +30,7 @@ class $modify(CharacterColorPage) {
             ship->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("ship", 1), IconType::Ship);
             ship->setColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color1", 0)));
             ship->setSecondColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color2", 0)));
-            if (Mod::get()->getSavedValue<bool>("glow", false)) {
+            if (Mod::get()->getSavedValue<bool>("glow", false) || Mod::get()->getSavedValue<int64_t>("color1", 0) == 15) {
                 ship->setGlowOutline(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("colorglow", 0)));
             } else {
                 ship->disableGlowOutline();
@@ -40,7 +40,7 @@ class $modify(CharacterColorPage) {
             ball->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("roll", 1), IconType::Ball);
             ball->setColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color1", 0)));
             ball->setSecondColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color2", 0)));
-            if (Mod::get()->getSavedValue<bool>("glow", false)) {
+            if (Mod::get()->getSavedValue<bool>("glow", false) || Mod::get()->getSavedValue<int64_t>("color1", 0) == 15) {
                 ball->setGlowOutline(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("colorglow", 0)));
             } else {
                 ball->disableGlowOutline();
@@ -50,7 +50,7 @@ class $modify(CharacterColorPage) {
             ufo->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("bird", 1), IconType::Ufo);
             ufo->setColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color1", 0)));
             ufo->setSecondColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color2", 0)));
-            if (Mod::get()->getSavedValue<bool>("glow", false)) {
+            if (Mod::get()->getSavedValue<bool>("glow", false) || Mod::get()->getSavedValue<int64_t>("color1", 0) == 15) {
                 ufo->setGlowOutline(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("colorglow", 0)));
             } else {
                 ufo->disableGlowOutline();
@@ -60,7 +60,7 @@ class $modify(CharacterColorPage) {
             wave->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("dart", 1), IconType::Wave);
             wave->setColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color1", 0)));
             wave->setSecondColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color2", 0)));
-            if (Mod::get()->getSavedValue<bool>("glow", false)) {
+            if (Mod::get()->getSavedValue<bool>("glow", false) || Mod::get()->getSavedValue<int64_t>("color1", 0) == 15) {
                 wave->setGlowOutline(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("colorglow", 0)));
             } else {
                 wave->disableGlowOutline();
@@ -70,7 +70,7 @@ class $modify(CharacterColorPage) {
             robot->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("robot", 1), IconType::Robot);
             robot->setColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color1", 0)));
             robot->setSecondColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color2", 0)));
-            if (Mod::get()->getSavedValue<bool>("glow", false)) {
+            if (Mod::get()->getSavedValue<bool>("glow", false) || Mod::get()->getSavedValue<int64_t>("color1", 0) == 15) {
                 robot->setGlowOutline(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("colorglow", 0)));
             } else {
                 robot->disableGlowOutline();
@@ -80,7 +80,7 @@ class $modify(CharacterColorPage) {
             spider->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("spider", 1), IconType::Spider);
             spider->setColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color1", 0)));
             spider->setSecondColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color2", 0)));
-            if (Mod::get()->getSavedValue<bool>("glow", false)) {
+            if (Mod::get()->getSavedValue<bool>("glow", false) || Mod::get()->getSavedValue<int64_t>("color1", 0) == 15) {
                 spider->setGlowOutline(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("colorglow", 0)));
             } else {
                 spider->disableGlowOutline();
@@ -90,7 +90,7 @@ class $modify(CharacterColorPage) {
             swing->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("swing", 1), IconType::Swing);
             swing->setColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color1", 0)));
             swing->setSecondColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color2", 0)));
-            if (Mod::get()->getSavedValue<bool>("glow", false)) {
+            if (Mod::get()->getSavedValue<bool>("glow", false) || Mod::get()->getSavedValue<int64_t>("color1", 0) == 15) {
                 swing->setGlowOutline(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("colorglow", 0)));
             } else {
                 swing->disableGlowOutline();
@@ -191,6 +191,8 @@ class $modify(CharacterColorPage) {
         }
 
         if (Mod::get()->getSavedValue<bool>("2pselected", false) && GM->isColorUnlocked(sender->getTag(), ut)) {
+            auto prevCol1 = Mod::get()->getSavedValue<int64_t>("color1", 0);
+
             auto layer = this->getChildByID("colors-layer");
             auto menu = layer->getChildByID("buttons-menu");
             std::vector<SimplePlayer*> icons;
@@ -221,6 +223,18 @@ class $modify(CharacterColorPage) {
                             icon->setColor(GM->colorForIdx(sender->getTag()));
                         }
                         player2->setColor(GM->colorForIdx(sender->getTag()));
+
+                        if (prevCol1 == 15) {
+                            for (auto* icon : icons) {
+                                icon->disableGlowOutline();
+                            }
+                            player2->disableGlowOutline();
+                        } else if (sender->getTag() == 15) {
+                            for (auto* icon : icons) {
+                                icon->setGlowOutline(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("colorglow", 0)));
+                            }
+                            player2->setGlowOutline(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("colorglow", 0)));
+                        }
 
                     } else {
                         ItemInfoPopup::create(sender->getTag(), UnlockType::Col1)->show();
@@ -255,7 +269,7 @@ class $modify(CharacterColorPage) {
                         });
 
                         Mod::get()->setSavedValue<int64_t>("colorglow", sender->getTag());
-                        if (Mod::get()->getSavedValue<bool>("glow", false)) {
+                        if (Mod::get()->getSavedValue<bool>("glow", false) || Mod::get()->getSavedValue<int64_t>("color1", 0) == 15) {
                             for (auto* icon : icons) {
                                 icon->setGlowOutline(GM->colorForIdx(sender->getTag()));
                             }
@@ -299,7 +313,7 @@ class $modify(CharacterColorPage) {
             Mod::get()->setSavedValue<bool>("glow", as<CCMenuItemToggler*>(sender)->isOn());
 
             for (auto* icon : icons) {
-                if (Mod::get()->getSavedValue<bool>("glow", false)) {
+                if (Mod::get()->getSavedValue<bool>("glow", false) || Mod::get()->getSavedValue<int64_t>("color1", 0) == 15) {
                     icon->setGlowOutline(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("colorglow", 0)));
                 } else {
                     icon->disableGlowOutline();

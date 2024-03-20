@@ -200,7 +200,7 @@ class $modify(MyProfilePage, ProfilePage) {
             cube->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("cube", 1), IconType::Cube);
             cube->setColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color1", 0)));
             cube->setSecondColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color2", 0)));
-            if (Mod::get()->getSavedValue<bool>("glow", false)) {
+            if (Mod::get()->getSavedValue<bool>("glow", false) || Mod::get()->getSavedValue<int64_t>("color1", 0) == 15) {
                 cube->setGlowOutline(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("colorglow", 0)));
             } else {
                 cube->disableGlowOutline();
@@ -211,7 +211,7 @@ class $modify(MyProfilePage, ProfilePage) {
             else ship->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("jetpack", 1), IconType::Jetpack);
             ship->setColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color1", 0)));
             ship->setSecondColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color2", 0)));
-            if (Mod::get()->getSavedValue<bool>("glow", false)) {
+            if (Mod::get()->getSavedValue<bool>("glow", false) || Mod::get()->getSavedValue<int64_t>("color1", 0) == 15) {
                 ship->setGlowOutline(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("colorglow", 0)));
             } else {
                 ship->disableGlowOutline();
@@ -224,7 +224,7 @@ class $modify(MyProfilePage, ProfilePage) {
                 
                 jetpack->setColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color1", 0)));
                 jetpack->setSecondColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color2", 0)));
-                if (Mod::get()->getSavedValue<bool>("glow", false)) {
+                if (Mod::get()->getSavedValue<bool>("glow", false) || Mod::get()->getSavedValue<int64_t>("color1", 0) == 15) {
                     jetpack->setGlowOutline(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("colorglow", 0)));
                 } else {
                     jetpack->disableGlowOutline();
@@ -235,7 +235,7 @@ class $modify(MyProfilePage, ProfilePage) {
             }
             ship->setColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color1", 0)));
             ship->setSecondColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color2", 0)));
-            if (Mod::get()->getSavedValue<bool>("glow", false)) {
+            if (Mod::get()->getSavedValue<bool>("glow", false) || Mod::get()->getSavedValue<int64_t>("color1", 0) == 15) {
                 ship->setGlowOutline(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("colorglow", 0)));
             } else {
                 ship->disableGlowOutline();
@@ -245,7 +245,7 @@ class $modify(MyProfilePage, ProfilePage) {
             ball->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("roll", 1), IconType::Ball);
             ball->setColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color1", 0)));
             ball->setSecondColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color2", 0)));
-            if (Mod::get()->getSavedValue<bool>("glow", false)) {
+            if (Mod::get()->getSavedValue<bool>("glow", false) || Mod::get()->getSavedValue<int64_t>("color1", 0) == 15) {
                 ball->setGlowOutline(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("colorglow", 0)));
             } else {
                 ball->disableGlowOutline();
@@ -254,7 +254,7 @@ class $modify(MyProfilePage, ProfilePage) {
             ufo->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("bird", 1), IconType::Ufo);
             ufo->setColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color1", 0)));
             ufo->setSecondColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color2", 0)));
-            if (Mod::get()->getSavedValue<bool>("glow", false)) {
+            if (Mod::get()->getSavedValue<bool>("glow", false) || Mod::get()->getSavedValue<int64_t>("color1", 0) == 15) {
                 ufo->setGlowOutline(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("colorglow", 0)));
             } else {
                 ufo->disableGlowOutline();
@@ -263,7 +263,7 @@ class $modify(MyProfilePage, ProfilePage) {
             wave->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("dart", 1), IconType::Wave);
             wave->setColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color1", 0)));
             wave->setSecondColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color2", 0)));
-            if (Mod::get()->getSavedValue<bool>("glow", false)) {
+            if (Mod::get()->getSavedValue<bool>("glow", false) || Mod::get()->getSavedValue<int64_t>("color1", 0) == 15) {
                 wave->setGlowOutline(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("colorglow", 0)));
             } else {
                 wave->disableGlowOutline();
@@ -272,7 +272,7 @@ class $modify(MyProfilePage, ProfilePage) {
             robot->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("robot", 1), IconType::Robot);
             robot->setColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color1", 0)));
             robot->setSecondColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color2", 0)));
-            if (Mod::get()->getSavedValue<bool>("glow", false)) {
+            if (Mod::get()->getSavedValue<bool>("glow", false) || Mod::get()->getSavedValue<int64_t>("color1", 0) == 15) {
                 robot->setGlowOutline(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("colorglow", 0)));
             } else {
                 robot->disableGlowOutline();
@@ -281,7 +281,7 @@ class $modify(MyProfilePage, ProfilePage) {
             spider->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("spider", 1), IconType::Spider);
             spider->setColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color1", 0)));
             spider->setSecondColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color2", 0)));
-            if (Mod::get()->getSavedValue<bool>("glow", false)) {
+            if (Mod::get()->getSavedValue<bool>("glow", false) || Mod::get()->getSavedValue<int64_t>("color1", 0) == 15) {
                 spider->setGlowOutline(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("colorglow", 0)));
             } else {
                 spider->disableGlowOutline();
@@ -290,7 +290,7 @@ class $modify(MyProfilePage, ProfilePage) {
             swing->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("swing", 1), IconType::Swing);
             swing->setColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color1", 0)));
             swing->setSecondColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color2", 0)));
-            if (Mod::get()->getSavedValue<bool>("glow", false)) {
+            if (Mod::get()->getSavedValue<bool>("glow", false) || Mod::get()->getSavedValue<int64_t>("color1", 0) == 15) {
                 swing->setGlowOutline(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("colorglow", 0)));
             } else {
                 swing->disableGlowOutline();

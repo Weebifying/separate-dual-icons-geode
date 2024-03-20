@@ -208,7 +208,7 @@ class $modify(MyGarageLayer, GJGarageLayer) {
         player2->setColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color1", 0)));
         player2->setSecondColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color2", 0)));
 
-        if (Mod::get()->getSavedValue<bool>("glow", false)) {
+        if (Mod::get()->getSavedValue<bool>("glow", false) || Mod::get()->getSavedValue<int64_t>("color1", 0) == 15) {
             player2->setGlowOutline(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("colorglow", 0)));
         } else {
             player2->disableGlowOutline();
