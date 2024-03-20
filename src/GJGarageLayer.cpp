@@ -9,8 +9,8 @@ class $modify(MyGarageLayer, GJGarageLayer) {
     
     void on2PToggle(CCObject* sender) {
         auto btn = as<CCMenuItemSpriteExtra*>(sender);
-        if (btn->getID() == "player1-button") PlayerData::player2Selected = false;
-        else PlayerData::player2Selected = true;
+        if (btn->getID() == "player1-button") Mod::get()->setSavedValue<bool>("2pselected", false);
+        else Mod::get()->setSavedValue<bool>("2pselected", true);
 
         auto GM = GameManager::get();
         auto winSize = CCDirector::get()->getWinSize();
@@ -25,7 +25,7 @@ class $modify(MyGarageLayer, GJGarageLayer) {
         auto cursor1 = this->getChildByID("cursor-1");
         auto cursor2 = this->getChildByID("cursor-2");
 
-        if (PlayerData::player2Selected) {
+        if (Mod::get()->getSavedValue<bool>("2pselected", false)) {
             
             int tag = 0;
             int tag2 = 0;
@@ -184,7 +184,7 @@ class $modify(MyGarageLayer, GJGarageLayer) {
     }
 
     bool init() {
-        PlayerData::player2Selected = false;
+        Mod::get()->setSavedValue<bool>("2pselected", false);
         m_fields->page = 0;
         m_fields->type = IconType::Cube;
 
@@ -308,7 +308,7 @@ class $modify(MyGarageLayer, GJGarageLayer) {
         m_fields->type = p2;
         if (p1 == -1) m_fields->page = 0;
 
-        if (PlayerData::player2Selected) {
+        if (Mod::get()->getSavedValue<bool>("2pselected", false)) {
             auto winSize = CCDirector::get()->getWinSize();
 
             auto iconBar = getChildOfType<ListButtonBar>(this, 0);
@@ -402,7 +402,7 @@ class $modify(MyGarageLayer, GJGarageLayer) {
             hehe = true;
         
         // same death effect cuz not working rn :(
-        if (PlayerData::player2Selected &&  hehe  && m_fields->type != IconType::DeathEffect) {
+        if (Mod::get()->getSavedValue<bool>("2pselected", false) &&  hehe  && m_fields->type != IconType::DeathEffect) {
             auto player2 = as<SimplePlayer*>(this->getChildByID("player2-icon"));
             auto winSize = CCDirector::get()->getWinSize();
             bool isShipTrail = false;
@@ -531,6 +531,11 @@ class $modify(MyGarageLayer, GJGarageLayer) {
                 default:
                     log::error("what the hell lmao");
                     break;
+            }
+
+            if (as<int>(m_fields->type) < 10) {
+                player2->updatePlayerFrame(n, m_fields->type);
+                player2->updateColors();
             }
 
             CCNode* cursor;

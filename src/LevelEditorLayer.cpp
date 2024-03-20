@@ -122,7 +122,7 @@ class $modify(LevelEditorLayer) {
         player2->setColor(GameManager::get()->colorForIdx(Mod::get()->getSavedValue<int64_t>("color1", 0)));
         player2->setSecondColor(GameManager::get()->colorForIdx(Mod::get()->getSavedValue<int64_t>("color2", 0)));
         
-        if (Mod::get()->getSavedValue<bool>("glow", false)) {
+        if (Mod::get()->getSavedValue<bool>("glow", false) || Mod::get()->getSavedValue<int64_t>("color1", 0) == 15) {
             player2->m_hasGlow = true;
             player2->m_glowColor = GameManager::get()->colorForIdx(Mod::get()->getSavedValue<int64_t>("colorglow", 0));
         } else {

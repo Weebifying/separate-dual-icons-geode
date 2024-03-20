@@ -11,7 +11,7 @@ class $modify(CharacterColorPage) {
 
         auto GM = GameManager::get();
 
-        if (PlayerData::player2Selected) {
+        if (Mod::get()->getSavedValue<bool>("2pselected", false)) {
             auto layer = this->getChildByID("colors-layer");
             auto menu = layer->getChildByID("buttons-menu");
             auto winSize = CCDirector::get()->getWinSize();
@@ -125,7 +125,7 @@ class $modify(CharacterColorPage) {
     void toggleShip(CCObject* sender) {
         CharacterColorPage::toggleShip(sender);
         
-        if (PlayerData::player2Selected) {
+        if (Mod::get()->getSavedValue<bool>("2pselected", false)) {
             auto ship = getChildOfType<SimplePlayer>(as<CCMenuItemSpriteExtra*>(sender), 0);
 
             switch (m_fields->shipType) {
@@ -149,7 +149,7 @@ class $modify(CharacterColorPage) {
     
     void onMode(CCObject* sender) {
         CharacterColorPage::onMode(sender);
-        if (PlayerData::player2Selected) {
+        if (Mod::get()->getSavedValue<bool>("2pselected", false)) {
             auto layer = this->getChildByID("colors-layer");
             auto menu = layer->getChildByID("buttons-menu");
 
@@ -190,7 +190,7 @@ class $modify(CharacterColorPage) {
                 break;
         }
 
-        if (PlayerData::player2Selected && GM->isColorUnlocked(sender->getTag(), ut)) {
+        if (Mod::get()->getSavedValue<bool>("2pselected", false) && GM->isColorUnlocked(sender->getTag(), ut)) {
             auto layer = this->getChildByID("colors-layer");
             auto menu = layer->getChildByID("buttons-menu");
             std::vector<SimplePlayer*> icons;
@@ -216,12 +216,12 @@ class $modify(CharacterColorPage) {
                             menu->getChildByID(std::to_string(sender->getTag()))->getPositionY() + menu->getPositionY()
                         });
 
+                        Mod::get()->setSavedValue<int64_t>("color1", sender->getTag());
                         for (auto* icon : icons) {
                             icon->setColor(GM->colorForIdx(sender->getTag()));
                         }
                         player2->setColor(GM->colorForIdx(sender->getTag()));
 
-                        Mod::get()->setSavedValue<int64_t>("color1", sender->getTag());
                     } else {
                         ItemInfoPopup::create(sender->getTag(), UnlockType::Col1)->show();
                         return;
@@ -235,12 +235,12 @@ class $modify(CharacterColorPage) {
                             menu->getChildByID(std::to_string(sender->getTag()))->getPositionY() + menu->getPositionY()
                         });
 
+                        Mod::get()->setSavedValue<int64_t>("color2", sender->getTag());
                         for (auto* icon : icons) {
                             icon->setSecondColor(GM->colorForIdx(sender->getTag()));
                         }
                         player2->setSecondColor(GM->colorForIdx(sender->getTag()));
 
-                        Mod::get()->setSavedValue<int64_t>("color2", sender->getTag());
                     } else {
                         ItemInfoPopup::create(sender->getTag(), UnlockType::Col2)->show();
                         return;
@@ -254,6 +254,7 @@ class $modify(CharacterColorPage) {
                             menu->getChildByID(std::to_string(sender->getTag()))->getPositionY() + menu->getPositionY()
                         });
 
+                        Mod::get()->setSavedValue<int64_t>("colorglow", sender->getTag());
                         if (Mod::get()->getSavedValue<bool>("glow", false)) {
                             for (auto* icon : icons) {
                                 icon->setGlowOutline(GM->colorForIdx(sender->getTag()));
@@ -261,7 +262,6 @@ class $modify(CharacterColorPage) {
                             player2->setGlowOutline(GM->colorForIdx(sender->getTag()));
                         }
 
-                        Mod::get()->setSavedValue<int64_t>("colorglow", sender->getTag());
                     } else {
                         ItemInfoPopup::create(sender->getTag(), UnlockType::Col2)->show();
                         return;
@@ -278,7 +278,7 @@ class $modify(CharacterColorPage) {
     }
 
     void toggleGlow(CCObject* sender) {
-        if (PlayerData::player2Selected) {
+        if (Mod::get()->getSavedValue<bool>("2pselected", false)) {
             auto GM = GameManager::get();
 
             auto layer = this->getChildByID("colors-layer");

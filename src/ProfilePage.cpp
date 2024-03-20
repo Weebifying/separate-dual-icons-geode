@@ -7,7 +7,12 @@ class $modify(MyProfilePage, ProfilePage) {
     // make ship/jetpack toggle
     bool hasLoaded = false;
     IconType shipType = IconType::Ship;
-
+    
+    //BUI added
+    GJUserScore* originalScore = m_score;
+    GJUserScore* p2Score;
+    //
+    
     static void onModify(auto& self) {
         self.setHookPriority("CharacterColorPage::loadPageFromUserInfo", 1000000);
     }
@@ -16,7 +21,7 @@ class $modify(MyProfilePage, ProfilePage) {
         auto ship = getChildOfType<SimplePlayer>(as<CCNode*>(sender), 0);
         auto GM = GameManager::get();
 
-        if (PlayerData::player2Selected) {
+        if (Mod::get()->getSavedValue<bool>("2pselected", false)) {
             switch (m_fields->shipType) {
                 case IconType::Ship:
                     m_fields->shipType = IconType::Jetpack;
@@ -61,10 +66,19 @@ class $modify(MyProfilePage, ProfilePage) {
         auto robot = getChildOfType<SimplePlayer>(menu->getChildByID("player-robot"), 0);
         auto spider = getChildOfType<SimplePlayer>(menu->getChildByID("player-spider"), 0);
         auto swing = getChildOfType<SimplePlayer>(menu->getChildByID("player-swing"), 0);
-
+        
+        //BUI added
+        bool BUI = Loader::get()->isModLoaded("rynat.better_unlock_info");
+        SimplePlayer* jetpack = nullptr;
+        if (BUI) {
+            m_score = originalScore;
+            if (menu->getChildByID("player-jetpack"))
+                jetpack = getChildOfType<SimplePlayer>(menu->getChildByID("player-jetpack"), 0);
+        }
+        //
 
         if (as<CCMenuItemToggler*>(sender)->isOn()) {
-            PlayerData::player2Selected = false;
+            Mod::get()->setSavedValue<bool>("2pselected", false);
 
             cube->updatePlayerFrame(GM->getPlayerFrame(), IconType::Cube);
             cube->setColor(GM->colorForIdx(GM->getPlayerColor()));
@@ -75,6 +89,7 @@ class $modify(MyProfilePage, ProfilePage) {
                 cube->disableGlowOutline();
             }
 
+            /*
             if (m_fields->shipType == IconType::Ship) ship->updatePlayerFrame(GM->getPlayerShip(), IconType::Ship);
             else ship->updatePlayerFrame(GM->getPlayerJetpack(), IconType::Jetpack);
             ship->setColor(GM->colorForIdx(GM->getPlayerColor()));
@@ -84,6 +99,31 @@ class $modify(MyProfilePage, ProfilePage) {
             } else {
                 ship->disableGlowOutline();
             }
+            */
+            //BUI added
+            if (jetpack) {
+                ship->updatePlayerFrame(GM->getPlayerShip(), IconType::Ship);
+                jetpack->updatePlayerFrame(GM->getPlayerJetpack(), IconType::Jetpack);
+                
+                jetpack->setColor(GM->colorForIdx(GM->getPlayerColor()));
+                jetpack->setSecondColor(GM->colorForIdx(GM->getPlayerColor2()));
+                if (GM->getPlayerGlow()) {
+                    jetpack->setGlowOutline(GM->colorForIdx(GM->getPlayerGlowColor()));
+                } else {
+                    jetpack->disableGlowOutline();
+                }
+            } else {
+                if (m_fields->shipType == IconType::Ship) ship->updatePlayerFrame(GM->getPlayerShip(), IconType::Ship);
+                else ship->updatePlayerFrame(GM->getPlayerJetpack(), IconType::Jetpack);
+            }
+            ship->setColor(GM->colorForIdx(GM->getPlayerColor()));
+            ship->setSecondColor(GM->colorForIdx(GM->getPlayerColor2()));
+            if (GM->getPlayerGlow()) {
+                ship->setGlowOutline(GM->colorForIdx(GM->getPlayerGlowColor()));
+            } else {
+                ship->disableGlowOutline();
+            }
+            //
 
             ball->updatePlayerFrame(GM->getPlayerBall(), IconType::Ball);
             ball->setColor(GM->colorForIdx(GM->getPlayerColor()));
@@ -139,7 +179,23 @@ class $modify(MyProfilePage, ProfilePage) {
                 swing->disableGlowOutline();
             }
         } else {
-            PlayerData::player2Selected = true;
+            Mod::get()->setSavedValue<bool>("2pselected", true);
+            
+            //BUI added
+            if (BUI) {
+                p2Score = GJUserScore::create();
+                p2Score->m_playerCube = Mod::get()->getSavedValue<int64_t>("cube", 1);
+                p2Score->m_playerShip = Mod::get()->getSavedValue<int64_t>("ship", 1);
+                p2Score->m_playerBall = Mod::get()->getSavedValue<int64_t>("roll", 1);
+                p2Score->m_playerUfo = Mod::get()->getSavedValue<int64_t>("bird", 1);
+                p2Score->m_playerWave = Mod::get()->getSavedValue<int64_t>("dart", 1);
+                p2Score->m_playerRobot = Mod::get()->getSavedValue<int64_t>("robot", 1);
+                p2Score->m_playerSpider = Mod::get()->getSavedValue<int64_t>("spider", 1);
+                p2Score->m_playerSwing = Mod::get()->getSavedValue<int64_t>("swing", 1);
+                p2Score->m_playerJetpack = Mod::get()->getSavedValue<int64_t>("jetpack", 1);
+                m_score = p2Score;
+            }
+            //
 
             cube->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("cube", 1), IconType::Cube);
             cube->setColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color1", 0)));
@@ -150,6 +206,7 @@ class $modify(MyProfilePage, ProfilePage) {
                 cube->disableGlowOutline();
             }
 
+            /*
             if (m_fields->shipType == IconType::Ship) ship->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("ship", 1), IconType::Ship);
             else ship->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("jetpack", 1), IconType::Jetpack);
             ship->setColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color1", 0)));
@@ -159,6 +216,31 @@ class $modify(MyProfilePage, ProfilePage) {
             } else {
                 ship->disableGlowOutline();
             }
+            */
+            //BUI added
+            if (jetpack) {
+                ship->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("ship", 1), IconType::Ship);
+                jetpack->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("jetpack", 1), IconType::Jetpack);
+                
+                jetpack->setColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color1", 0)));
+                jetpack->setSecondColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color2", 0)));
+                if (Mod::get()->getSavedValue<bool>("glow", false)) {
+                    jetpack->setGlowOutline(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("colorglow", 0)));
+                } else {
+                    jetpack->disableGlowOutline();
+                }
+            } else {
+                if (m_fields->shipType == IconType::Ship) ship->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("ship", 1), IconType::Ship);
+                else ship->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("jetpack", 1), IconType::Jetpack);
+            }
+            ship->setColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color1", 0)));
+            ship->setSecondColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color2", 0)));
+            if (Mod::get()->getSavedValue<bool>("glow", false)) {
+                ship->setGlowOutline(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("colorglow", 0)));
+            } else {
+                ship->disableGlowOutline();
+            }
+            //
 
             ball->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("roll", 1), IconType::Ball);
             ball->setColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color1", 0)));
@@ -218,7 +300,7 @@ class $modify(MyProfilePage, ProfilePage) {
 
     void loadPageFromUserInfo(GJUserScore* p0){
         ProfilePage::loadPageFromUserInfo(p0);
-        PlayerData::player2Selected = false;
+        Mod::get()->setSavedValue<bool>("2pselected", false);
 
         auto GM = GameManager::get();
 
@@ -240,6 +322,9 @@ class $modify(MyProfilePage, ProfilePage) {
                 myShip->setContentSize(ship->getContentSize());
                 myShipSprite->setPosition({myShip->getContentWidth()/2, myShip->getContentHeight()/2});
                 menu->addChild(myShip);
+                //BUI added
+                swapChildIndices(ship, myShip);
+                //
                 menu->removeChild(ship);
                 myShip->setID("player-ship");
 
