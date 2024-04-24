@@ -9,6 +9,7 @@ class $modify(PlayLayer) {
 
 
         PlayerObject* player2 = this->m_player2;
+        if (!player2) return true;
         if (player2->m_isShip) {
 
             if (this->m_level->isPlatformer())
