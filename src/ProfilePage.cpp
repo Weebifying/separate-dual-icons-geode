@@ -8,11 +8,6 @@ class $modify(MyProfilePage, ProfilePage) {
     bool hasLoaded = false;
     IconType shipType = IconType::Ship;
     
-    //BUI added
-    GJUserScore* originalScore = m_score;
-    GJUserScore* p2Score;
-    //
-    
     static void onModify(auto& self) {
         self.setHookPriority("CharacterColorPage::loadPageFromUserInfo", 1000000);
     }
@@ -70,11 +65,8 @@ class $modify(MyProfilePage, ProfilePage) {
         //BUI added
         bool BUI = Loader::get()->isModLoaded("rynat.better_unlock_info");
         SimplePlayer* jetpack = nullptr;
-        if (BUI) {
-            m_score = originalScore;
-            if (menu->getChildByID("player-jetpack"))
-                jetpack = getChildOfType<SimplePlayer>(menu->getChildByID("player-jetpack"), 0);
-        }
+        if (BUI && menu->getChildByID("player-jetpack"))
+            jetpack = getChildOfType<SimplePlayer>(menu->getChildByID("player-jetpack"), 0);
         //
 
         if (as<CCMenuItemToggler*>(sender)->isOn()) {
@@ -180,22 +172,6 @@ class $modify(MyProfilePage, ProfilePage) {
             }
         } else {
             Mod::get()->setSavedValue<bool>("2pselected", true);
-            
-            //BUI added
-            if (BUI) {
-                p2Score = GJUserScore::create();
-                p2Score->m_playerCube = Mod::get()->getSavedValue<int64_t>("cube", 1);
-                p2Score->m_playerShip = Mod::get()->getSavedValue<int64_t>("ship", 1);
-                p2Score->m_playerBall = Mod::get()->getSavedValue<int64_t>("roll", 1);
-                p2Score->m_playerUfo = Mod::get()->getSavedValue<int64_t>("bird", 1);
-                p2Score->m_playerWave = Mod::get()->getSavedValue<int64_t>("dart", 1);
-                p2Score->m_playerRobot = Mod::get()->getSavedValue<int64_t>("robot", 1);
-                p2Score->m_playerSpider = Mod::get()->getSavedValue<int64_t>("spider", 1);
-                p2Score->m_playerSwing = Mod::get()->getSavedValue<int64_t>("swing", 1);
-                p2Score->m_playerJetpack = Mod::get()->getSavedValue<int64_t>("jetpack", 1);
-                m_score = p2Score;
-            }
-            //
 
             cube->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("cube", 1), IconType::Cube);
             cube->setColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color1", 0)));
