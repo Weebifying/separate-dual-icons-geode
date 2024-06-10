@@ -3,7 +3,9 @@
 
 
 class $modify(PlayerObject) {
-    bool isMini = false;
+    struct Fields {
+        bool m_is2PMini = false;
+    };
 
     void setupStreak() {
         // thanks alphalaneous for the fucking genius code
@@ -56,11 +58,14 @@ class $modify(PlayerObject) {
         
         
         if (PlayLayer::get()) {
-            if (this == PlayLayer::get()->m_player2)
-                PlayerObject::updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("cube", 1));
+            if (this == PlayLayer::get()->m_player2) {
+                if (m_fields->m_is2PMini && this->m_gamevar0060) PlayerObject::updatePlayerFrame(0);
+                else PlayerObject::updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("cube", 1));
+            }
         } else if (LevelEditorLayer::get()) {
             if (this == LevelEditorLayer::get()->m_player2)
-                PlayerObject::updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("cube", 1));
+                if (m_fields->m_is2PMini && this->m_gamevar0060) PlayerObject::updatePlayerFrame(0);
+                else PlayerObject::updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("cube", 1));
         }
     }
     
@@ -84,10 +89,12 @@ class $modify(PlayerObject) {
         
         if (PlayLayer::get()) {
             if (this == PlayLayer::get()->m_player2)
-                PlayerObject::updatePlayerRollFrame(Mod::get()->getSavedValue<int64_t>("roll", 1));
+                if (m_fields->m_is2PMini && this->m_gamevar0060) PlayerObject::updatePlayerRollFrame(0);
+                else PlayerObject::updatePlayerRollFrame(Mod::get()->getSavedValue<int64_t>("roll", 1));
         } else if (LevelEditorLayer::get()) {
             if (this == LevelEditorLayer::get()->m_player2)
-                PlayerObject::updatePlayerRollFrame(Mod::get()->getSavedValue<int64_t>("roll", 1));
+                if (m_fields->m_is2PMini && this->m_gamevar0060) PlayerObject::updatePlayerRollFrame(0);
+                else PlayerObject::updatePlayerRollFrame(Mod::get()->getSavedValue<int64_t>("roll", 1));
         }
         
     }
@@ -123,7 +130,6 @@ class $modify(PlayerObject) {
     void updatePlayerSwingFrame(int p0) {
         PlayerObject::updatePlayerSwingFrame(p0);
         
-        
         if (PlayLayer::get()) {
             if (this == PlayLayer::get()->m_player2)
                 PlayerObject::updatePlayerSwingFrame(Mod::get()->getSavedValue<int64_t>("swing", 1));
@@ -148,25 +154,72 @@ class $modify(PlayerObject) {
 
     }
 
-    // void togglePlayerScale(bool p0, bool p1) {
-    //     PlayerObject::togglePlayerScale(p0, p1);
+    void togglePlayerScale(bool p0, bool p1) {
+        PlayerObject::togglePlayerScale(p0, p1);
+
+        if (PlayLayer::get()) {
+            if (this == PlayLayer::get()->m_player2) m_fields->m_is2PMini = p0;
+        } else if (LevelEditorLayer::get()) {
+            if (this == LevelEditorLayer::get()->m_player2) m_fields->m_is2PMini = p0;
+        }
         
-    //     isMini = p0;
-    //     if (p0) {
-    //         if (PlayLayer::get()) {
-    //             if (this == PlayLayer::get()->m_player2) {
-    //                 if (this->m_isBall)
-    //                     PlayerObject::updatePlayerRollFrame(0);
-    //                 else
-    //                     PlayerObject::updatePlayerFrame(0);
-    //             }
-    //         } else if (LevelEditorLayer::get()) {
-    //             if (this == LevelEditorLayer::get()->m_player2)
-    //                 if (this->m_isBall)
-    //                     PlayerObject::updatePlayerRollFrame(0);
-    //                 else
-    //                     PlayerObject::updatePlayerFrame(0);
-    //         }   
-    //     }
-    // }
+        
+        if (p0) {
+            if (PlayLayer::get()) {
+                if (this == PlayLayer::get()->m_player2) {
+                    if (this->m_gamevar0060) {
+                        if (this->m_isBall)
+                            PlayerObject::updatePlayerRollFrame(0);
+                        else if (this->m_isDart)
+                            PlayerObject::updatePlayerDartFrame(Mod::get()->getSavedValue<int64_t>("dart", 1));
+                        else if (this->m_isSwing)
+                            PlayerObject::updatePlayerSwingFrame(Mod::get()->getSavedValue<int64_t>("swing", 1));
+                        else
+                            PlayerObject::updatePlayerFrame(0);
+                    }
+                }
+            } else if (LevelEditorLayer::get()) {
+                if (this == LevelEditorLayer::get()->m_player2) {
+                    if (this->m_gamevar0060) {
+                        if (this->m_isBall)
+                            PlayerObject::updatePlayerRollFrame(0);
+                        else if (this->m_isDart)
+                            PlayerObject::updatePlayerDartFrame(Mod::get()->getSavedValue<int64_t>("dart", 1));
+                        else if (this->m_isSwing)
+                            PlayerObject::updatePlayerSwingFrame(Mod::get()->getSavedValue<int64_t>("swing", 1));
+                        else
+                            PlayerObject::updatePlayerFrame(0);
+                    }
+                }
+            }
+        } else {
+            if (PlayLayer::get()) {
+                if (this == PlayLayer::get()->m_player2) {
+                    if (this->m_gamevar0060) {
+                        if (this->m_isBall)
+                            PlayerObject::updatePlayerRollFrame(Mod::get()->getSavedValue<int64_t>("roll", 1));
+                        else if (this->m_isDart)
+                            PlayerObject::updatePlayerDartFrame(Mod::get()->getSavedValue<int64_t>("dart", 1));
+                        else if (this->m_isSwing)
+                            PlayerObject::updatePlayerSwingFrame(Mod::get()->getSavedValue<int64_t>("swing", 1));
+                        else
+                            PlayerObject::updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("cube", 1));
+                    }
+                }
+            } else if (LevelEditorLayer::get()) {
+                if (this == LevelEditorLayer::get()->m_player2) {
+                    if (this->m_gamevar0060) {
+                        if (this->m_isBall)
+                            PlayerObject::updatePlayerRollFrame(Mod::get()->getSavedValue<int64_t>("roll", 1));
+                        else if (this->m_isDart)
+                            PlayerObject::updatePlayerDartFrame(Mod::get()->getSavedValue<int64_t>("dart", 1));
+                        else if (this->m_isSwing)
+                            PlayerObject::updatePlayerSwingFrame(Mod::get()->getSavedValue<int64_t>("swing", 1));
+                        else
+                            PlayerObject::updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("cube", 1));
+                    }
+                }
+            }
+        }
+    }
 };

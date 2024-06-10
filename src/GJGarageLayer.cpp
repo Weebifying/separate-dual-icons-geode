@@ -4,8 +4,10 @@
 
 
 class $modify(MyGarageLayer, GJGarageLayer) {
-    int page;
-    IconType type;
+    struct Fields {
+        int page;
+        IconType type;
+    };
     
     void on2PToggle(CCObject* sender) {
         auto btn = as<CCMenuItemSpriteExtra*>(sender);

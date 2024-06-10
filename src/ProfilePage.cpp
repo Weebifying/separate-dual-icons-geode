@@ -3,10 +3,11 @@
 
 
 class $modify(MyProfilePage, ProfilePage) {
-
-    // make ship/jetpack toggle
-    bool hasLoaded = false;
-    IconType shipType = IconType::Ship;
+    struct Fields {
+        // make ship/jetpack toggle
+        bool hasLoaded = false;
+        IconType shipType = IconType::Ship;
+    };
     
     static void onModify(auto& self) {
         self.setHookPriority("CharacterColorPage::loadPageFromUserInfo", 1000000);

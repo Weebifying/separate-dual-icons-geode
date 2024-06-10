@@ -15,8 +15,8 @@ jobs:
         - name: Windows
           os: windows-latest
 
-        - name: macOS
-          os: macos-latest
+        # - name: macOS
+        #   os: macos-latest
 
         - name: Android32
           os: ubuntu-latest
@@ -35,8 +35,11 @@ jobs:
       - name: Build the mod
         uses: geode-sdk/build-geode-mod@main
         with:
-          sdk: 'nightly'
+          bindings: weebifying/bindings
+          build-config: RelWithDebInfo
+          export-pdb: true
           combine: true
+          sdk: 'nightly'
           target: ${{ matrix.config.target }}
 
   package:

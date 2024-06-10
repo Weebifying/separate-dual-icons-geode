@@ -1,4 +1,7 @@
 # Separate Dual Icons Changelog
+## v1.1.0-beta.1
+- Added 2.206 support
+- Fixed an issue with the default mini icon option not working with 2p
 ## v1.0.3
 - Fixed a bug related to the game's forced glow when your primary color is black
 - Fixed a bug related to the profile page

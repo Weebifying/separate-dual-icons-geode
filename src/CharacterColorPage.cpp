@@ -3,8 +3,10 @@
 
 
 class $modify(CharacterColorPage) {
-    IconType shipType = IconType::Ship;
-    int colorMode = 0;
+    struct Fields {
+        IconType shipType = IconType::Ship;
+        int colorMode = 0;
+    };
 
     bool init() {
         if (!CharacterColorPage::init()) return false;

@@ -3,7 +3,9 @@
 
 
 class $modify(LevelEditorLayer) {
-    int lastType = 0;
+    struct Fields {
+        int lastType = 0;
+    };
 
     void postUpdate(float p0) {
         LevelEditorLayer::postUpdate(p0);

@@ -2,7 +2,7 @@
 - Fix(?) toggling glow on Android
 - Make separate death effects work
 - Make p1 and p2 icon kits quick swap ([#3](https://github.com/Weebifying/separate-dual-icons-geode/issues/3))
-- Fix old mini icons not working on 2p, considering having them separate as well ([#4](https://github.com/Weebifying/separate-dual-icons-geode/issues/4))
+- ~~Fix old mini icons not working on 2p~~, considering having them separate as well ([#4](https://github.com/Weebifying/separate-dual-icons-geode/issues/4))
 
 # Separate Dual Icons
 
