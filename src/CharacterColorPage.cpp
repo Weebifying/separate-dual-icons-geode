@@ -175,7 +175,6 @@ class $modify(CharacterColorPage) {
             });
 
             m_fields->colorMode = as<CCMenuItemSpriteExtra*>(sender)->getTag();
-            log::warn("mode {}", m_fields->colorMode);
         }
     }
 

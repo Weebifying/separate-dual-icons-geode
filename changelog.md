@@ -1,4 +1,7 @@
 # Separate Dual Icons Changelog
+## v1.1.0-beta.2
+- Updated for Geode v3.0.0-alpha.2
+- Added MacOS support
 ## v1.1.0-beta.1
 - Added 2.206 support
 - Fixed an issue with the default mini icon option not working with 2p
