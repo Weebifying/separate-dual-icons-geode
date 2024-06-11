@@ -185,6 +185,142 @@ class $modify(MyGarageLayer, GJGarageLayer) {
         }
     }
 
+    void swap2PKit(CCObject* sender) {
+        auto GM = GameManager::get();
+        Mod::get()->setSavedValue<bool>("2pselected", !Mod::get()->getSavedValue<bool>("2pselected", false));
+
+        int oldCube = GM->getPlayerFrame();
+        int oldShip = GM->getPlayerShip();
+        int oldRoll = GM->getPlayerBall();
+        int oldBird = GM->getPlayerBird();
+        int oldDart = GM->getPlayerDart();
+        int oldRobot = GM->getPlayerRobot();
+        int oldSpider = GM->getPlayerSpider();
+        int oldSwing = GM->getPlayerSwing();
+        int oldJetpack = GM->getPlayerJetpack();
+        int oldTrail = GM->getPlayerStreak();
+        int oldShipTrail = GM->getPlayerShipFire();
+        int oldDeath = GM->getPlayerDeathEffect();
+        int oldColor1 = GM->getPlayerColor();
+        int oldColor2 = GM->getPlayerColor2();
+        int oldColorGlow = GM->getPlayerGlowColor();
+        bool oldGlow = GM->getPlayerGlow();
+
+        GM->setPlayerFrame(Mod::get()->getSavedValue<int64_t>("cube", 1));
+        GM->setPlayerShip(Mod::get()->getSavedValue<int64_t>("ship", 1));
+        GM->setPlayerBall(Mod::get()->getSavedValue<int64_t>("roll", 1));
+        GM->setPlayerBird(Mod::get()->getSavedValue<int64_t>("bird", 1));
+        GM->setPlayerDart(Mod::get()->getSavedValue<int64_t>("dart", 1));
+        GM->setPlayerRobot(Mod::get()->getSavedValue<int64_t>("robot", 1));
+        GM->setPlayerSpider(Mod::get()->getSavedValue<int64_t>("spider", 1));
+        GM->setPlayerSwing(Mod::get()->getSavedValue<int64_t>("swing", 1));
+        GM->setPlayerJetpack(Mod::get()->getSavedValue<int64_t>("jetpack", 1));
+        GM->setPlayerStreak(Mod::get()->getSavedValue<int64_t>("trail", 1));
+        GM->setPlayerShipStreak(Mod::get()->getSavedValue<int64_t>("shiptrail", 1));
+        GM->setPlayerDeathEffect(Mod::get()->getSavedValue<int64_t>("death", 1));
+        GM->setPlayerColor(Mod::get()->getSavedValue<int64_t>("color1", 0));
+        GM->setPlayerColor2(Mod::get()->getSavedValue<int64_t>("color2", 0));
+        GM->setPlayerColor3(Mod::get()->getSavedValue<int64_t>("colorglow", 0));
+        GM->setPlayerGlow(Mod::get()->getSavedValue<bool>("glow", false));
+
+        Mod::get()->setSavedValue<int64_t>("cube", oldCube);
+        Mod::get()->setSavedValue<int64_t>("ship", oldShip);
+        Mod::get()->setSavedValue<int64_t>("roll", oldRoll);
+        Mod::get()->setSavedValue<int64_t>("bird", oldBird);
+        Mod::get()->setSavedValue<int64_t>("dart", oldDart);
+        Mod::get()->setSavedValue<int64_t>("robot", oldRobot);
+        Mod::get()->setSavedValue<int64_t>("spider", oldSpider);
+        Mod::get()->setSavedValue<int64_t>("swing", oldSwing);
+        Mod::get()->setSavedValue<int64_t>("jetpack", oldJetpack);
+        Mod::get()->setSavedValue<int64_t>("trail", oldTrail);
+        Mod::get()->setSavedValue<int64_t>("shiptrail", oldShipTrail);
+        Mod::get()->setSavedValue<int64_t>("death", oldDeath);
+        Mod::get()->setSavedValue<int64_t>("color1", oldColor1);
+        Mod::get()->setSavedValue<int64_t>("color2", oldColor2);
+        Mod::get()->setSavedValue<int64_t>("colorglow", oldColorGlow);
+        Mod::get()->setSavedValue<bool>("glow", oldGlow);
+
+        if (Mod::get()->getSavedValue<bool>("2pselected", false)) {
+            this->getChildByID("arrow-1")->setVisible(false);
+            this->getChildByID("arrow-2")->setVisible(true);
+        } else {
+            this->getChildByID("arrow-1")->setVisible(true);
+            this->getChildByID("arrow-2")->setVisible(false);
+        }
+
+        auto player1 = as<SimplePlayer*>(this->getChildByID("player-icon"));
+        auto player2 = as<SimplePlayer*>(this->getChildByID("player2-icon"));
+        switch ((int)GM->m_playerIconType) {
+            case 0:
+                player1->updatePlayerFrame(GM->m_playerFrame, IconType::Cube);
+                break;
+            case 1:
+                player1->updatePlayerFrame(GM->m_playerShip, IconType::Ship);
+                break;
+            case 2:
+                player1->updatePlayerFrame(GM->m_playerBall, IconType::Ball);
+                break;
+            case 3:
+                player1->updatePlayerFrame(GM->m_playerBird, IconType::Ufo);
+                break;
+            case 4:
+                player1->updatePlayerFrame(GM->m_playerDart, IconType::Wave);
+                break;
+            case 5:
+                player1->updatePlayerFrame(GM->m_playerRobot, IconType::Robot);
+                break;
+            case 6:
+                player1->updatePlayerFrame(GM->m_playerSpider, IconType::Spider);
+                break;
+            case 7:
+                player1->updatePlayerFrame(GM->m_playerSwing, IconType::Swing);
+                break;
+            case 8:
+                player1->updatePlayerFrame(GM->m_playerJetpack, IconType::Jetpack);
+                break;
+        }
+        player1->setColor(GM->colorForIdx(GM->m_playerColor));
+        player1->setSecondColor(GM->colorForIdx(GM->m_playerColor2));
+        player1->setGlowOutline(GM->colorForIdx(GM->m_playerGlowColor));
+        if (!GM->m_playerGlow) player1->disableGlowOutline();
+
+        switch (Mod::get()->getSavedValue("lasttype", 0)) {
+            case 0:
+                player2->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("cube", 1), IconType::Cube);
+                break;
+            case 1:
+                player2->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("ship", 1), IconType::Ship);
+                break;
+            case 2:
+                player2->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("roll", 1), IconType::Ball);
+                break;
+            case 3:
+                player2->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("bird", 1), IconType::Ufo);
+                break;
+            case 4:
+                player2->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("dart", 1), IconType::Wave);
+                break;
+            case 5:
+                player2->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("robot", 1), IconType::Robot);
+                break;
+            case 6:
+                player2->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("spider", 1), IconType::Spider);
+                break;
+            case 7:
+                player2->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("swing", 1), IconType::Swing);
+                break;
+            case 8:
+                player2->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("jetpack", 1), IconType::Jetpack);
+                break;
+        }
+        player2->setColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color1", 0)));
+        player2->setSecondColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color2", 0)));
+        player2->setGlowOutline(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("colorglow", 0)));
+        if (!Mod::get()->getSavedValue<bool>("glow", false)) player2->disableGlowOutline();
+
+
+    }
+
     bool init() {
         Mod::get()->setSavedValue<bool>("2pselected", false);
         m_fields->page = 0;
@@ -299,6 +435,13 @@ class $modify(MyGarageLayer, GJGarageLayer) {
 
         this->addChild(arrow1);
         this->addChild(arrow2);
+
+    
+        auto label = CCLabelBMFont::create("Swap", "bigFont.fnt");
+        auto swapSprite = CircleButtonSprite::create(label, CircleBaseColor::Green, CircleBaseSize::Small);
+        auto swapBtn = CCMenuItemSpriteExtra::create(swapSprite, this, menu_selector(MyGarageLayer::swap2PKit));
+        this->getChildByID("shards-menu")->addChild(swapBtn);
+        this->getChildByID("shards-menu")->updateLayout();
 
         return true;
     }
