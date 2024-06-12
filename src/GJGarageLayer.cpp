@@ -437,9 +437,9 @@ class $modify(MyGarageLayer, GJGarageLayer) {
         this->addChild(arrow2);
 
     
-        auto label = CCLabelBMFont::create("Swap", "bigFont.fnt");
-        auto swapSprite = CircleButtonSprite::create(label, CircleBaseColor::Green, CircleBaseSize::Small);
+        auto swapSprite = CircleButtonSprite::createWithSprite("GJ_2PSwapBtn.png"_spr, 0.95, CircleBaseColor::Green, CircleBaseSize::Small);
         auto swapBtn = CCMenuItemSpriteExtra::create(swapSprite, this, menu_selector(MyGarageLayer::swap2PKit));
+        swapBtn->setID("swap-2p-button");
         this->getChildByID("shards-menu")->addChild(swapBtn);
         this->getChildByID("shards-menu")->updateLayout();
 

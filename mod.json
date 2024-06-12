@@ -13,6 +13,9 @@
     "resources": {
 		"files": [
 			"./image.png"
+		],
+		"sprites": [
+			"res/*.png"
 		]
 	},
     "repository": "https://github.com/Weebifying/separate-dual-icons-geode"

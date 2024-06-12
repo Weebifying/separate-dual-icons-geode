@@ -1,6 +1,8 @@
 # Separate Dual Icons Changelog
 ## v1.1.0-beta.2
 - Updated for Geode v3.0.0-alpha.2
+- Added a button to quickly swap between player1 and player2 icon kits
+- Fixed an issue with glow toggling on Android
 ## v1.1.0-beta.1
 - Added 2.206 support
 - Fixed an issue with the default mini icon option not working with 2p
