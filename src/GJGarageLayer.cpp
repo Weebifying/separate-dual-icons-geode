@@ -248,6 +248,18 @@ class $modify(MyGarageLayer, GJGarageLayer) {
             this->getChildByID("arrow-2")->setVisible(false);
         }
 
+        auto cursor1 = as<CCSprite*>(this->getChildByID("cursor-1"));
+        auto cursor2 = as<CCSprite*>(this->getChildByID("cursor-2"));
+
+        if (cursor1->getColor() == ccColor3B({255, 255, 0})) {
+            cursor1->setColor({0, 255, 255});
+            cursor2->setColor({0, 255, 255});
+        } else if (cursor1->getColor() == ccColor3B({0, 255, 255})) {
+            cursor1->setColor({255, 255, 0});
+            cursor2->setColor({255, 255, 0});            
+        }
+
+
         auto player1 = as<SimplePlayer*>(this->getChildByID("player-icon"));
         auto player2 = as<SimplePlayer*>(this->getChildByID("player2-icon"));
         switch ((int)GM->m_playerIconType) {
@@ -317,8 +329,6 @@ class $modify(MyGarageLayer, GJGarageLayer) {
         player2->setSecondColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color2", 0)));
         player2->setGlowOutline(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("colorglow", 0)));
         if (!Mod::get()->getSavedValue<bool>("glow", false)) player2->disableGlowOutline();
-
-
     }
 
     bool init() {
@@ -442,6 +452,17 @@ class $modify(MyGarageLayer, GJGarageLayer) {
         swapBtn->setID("swap-2p-button");
         this->getChildByID("shards-menu")->addChild(swapBtn);
         this->getChildByID("shards-menu")->updateLayout();
+
+        if (Loader::get()->isModLoaded("omgrod.garage_plus")) {
+            if (auto garageMod = Loader::get()->getLoadedMod("omgrod.garage_plus")) {
+                if (garageMod->getSettingValue<bool>("top-buttons") && garageMod->getSettingValue<bool>("no-lock-hint")) {
+                    player2->setPositionY(player2->getPositionY() - winSize.height/12);
+                    arrow1->setPositionY(arrow1->getPositionY() - winSize.height/12);
+                    arrow2->setPositionY(arrow2->getPositionY() - winSize.height/12);
+                    playerMenu->setPositionY(playerMenu->getPositionY() - winSize.height/12);
+                }
+            }
+        }
 
         return true;
     }

@@ -1,4 +1,6 @@
 # Separate Dual Icons Changelog
+## v1.1.0-beta.3
+- Fixed incompatability with OmgRod's Garage Plus mod
 ## v1.1.0-beta.2
 - Updated for Geode v3.0.0-alpha.2
 - Added a button to quickly swap between player1 and player2 icon kits
