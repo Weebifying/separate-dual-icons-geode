@@ -63,9 +63,10 @@ class $modify(PlayerObject) {
                 else PlayerObject::updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("cube", 1));
             }
         } else if (LevelEditorLayer::get()) {
-            if (this == LevelEditorLayer::get()->m_player2)
+            if (this == LevelEditorLayer::get()->m_player2) {
                 if (m_fields->m_is2PMini && this->m_gamevar0060) PlayerObject::updatePlayerFrame(0);
                 else PlayerObject::updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("cube", 1));
+            }
         }
     }
     
@@ -88,13 +89,15 @@ class $modify(PlayerObject) {
         
         
         if (PlayLayer::get()) {
-            if (this == PlayLayer::get()->m_player2)
+            if (this == PlayLayer::get()->m_player2) {
                 if (m_fields->m_is2PMini && this->m_gamevar0060) PlayerObject::updatePlayerRollFrame(0);
                 else PlayerObject::updatePlayerRollFrame(Mod::get()->getSavedValue<int64_t>("roll", 1));
+            }
         } else if (LevelEditorLayer::get()) {
-            if (this == LevelEditorLayer::get()->m_player2)
+            if (this == LevelEditorLayer::get()->m_player2) {
                 if (m_fields->m_is2PMini && this->m_gamevar0060) PlayerObject::updatePlayerRollFrame(0);
                 else PlayerObject::updatePlayerRollFrame(Mod::get()->getSavedValue<int64_t>("roll", 1));
+            }
         }
         
     }

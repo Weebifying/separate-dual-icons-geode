@@ -29,6 +29,9 @@ class $modify(MyProfilePage, ProfilePage) {
                     ship->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("ship", 1), m_fields->shipType);
                     ship->setScale(0.95f);
                     break;
+                default:
+                    log::error("huh???");
+                    break;
             }
 
         } else {
@@ -42,6 +45,9 @@ class $modify(MyProfilePage, ProfilePage) {
                     m_fields->shipType = IconType::Ship;
                     ship->updatePlayerFrame(GM->getPlayerShip(), m_fields->shipType);
                     ship->setScale(0.95f);
+                    break;
+                default:
+                    log::error("huh???");
                     break;
             }
 
