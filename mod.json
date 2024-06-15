@@ -11,6 +11,13 @@
 	"developer": "Weebify",
 	"description": "Allows you to customize your 2nd player",
     "tags": ["Gameplay", "Interface", "Customization"],
+	"dependencies": [
+		{
+			"id": "geode.node-ids",
+			"version": ">=1.11.0",
+			"importance": "required"
+		}
+	],
     "resources": {
 		"files": [
 			"./image.png"
