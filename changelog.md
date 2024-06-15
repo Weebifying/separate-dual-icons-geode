@@ -1,4 +1,6 @@
 # Separate Dual Icons Changelog
+## v1.1.1
+- Oops I forgot to add Node IDs as dependency LOL
 ## v1.1.0
 - Updated for Geode v3.0.0-beta.1
 - Added MacOS support
