@@ -1,4 +1,7 @@
 # Separate Dual Icons Changelog
+## v1.1.0
+- Updated for Geode v3.0.0-beta.1
+- Added MacOS support
 ## v1.1.0-beta.3
 - Fixed incompatability with OmgRod's Garage Plus mod
 ## v1.1.0-beta.2
