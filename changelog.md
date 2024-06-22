@@ -1,4 +1,6 @@
 # Separate Dual Icons Changelog
+## v1.1.2
+- I hate OmgRod
 ## v1.1.1
 - Oops I forgot to add Node IDs as dependency LOL
 ## v1.1.0

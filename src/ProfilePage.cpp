@@ -280,9 +280,20 @@ class $modify(MyProfilePage, ProfilePage) {
         }
     };
 
+    // static ProfilePage* create(int p0, bool p1) {
+    //     auto res = ProfilePage::create(p0, p1);
+    //     log::error("ProfilePage:create");
+    //     return res;
+    // }
+
+    // void setupCommentsBrowser(cocos2d::CCArray* p0) {
+    //     ProfilePage::setupCommentsBrowser(p0);
+    //     log::info("ProfilePage::setupCommentsBrowser");
+    // }
+
     void loadPageFromUserInfo(GJUserScore* p0){
         ProfilePage::loadPageFromUserInfo(p0);
-        log::warn("ProfilePage::loadPageFromUserInfo");
+        // log::warn("ProfilePage::loadPageFromUserInfo");
         Mod::get()->setSavedValue<bool>("2pselected", false);
 
         auto GM = GameManager::get();

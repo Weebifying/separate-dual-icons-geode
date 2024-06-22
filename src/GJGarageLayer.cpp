@@ -453,16 +453,18 @@ class $modify(MyGarageLayer, GJGarageLayer) {
         this->getChildByID("shards-menu")->addChild(swapBtn);
         this->getChildByID("shards-menu")->updateLayout();
 
-        if (Loader::get()->isModLoaded("omgrod.garage_plus")) {
-            if (auto garageMod = Loader::get()->getLoadedMod("omgrod.garage_plus")) {
-                if (garageMod->getSettingValue<bool>("top-buttons") && garageMod->getSettingValue<bool>("no-lock-hint")) {
-                    player2->setPositionY(player2->getPositionY() - winSize.height/12);
-                    arrow1->setPositionY(arrow1->getPositionY() - winSize.height/12);
-                    arrow2->setPositionY(arrow2->getPositionY() - winSize.height/12);
-                    playerMenu->setPositionY(playerMenu->getPositionY() - winSize.height/12);
-                }
-            }
-        }
+
+        // i might actually kill myself if omgrod fucks me up again
+        // if (Loader::get()->isModLoaded("omgrod.garage_plus")) {
+        //     if (auto garageMod = Loader::get()->getLoadedMod("omgrod.garage_plus")) {
+        //         if (garageMod->getSettingValue<bool>("top-buttons") && garageMod->getSettingValue<bool>("no-lock-hint")) {
+        //             player2->setPositionY(player2->getPositionY() - winSize.height/12);
+        //             arrow1->setPositionY(arrow1->getPositionY() - winSize.height/12);
+        //             arrow2->setPositionY(arrow2->getPositionY() - winSize.height/12);
+        //             playerMenu->setPositionY(playerMenu->getPositionY() - winSize.height/12);
+        //         }
+        //     }
+        // }
 
         return true;
     }
