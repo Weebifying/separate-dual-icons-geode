@@ -13,7 +13,7 @@ class $modify(PlayerObject) {
         int origStreak = GameManager::get()->m_playerStreak;
         int origShipStreak = GameManager::get()->m_playerShipFire;
 
-        if (PlayLayer::get()) {
+        if (PlayLayer::get() || LevelEditorLayer::get()) {
             if (PlayerData::callPosStreak == 1) {
                 GameManager::get()->m_playerStreak = Mod::get()->getSavedValue<int64_t>("trail", 1);
                 GameManager::get()->m_playerShipFire = Mod::get()->getSavedValue<int64_t>("shiptrail", 1);
@@ -27,6 +27,23 @@ class $modify(PlayerObject) {
 
         GameManager::get()->m_playerStreak = origStreak;
         GameManager::get()->m_playerShipFire = origShipStreak;
+    }
+
+    void playDeathEffect() {
+        int origDeath = GameManager::get()->m_playerDeathEffect;
+        bool orgDeathExplode = GameManager::get()->getGameVariable("0153");
+
+        if (PlayLayer::get()) {
+            if (this == PlayLayer::get()->m_player2) {
+                GameManager::get()->m_playerDeathEffect = Mod::get()->getSavedValue<int64_t>("death", 1);
+                GameManager::get()->setGameVariable("0153", Mod::get()->getSavedValue<bool>("deathexplode", false));
+            }
+        }
+
+        PlayerObject::playDeathEffect();
+
+        GameManager::get()->m_playerDeathEffect = origDeath;
+        GameManager::get()->setGameVariable("0153", orgDeathExplode);
     }
 
     void setColor(ccColor3B const &color) {

@@ -4,9 +4,9 @@
 
 class $modify(PlayLayer) {
     bool init(GJGameLevel* p0, bool p1, bool p2) {
-        PlayerData::callPosStreak = 0;        
+        PlayerData::callPosStreak = 0;
         if (!PlayLayer::init(p0, p1, p2)) return false;
-
+        GameManager::get()->loadDeathEffect(Mod::get()->getSavedValue<int64_t>("death", 1));
 
         PlayerObject* player2 = this->m_player2;
         if (!player2) return true;

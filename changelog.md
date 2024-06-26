@@ -1,6 +1,8 @@
 # Separate Dual Icons Changelog
 ## v1.1.2
-- I hate OmgRod
+- Finally made separate death effects work (the `Explode` toggle is separated as well!)
+- Fixed separate ship fire not working in the editor
+- Fixed a bug with the 2P icon in garage not displaying correctly
 ## v1.1.1
 - Oops I forgot to add Node IDs as dependency LOL
 ## v1.1.0
