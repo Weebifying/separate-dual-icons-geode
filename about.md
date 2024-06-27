@@ -11,5 +11,5 @@ Allows you to customize your 2nd player
 ![Showcase](weebify.separate_dual_icons/image.png)
 
 ## Special thanks to:
-- Alphalaneous, for making the original 2.1 version so I can replicate 80% of their code
-- [ninXout](user:7479054) and [zmx](user:5327860)for testing on MacOS
+- [Alphalaneous](user:7834088), for making the original 2.1 version so I can replicate 80% of their code
+- [ninXout](user:7479054) and [zmx](user:5327860), for testing on MacOS
