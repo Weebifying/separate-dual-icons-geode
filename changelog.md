@@ -1,5 +1,5 @@
 # Separate Dual Icons Changelog
-## v1.1.2
+## v1.2.0
 - Finally made separate death effects work (the `Explode` toggle is separated as well!)
 - Fixed separate ship fire not working in the editor
 - Fixed a bug with the 2P icon in garage not displaying correctly
