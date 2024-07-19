@@ -1,6 +1,5 @@
 #include "PlayerData.hpp"
 #include <Geode/modify/GJGarageLayer.hpp>
-#include <Geode/modify/CCKeyboardDispatcher.hpp>
 
 class $modify(MyGarageLayer, GJGarageLayer) {
     struct Fields {
@@ -789,20 +788,5 @@ class $modify(MyGarageLayer, GJGarageLayer) {
         } else {
             GJGarageLayer::onSelect(sender);
         }
-    }
-};
-
-class $modify(CCKeyboardDispatcher) {
-    bool dispatchKeyboardMSG(cocos2d::enumKeyCodes key, bool down, bool repeat) {
-        PlayerObject* a;
-        if (key == KEY_OEMPeriod && down) {
-            Mod::get()->setSavedValue<bool>("deathexplode", false);
-            log::info("deathexplode set to false");
-        }
-        if (key == KEY_OEMComma && down) {
-            Mod::get()->setSavedValue<bool>("deathexplode", true);
-            log::info("deathexplode set to true");
-        }
-        return CCKeyboardDispatcher::dispatchKeyboardMSG(key, down, repeat);
     }
 };

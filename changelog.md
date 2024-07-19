@@ -1,4 +1,6 @@
 # Separate Dual Icons Changelog
+## v1.2.1
+- Fixed image preview in mod description
 ## v1.2.0
 - Finally made separate death effects work (the `Explode` toggle is separated as well!)
 - Fixed separate ship fire not working in the editor
