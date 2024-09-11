@@ -406,7 +406,7 @@ class $modify(MyProfilePage, ProfilePage) {
                 sprite2POn->setScale(0.7f);
 
                 auto toggler = CCMenuItemToggler::create(sprite2POff, sprite2POn, this, menu_selector(MyProfilePage::on2PToggle));
-                toggler->setID("2p-toggler"_spr);
+                toggler->setID("2p-toggler");
                 menu->addChild(toggler);
                 menu->updateLayout();
 

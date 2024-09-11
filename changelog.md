@@ -1,4 +1,6 @@
 # Separate Dual Icons Changelog
+## v1.2.3
+- Reverted a change that causes another unrelated crash... oops
 ## v1.2.2
 - Crash with Doggo's Animated Profiles Icon mod SHOULD be fixed
 ## v1.2.1

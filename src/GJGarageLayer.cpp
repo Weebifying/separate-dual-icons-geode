@@ -364,7 +364,7 @@ class $modify(MyGarageLayer, GJGarageLayer) {
         player1->setPositionX(player1->getPositionX() - winSize.width/12);
 
         auto player2 = SimplePlayer::create(0);
-        player2->setID("player2-icon"_spr);
+        player2->setID("player2-icon");
         player2->setScale(1.6f);
         player2->setPosition(player1->getPosition());
         player2->setPositionX(player2->getPositionX() + winSize.width/6);
@@ -422,7 +422,7 @@ class $modify(MyGarageLayer, GJGarageLayer) {
         auto playerMenu = CCMenu::create();
         playerMenu->setContentSize(winSize);
         playerMenu->setPosition({0, 0});
-        playerMenu->setID("player-buttons-menu"_spr);
+        playerMenu->setID("player-buttons-menu");
         this->addChild(playerMenu);
 
         auto sprite = CCSprite::create("GJ_button_01.png");
@@ -433,9 +433,9 @@ class $modify(MyGarageLayer, GJGarageLayer) {
         button1->setPosition(player1->getPosition());
         button2->setPosition(player2->getPosition());
         button1->setContentSize({70.f, 50.f});
-        button1->setID("player1-button"_spr);
+        button1->setID("player1-button");
         button2->setContentSize({70.f, 50.f});
-        button2->setID("player2-button"_spr);
+        button2->setID("player2-button");
 
         playerMenu->addChild(button1);
         playerMenu->addChild(button2);
@@ -446,12 +446,12 @@ class $modify(MyGarageLayer, GJGarageLayer) {
 
         arrow1->setScale(0.4f);
         arrow1->setPosition({player1->getPositionX() - winSize.width/12, player1->getPositionY()});
-        arrow1->setID("arrow-1"_spr);
+        arrow1->setID("arrow-1");
 
         arrow2->setScale(0.4f);
         arrow2->setFlipX(true);
         arrow2->setPosition({player2->getPositionX() + winSize.width/12, player2->getPositionY()});
-        arrow2->setID("arrow-2"_spr);
+        arrow2->setID("arrow-2");
 
         arrow2->setVisible(false);
 
@@ -472,7 +472,7 @@ class $modify(MyGarageLayer, GJGarageLayer) {
     
         auto swapSprite = CircleButtonSprite::createWithSprite("GJ_2PSwapBtn.png"_spr, 0.95, CircleBaseColor::Green, CircleBaseSize::Small);
         auto swapBtn = CCMenuItemSpriteExtra::create(swapSprite, this, menu_selector(MyGarageLayer::swap2PKit));
-        swapBtn->setID("swap-2p-button"_spr);
+        swapBtn->setID("swap-2p-button");
         this->getChildByID("shards-menu")->addChild(swapBtn);
         this->getChildByID("shards-menu")->updateLayout();
 
@@ -521,7 +521,7 @@ class $modify(MyGarageLayer, GJGarageLayer) {
             repToggler->setZOrder(bruh->getZOrder());
             repToggler->setScale(bruh->getScale());
             repToggler->setContentSize(bruh->getContentSize());
-            repToggler->setID("xd"_spr);
+            repToggler->setID("xd");
 
             bruh->getParent()->addChild(repToggler);
             bruh->removeFromParent();
