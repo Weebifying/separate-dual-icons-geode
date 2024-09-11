@@ -59,14 +59,24 @@ class $modify(MyProfilePage, ProfilePage) {
 
         auto layer = as<CCLayer*>(this->getChildren()->objectAtIndex(0));
         auto menu = layer->getChildByID("player-menu");
+        auto isAnimated = Loader::get()->isModLoaded("thesillydoggo.animatedprofiles");
 
         auto cube = getChildOfType<SimplePlayer>(menu->getChildByID("player-icon"), 0);
         auto ship = getChildOfType<SimplePlayer>(menu->getChildByID("player-ship"), 0);
         auto ball = getChildOfType<SimplePlayer>(menu->getChildByID("player-ball"), 0);
         auto ufo = getChildOfType<SimplePlayer>(menu->getChildByID("player-ufo"), 0);
         auto wave = getChildOfType<SimplePlayer>(menu->getChildByID("player-wave"), 0);
-        auto robot = getChildOfType<SimplePlayer>(menu->getChildByID("player-robot"), 0);
-        auto spider = getChildOfType<SimplePlayer>(menu->getChildByID("player-spider"), 0);
+        CCNode* robotNode = nullptr;
+        CCNode* spiderNode = nullptr;
+        if (isAnimated) {
+            robotNode = menu->getChildByID("player-robot")->getChildByID("player-robot");
+            spiderNode = menu->getChildByID("player-spider")->getChildByID("player-spider");
+        } else {
+            robotNode = menu->getChildByID("player-robot");
+            spiderNode = menu->getChildByID("player-spider");
+        }
+        auto robot = getChildOfType<SimplePlayer>(robotNode, 0);
+        auto spider = getChildOfType<SimplePlayer>(spiderNode, 0);
         auto swing = getChildOfType<SimplePlayer>(menu->getChildByID("player-swing"), 0);
         
         //BUI added
@@ -396,7 +406,7 @@ class $modify(MyProfilePage, ProfilePage) {
                 sprite2POn->setScale(0.7f);
 
                 auto toggler = CCMenuItemToggler::create(sprite2POff, sprite2POn, this, menu_selector(MyProfilePage::on2PToggle));
-                toggler->setID("2p-toggler");
+                toggler->setID("2p-toggler"_spr);
                 menu->addChild(toggler);
                 menu->updateLayout();
 
