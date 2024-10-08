@@ -1,4 +1,6 @@
 # Separate Dual Icons Changelog
+## v1.2.4
+- Fixed a crash when both Animated Profile Icon and Better Unlock Info are enabled
 ## v1.2.3
 - Reverted a change that causes another unrelated crash... oops
 ## v1.2.2

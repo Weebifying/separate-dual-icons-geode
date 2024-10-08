@@ -1,4 +1,5 @@
 #include "PlayerData.hpp"
+#include "Macros.hpp"
 #include <Geode/modify/ProfilePage.hpp>
 
 
@@ -17,16 +18,16 @@ class $modify(MyProfilePage, ProfilePage) {
         auto ship = getChildOfType<SimplePlayer>(as<CCNode*>(sender), 0);
         auto GM = GameManager::get();
 
-        if (Mod::get()->getSavedValue<bool>("2pselected", false)) {
+        if (GDI_GET_VALUE(bool, "2pselected", false)) {
             switch (m_fields->shipType) {
                 case IconType::Ship:
                     m_fields->shipType = IconType::Jetpack;
-                    ship->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("jetpack", 1), m_fields->shipType);
+                    ship->updatePlayerFrame(GDI_GET_VALUE(int64_t, "jetpack", 1), m_fields->shipType);
                     ship->setScale(0.9f);
                     break;
                 case IconType::Jetpack:
                     m_fields->shipType = IconType::Ship;
-                    ship->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("ship", 1), m_fields->shipType);
+                    ship->updatePlayerFrame(GDI_GET_VALUE(int64_t, "ship", 1), m_fields->shipType);
                     ship->setScale(0.95f);
                     break;
                 default:
@@ -60,6 +61,7 @@ class $modify(MyProfilePage, ProfilePage) {
         auto layer = as<CCLayer*>(this->getChildren()->objectAtIndex(0));
         auto menu = layer->getChildByID("player-menu");
         auto isAnimated = Loader::get()->isModLoaded("thesillydoggo.animatedprofiles");
+        auto BUI = Loader::get()->isModLoaded("rynat.better_unlock_info");
 
         auto cube = getChildOfType<SimplePlayer>(menu->getChildByID("player-icon"), 0);
         auto ship = getChildOfType<SimplePlayer>(menu->getChildByID("player-ship"), 0);
@@ -68,7 +70,7 @@ class $modify(MyProfilePage, ProfilePage) {
         auto wave = getChildOfType<SimplePlayer>(menu->getChildByID("player-wave"), 0);
         CCNode* robotNode = nullptr;
         CCNode* spiderNode = nullptr;
-        if (isAnimated) {
+        if (isAnimated && !BUI) {
             robotNode = menu->getChildByID("player-robot")->getChildByID("player-robot");
             spiderNode = menu->getChildByID("player-spider")->getChildByID("player-spider");
         } else {
@@ -80,14 +82,14 @@ class $modify(MyProfilePage, ProfilePage) {
         auto swing = getChildOfType<SimplePlayer>(menu->getChildByID("player-swing"), 0);
         
         //BUI added
-        bool BUI = Loader::get()->isModLoaded("rynat.better_unlock_info");
+        
         SimplePlayer* jetpack = nullptr;
         if (BUI && menu->getChildByID("player-jetpack"))
             jetpack = getChildOfType<SimplePlayer>(menu->getChildByID("player-jetpack"), 0);
         //
 
         if (as<CCMenuItemToggler*>(sender)->isOn()) {
-            Mod::get()->setSavedValue<bool>("2pselected", false);
+            GDI_SET_VALUE(bool, "2pselected", false);
 
             cube->updatePlayerFrame(GM->getPlayerFrame(), IconType::Cube);
             cube->setColor(GM->colorForIdx(GM->getPlayerColor()));
@@ -187,103 +189,103 @@ class $modify(MyProfilePage, ProfilePage) {
                 swing->disableGlowOutline();
             }
         } else {
-            Mod::get()->setSavedValue<bool>("2pselected", true);
+            GDI_SET_VALUE(bool, "2pselected", true);
 
-            cube->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("cube", 1), IconType::Cube);
-            cube->setColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color1", 0)));
-            cube->setSecondColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color2", 0)));
-            if (Mod::get()->getSavedValue<bool>("glow", false) || Mod::get()->getSavedValue<int64_t>("color1", 0) == 15) {
-                cube->setGlowOutline(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("colorglow", 0)));
+            cube->updatePlayerFrame(GDI_GET_VALUE(int64_t, "cube", 1), IconType::Cube);
+            cube->setColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color1", 0)));
+            cube->setSecondColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color2", 0)));
+            if (GDI_GET_VALUE(bool, "glow", false) || GDI_GET_VALUE(int64_t, "color1", 0) == 15) {
+                cube->setGlowOutline(GM->colorForIdx(GDI_GET_VALUE(int64_t, "colorglow", 0)));
             } else {
                 cube->disableGlowOutline();
             }
 
             /*
-            if (m_fields->shipType == IconType::Ship) ship->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("ship", 1), IconType::Ship);
-            else ship->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("jetpack", 1), IconType::Jetpack);
-            ship->setColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color1", 0)));
-            ship->setSecondColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color2", 0)));
-            if (Mod::get()->getSavedValue<bool>("glow", false) || Mod::get()->getSavedValue<int64_t>("color1", 0) == 15) {
-                ship->setGlowOutline(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("colorglow", 0)));
+            if (m_fields->shipType == IconType::Ship) ship->updatePlayerFrame(GDI_GET_VALUE(int64_t, "ship", 1), IconType::Ship);
+            else ship->updatePlayerFrame(GDI_GET_VALUE(int64_t, "jetpack", 1), IconType::Jetpack);
+            ship->setColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color1", 0)));
+            ship->setSecondColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color2", 0)));
+            if (GDI_GET_VALUE(bool, "glow", false) || GDI_GET_VALUE(int64_t, "color1", 0) == 15) {
+                ship->setGlowOutline(GM->colorForIdx(GDI_GET_VALUE(int64_t, "colorglow", 0)));
             } else {
                 ship->disableGlowOutline();
             }
             */
             //BUI added
             if (jetpack) {
-                ship->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("ship", 1), IconType::Ship);
-                jetpack->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("jetpack", 1), IconType::Jetpack);
+                ship->updatePlayerFrame(GDI_GET_VALUE(int64_t, "ship", 1), IconType::Ship);
+                jetpack->updatePlayerFrame(GDI_GET_VALUE(int64_t, "jetpack", 1), IconType::Jetpack);
                 
-                jetpack->setColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color1", 0)));
-                jetpack->setSecondColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color2", 0)));
-                if (Mod::get()->getSavedValue<bool>("glow", false) || Mod::get()->getSavedValue<int64_t>("color1", 0) == 15) {
-                    jetpack->setGlowOutline(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("colorglow", 0)));
+                jetpack->setColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color1", 0)));
+                jetpack->setSecondColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color2", 0)));
+                if (GDI_GET_VALUE(bool, "glow", false) || GDI_GET_VALUE(int64_t, "color1", 0) == 15) {
+                    jetpack->setGlowOutline(GM->colorForIdx(GDI_GET_VALUE(int64_t, "colorglow", 0)));
                 } else {
                     jetpack->disableGlowOutline();
                 }
             } else {
-                if (m_fields->shipType == IconType::Ship) ship->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("ship", 1), IconType::Ship);
-                else ship->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("jetpack", 1), IconType::Jetpack);
+                if (m_fields->shipType == IconType::Ship) ship->updatePlayerFrame(GDI_GET_VALUE(int64_t, "ship", 1), IconType::Ship);
+                else ship->updatePlayerFrame(GDI_GET_VALUE(int64_t, "jetpack", 1), IconType::Jetpack);
             }
-            ship->setColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color1", 0)));
-            ship->setSecondColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color2", 0)));
-            if (Mod::get()->getSavedValue<bool>("glow", false) || Mod::get()->getSavedValue<int64_t>("color1", 0) == 15) {
-                ship->setGlowOutline(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("colorglow", 0)));
+            ship->setColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color1", 0)));
+            ship->setSecondColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color2", 0)));
+            if (GDI_GET_VALUE(bool, "glow", false) || GDI_GET_VALUE(int64_t, "color1", 0) == 15) {
+                ship->setGlowOutline(GM->colorForIdx(GDI_GET_VALUE(int64_t, "colorglow", 0)));
             } else {
                 ship->disableGlowOutline();
             }
             //
 
-            ball->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("roll", 1), IconType::Ball);
-            ball->setColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color1", 0)));
-            ball->setSecondColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color2", 0)));
-            if (Mod::get()->getSavedValue<bool>("glow", false) || Mod::get()->getSavedValue<int64_t>("color1", 0) == 15) {
-                ball->setGlowOutline(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("colorglow", 0)));
+            ball->updatePlayerFrame(GDI_GET_VALUE(int64_t, "roll", 1), IconType::Ball);
+            ball->setColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color1", 0)));
+            ball->setSecondColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color2", 0)));
+            if (GDI_GET_VALUE(bool, "glow", false) || GDI_GET_VALUE(int64_t, "color1", 0) == 15) {
+                ball->setGlowOutline(GM->colorForIdx(GDI_GET_VALUE(int64_t, "colorglow", 0)));
             } else {
                 ball->disableGlowOutline();
             }
 
-            ufo->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("bird", 1), IconType::Ufo);
-            ufo->setColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color1", 0)));
-            ufo->setSecondColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color2", 0)));
-            if (Mod::get()->getSavedValue<bool>("glow", false) || Mod::get()->getSavedValue<int64_t>("color1", 0) == 15) {
-                ufo->setGlowOutline(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("colorglow", 0)));
+            ufo->updatePlayerFrame(GDI_GET_VALUE(int64_t, "bird", 1), IconType::Ufo);
+            ufo->setColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color1", 0)));
+            ufo->setSecondColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color2", 0)));
+            if (GDI_GET_VALUE(bool, "glow", false) || GDI_GET_VALUE(int64_t, "color1", 0) == 15) {
+                ufo->setGlowOutline(GM->colorForIdx(GDI_GET_VALUE(int64_t, "colorglow", 0)));
             } else {
                 ufo->disableGlowOutline();
             }
 
-            wave->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("dart", 1), IconType::Wave);
-            wave->setColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color1", 0)));
-            wave->setSecondColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color2", 0)));
-            if (Mod::get()->getSavedValue<bool>("glow", false) || Mod::get()->getSavedValue<int64_t>("color1", 0) == 15) {
-                wave->setGlowOutline(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("colorglow", 0)));
+            wave->updatePlayerFrame(GDI_GET_VALUE(int64_t, "dart", 1), IconType::Wave);
+            wave->setColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color1", 0)));
+            wave->setSecondColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color2", 0)));
+            if (GDI_GET_VALUE(bool, "glow", false) || GDI_GET_VALUE(int64_t, "color1", 0) == 15) {
+                wave->setGlowOutline(GM->colorForIdx(GDI_GET_VALUE(int64_t, "colorglow", 0)));
             } else {
                 wave->disableGlowOutline();
             }
 
-            robot->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("robot", 1), IconType::Robot);
-            robot->setColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color1", 0)));
-            robot->setSecondColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color2", 0)));
-            if (Mod::get()->getSavedValue<bool>("glow", false) || Mod::get()->getSavedValue<int64_t>("color1", 0) == 15) {
-                robot->setGlowOutline(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("colorglow", 0)));
+            robot->updatePlayerFrame(GDI_GET_VALUE(int64_t, "robot", 1), IconType::Robot);
+            robot->setColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color1", 0)));
+            robot->setSecondColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color2", 0)));
+            if (GDI_GET_VALUE(bool, "glow", false) || GDI_GET_VALUE(int64_t, "color1", 0) == 15) {
+                robot->setGlowOutline(GM->colorForIdx(GDI_GET_VALUE(int64_t, "colorglow", 0)));
             } else {
                 robot->disableGlowOutline();
             }
 
-            spider->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("spider", 1), IconType::Spider);
-            spider->setColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color1", 0)));
-            spider->setSecondColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color2", 0)));
-            if (Mod::get()->getSavedValue<bool>("glow", false) || Mod::get()->getSavedValue<int64_t>("color1", 0) == 15) {
-                spider->setGlowOutline(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("colorglow", 0)));
+            spider->updatePlayerFrame(GDI_GET_VALUE(int64_t, "spider", 1), IconType::Spider);
+            spider->setColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color1", 0)));
+            spider->setSecondColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color2", 0)));
+            if (GDI_GET_VALUE(bool, "glow", false) || GDI_GET_VALUE(int64_t, "color1", 0) == 15) {
+                spider->setGlowOutline(GM->colorForIdx(GDI_GET_VALUE(int64_t, "colorglow", 0)));
             } else {
                 spider->disableGlowOutline();
             }
 
-            swing->updatePlayerFrame(Mod::get()->getSavedValue<int64_t>("swing", 1), IconType::Swing);
-            swing->setColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color1", 0)));
-            swing->setSecondColor(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("color2", 0)));
-            if (Mod::get()->getSavedValue<bool>("glow", false) || Mod::get()->getSavedValue<int64_t>("color1", 0) == 15) {
-                swing->setGlowOutline(GM->colorForIdx(Mod::get()->getSavedValue<int64_t>("colorglow", 0)));
+            swing->updatePlayerFrame(GDI_GET_VALUE(int64_t, "swing", 1), IconType::Swing);
+            swing->setColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color1", 0)));
+            swing->setSecondColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color2", 0)));
+            if (GDI_GET_VALUE(bool, "glow", false) || GDI_GET_VALUE(int64_t, "color1", 0) == 15) {
+                swing->setGlowOutline(GM->colorForIdx(GDI_GET_VALUE(int64_t, "colorglow", 0)));
             } else {
                 swing->disableGlowOutline();
             }
@@ -304,7 +306,7 @@ class $modify(MyProfilePage, ProfilePage) {
     void loadPageFromUserInfo(GJUserScore* p0){
         ProfilePage::loadPageFromUserInfo(p0);
         // log::warn("ProfilePage::loadPageFromUserInfo");
-        Mod::get()->setSavedValue<bool>("2pselected", false);
+        GDI_SET_VALUE(bool, "2pselected", false);
 
         auto GM = GameManager::get();
 
