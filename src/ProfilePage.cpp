@@ -301,7 +301,7 @@ class $modify(MyProfilePage, ProfilePage) {
                 if (GM->getPlayerGlow()) player->setGlowOutline(GM->colorForIdx(GM->getPlayerGlowColor()));
                 else player->disableGlowOutline();
 
-                player = as<SimplePlayer*>(menu->getChildByID("player-ship")->getChildByID("player-ship"));
+                player = as<SimplePlayer*>(as<CCMenuItemSpriteExtra*>(menu->getChildByID("player-ship"))->getNormalImage());
                 player->updatePlayerFrame(GM->getPlayerShip(), IconType::Ship);
                 player->setColor(GM->colorForIdx(GM->getPlayerColor()));
                 player->setSecondColor(GM->colorForIdx(GM->getPlayerColor2()));
