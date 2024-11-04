@@ -7,45 +7,25 @@ class $modify(MyProfilePage, ProfilePage) {
     struct Fields {
         // make ship/jetpack toggle
         bool hasLoaded = false;
-        IconType shipType = IconType::Ship;
     };
     
     static void onModify(auto& self) {
         self.setHookPriority("CharacterColorPage::loadPageFromUserInfo", 1000000);
     }
 
-    void onShipToggle(CCObject* sender) {
+    void toggleShip(CCObject* sender) {
+        ProfilePage::toggleShip(sender);
+
         auto ship = getChildOfType<SimplePlayer>(as<CCNode*>(sender), 0);
         auto GM = GameManager::get();
 
         if (GDI_GET_VALUE(bool, "2pselected", false)) {
-            switch (m_fields->shipType) {
-                case IconType::Ship:
-                    m_fields->shipType = IconType::Jetpack;
-                    ship->updatePlayerFrame(GDI_GET_VALUE(int64_t, "jetpack", 1), m_fields->shipType);
-                    ship->setScale(0.9f);
+            switch (sender->getTag()) {
+                case 1:
+                    ship->updatePlayerFrame(GDI_GET_VALUE(int64_t, "jetpack", 1), IconType::Ship);
                     break;
-                case IconType::Jetpack:
-                    m_fields->shipType = IconType::Ship;
-                    ship->updatePlayerFrame(GDI_GET_VALUE(int64_t, "ship", 1), m_fields->shipType);
-                    ship->setScale(0.95f);
-                    break;
-                default:
-                    log::error("huh???");
-                    break;
-            }
-
-        } else {
-            switch (m_fields->shipType) {
-                case IconType::Ship:
-                    m_fields->shipType = IconType::Jetpack;
-                    ship->updatePlayerFrame(GM->getPlayerJetpack(), m_fields->shipType);
-                    ship->setScale(0.9f);
-                    break;
-                case IconType::Jetpack:
-                    m_fields->shipType = IconType::Ship;
-                    ship->updatePlayerFrame(GM->getPlayerShip(), m_fields->shipType);
-                    ship->setScale(0.95f);
+                case 8:
+                    ship->updatePlayerFrame(GDI_GET_VALUE(int64_t, "ship", 1), IconType::Jetpack);
                     break;
                 default:
                     log::error("huh???");
@@ -58,11 +38,11 @@ class $modify(MyProfilePage, ProfilePage) {
     void on2PToggle(CCObject* sender) {
         auto GM = GameManager::get();
 
-        auto layer = as<CCLayer*>(this->getChildren()->objectAtIndex(0));
-        auto menu = layer->getChildByID("player-menu");
+        auto menu = m_mainLayer->getChildByID("player-menu");
         auto isAnimated = Loader::get()->isModLoaded("thesillydoggo.animatedprofiles");
         auto BUI = Loader::get()->isModLoaded("rynat.better_unlock_info");
 
+        auto shipType = (IconType)menu->getChildByID("player-ship")->getTag();
         auto cube = getChildOfType<SimplePlayer>(menu->getChildByID("player-icon"), 0);
         auto ship = getChildOfType<SimplePlayer>(menu->getChildByID("player-ship"), 0);
         auto ball = getChildOfType<SimplePlayer>(menu->getChildByID("player-ball"), 0);
@@ -124,7 +104,7 @@ class $modify(MyProfilePage, ProfilePage) {
                     jetpack->disableGlowOutline();
                 }
             } else {
-                if (m_fields->shipType == IconType::Ship) ship->updatePlayerFrame(GM->getPlayerShip(), IconType::Ship);
+                if (shipType == IconType::Ship) ship->updatePlayerFrame(GM->getPlayerShip(), IconType::Ship);
                 else ship->updatePlayerFrame(GM->getPlayerJetpack(), IconType::Jetpack);
             }
             ship->setColor(GM->colorForIdx(GM->getPlayerColor()));
@@ -224,7 +204,7 @@ class $modify(MyProfilePage, ProfilePage) {
                     jetpack->disableGlowOutline();
                 }
             } else {
-                if (m_fields->shipType == IconType::Ship) ship->updatePlayerFrame(GDI_GET_VALUE(int64_t, "ship", 1), IconType::Ship);
+                if (shipType == IconType::Ship) ship->updatePlayerFrame(GDI_GET_VALUE(int64_t, "ship", 1), IconType::Ship);
                 else ship->updatePlayerFrame(GDI_GET_VALUE(int64_t, "jetpack", 1), IconType::Jetpack);
             }
             ship->setColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color1", 0)));
@@ -311,35 +291,18 @@ class $modify(MyProfilePage, ProfilePage) {
         auto GM = GameManager::get();
 
         if (this->m_ownProfile) {
-            if (auto menu = as<CCLayer*>(this->getChildren()->objectAtIndex(0))->getChildByID("player-menu")) {
-                auto ship = menu->getChildByID("player-ship");
-
-                auto myShipSprite = SimplePlayer::create(GM->getPlayerShip());
-                myShipSprite->setScale(0.95f);
-                myShipSprite->updatePlayerFrame(GM->getPlayerShip(), IconType::Ship);
-                myShipSprite->setColor(GM->colorForIdx(GM->getPlayerColor()));
-                myShipSprite->setSecondColor(GM->colorForIdx(GM->getPlayerColor2()));
-                if (GM->getPlayerGlow()) {
-                    myShipSprite->setGlowOutline(GM->colorForIdx(GM->getPlayerGlowColor()));
-                }
-
-                auto myShip = CCMenuItemSpriteExtra::create(myShipSprite, this, menu_selector(MyProfilePage::onShipToggle));
-                myShip->setPosition(ship->getPosition());
-                myShip->setContentSize(ship->getContentSize());
-                myShipSprite->setPosition({myShip->getContentWidth()/2, myShip->getContentHeight()/2});
-                menu->addChild(myShip);
-                //BUI added
-                swapChildIndices(ship, myShip);
-                //
-                menu->removeChild(ship);
-
-                myShip->setID("player-ship");
-                myShipSprite->setID("player-ship");
-
+            if (auto menu = m_mainLayer->getChildByID("player-menu")) {
                 SimplePlayer* player = nullptr;
 
                 player = as<SimplePlayer*>(menu->getChildByID("player-icon")->getChildByID("player-icon"));
                 player->updatePlayerFrame(GM->getPlayerFrame(), IconType::Cube);
+                player->setColor(GM->colorForIdx(GM->getPlayerColor()));
+                player->setSecondColor(GM->colorForIdx(GM->getPlayerColor2()));
+                if (GM->getPlayerGlow()) player->setGlowOutline(GM->colorForIdx(GM->getPlayerGlowColor()));
+                else player->disableGlowOutline();
+
+                player = as<SimplePlayer*>(menu->getChildByID("player-ship")->getChildByID("player-ship"));
+                player->updatePlayerFrame(GM->getPlayerShip(), IconType::Ship);
                 player->setColor(GM->colorForIdx(GM->getPlayerColor()));
                 player->setSecondColor(GM->colorForIdx(GM->getPlayerColor2()));
                 if (GM->getPlayerGlow()) player->setGlowOutline(GM->colorForIdx(GM->getPlayerGlowColor()));
@@ -393,10 +356,9 @@ class $modify(MyProfilePage, ProfilePage) {
         if (this->m_ownProfile && !m_fields->hasLoaded) {
             
             m_fields->hasLoaded = true;
-            auto layer = as<CCLayer*>(this->getChildren()->objectAtIndex(0));
             auto winSize = CCDirector::get()->getWinSize();
 
-            if (auto menu = layer->getChildByID("left-menu")) {
+            if (auto menu = m_mainLayer->getChildByID("left-menu")) {
                 
                 menu->setContentHeight(menu->getContentHeight()*2);
                 menu->setPositionY(menu->getPositionY() - menu->getContentHeight()/4);
