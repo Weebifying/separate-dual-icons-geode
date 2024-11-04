@@ -103,7 +103,7 @@ class $modify(MyProfilePage, ProfilePage) {
                 } else {
                     jetpack->disableGlowOutline();
                 }
-            } else {
+            } else if (!BUI) {
                 if (shipType == IconType::Ship) ship->updatePlayerFrame(GM->getPlayerShip(), IconType::Ship);
                 else ship->updatePlayerFrame(GM->getPlayerJetpack(), IconType::Jetpack);
             }
@@ -203,7 +203,7 @@ class $modify(MyProfilePage, ProfilePage) {
                 } else {
                     jetpack->disableGlowOutline();
                 }
-            } else {
+            } else if (!BUI) {
                 if (shipType == IconType::Ship) ship->updatePlayerFrame(GDI_GET_VALUE(int64_t, "ship", 1), IconType::Ship);
                 else ship->updatePlayerFrame(GDI_GET_VALUE(int64_t, "jetpack", 1), IconType::Jetpack);
             }
