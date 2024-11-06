@@ -37,6 +37,7 @@ jobs:
         with:
           bindings: weebifying/bindings
           build-config: RelWithDebInfo
+          export-pdb: true
           combine: true
           # sdk: 'nightly'
           target: ${{ matrix.config.target }}
