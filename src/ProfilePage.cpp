@@ -22,10 +22,10 @@ class $modify(MyProfilePage, ProfilePage) {
         if (GDI_GET_VALUE(bool, "2pselected", false)) {
             switch (sender->getTag()) {
                 case 1:
-                    ship->updatePlayerFrame(GDI_GET_VALUE(int64_t, "jetpack", 1), IconType::Ship);
+                    ship->updatePlayerFrame(GDI_GET_VALUE(int64_t, "ship", 1), IconType::Ship);
                     break;
                 case 8:
-                    ship->updatePlayerFrame(GDI_GET_VALUE(int64_t, "ship", 1), IconType::Jetpack);
+                    ship->updatePlayerFrame(GDI_GET_VALUE(int64_t, "jetpack", 1), IconType::Jetpack);
                     break;
                 default:
                     log::error("huh???");
