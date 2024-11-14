@@ -294,62 +294,68 @@ class $modify(MyProfilePage, ProfilePage) {
             if (auto menu = m_mainLayer->getChildByID("player-menu")) {
                 SimplePlayer* player = nullptr;
 
-                player = as<SimplePlayer*>(menu->getChildByID("player-icon")->getChildByID("player-icon"));
-                player->updatePlayerFrame(GM->getPlayerFrame(), IconType::Cube);
-                player->setColor(GM->colorForIdx(GM->getPlayerColor()));
-                player->setSecondColor(GM->colorForIdx(GM->getPlayerColor2()));
-                if (GM->getPlayerGlow()) player->setGlowOutline(GM->colorForIdx(GM->getPlayerGlowColor()));
-                else player->disableGlowOutline();
+                if (auto node = menu->getChildByID("player-icon")->getChildByID("player-icon")) {
+                    player = typeinfo_cast<SimplePlayer*>(node);
+                    player->updatePlayerFrame(GM->getPlayerFrame(), IconType::Cube);
+                    player->setColor(GM->colorForIdx(GM->getPlayerColor()));
+                    player->setSecondColor(GM->colorForIdx(GM->getPlayerColor2()));
+                    if (GM->getPlayerGlow()) player->setGlowOutline(GM->colorForIdx(GM->getPlayerGlowColor()));
+                    else player->disableGlowOutline();
+                }
 
-                player = as<SimplePlayer*>(as<CCMenuItemSpriteExtra*>(menu->getChildByID("player-ship"))->getNormalImage());
-                player->updatePlayerFrame(GM->getPlayerShip(), IconType::Ship);
-                player->setColor(GM->colorForIdx(GM->getPlayerColor()));
-                player->setSecondColor(GM->colorForIdx(GM->getPlayerColor2()));
-                if (GM->getPlayerGlow()) player->setGlowOutline(GM->colorForIdx(GM->getPlayerGlowColor()));
-                else player->disableGlowOutline();
+                if (auto node = menu->getChildByID("player-ball")->getChildByID("player-ball")) {
+                    player = typeinfo_cast<SimplePlayer*>(node);
+                    player->updatePlayerFrame(GM->getPlayerBall(), IconType::Ball);
+                    player->setColor(GM->colorForIdx(GM->getPlayerColor()));
+                    player->setSecondColor(GM->colorForIdx(GM->getPlayerColor2()));
+                    if (GM->getPlayerGlow()) player->setGlowOutline(GM->colorForIdx(GM->getPlayerGlowColor()));
+                    else player->disableGlowOutline();
+                }
 
-                player = as<SimplePlayer*>(menu->getChildByID("player-ball")->getChildByID("player-ball"));
-                player->updatePlayerFrame(GM->getPlayerBall(), IconType::Ball);
-                player->setColor(GM->colorForIdx(GM->getPlayerColor()));
-                player->setSecondColor(GM->colorForIdx(GM->getPlayerColor2()));
-                if (GM->getPlayerGlow()) player->setGlowOutline(GM->colorForIdx(GM->getPlayerGlowColor()));
-                else player->disableGlowOutline();
+                if (auto node = menu->getChildByID("player-ufo")->getChildByID("player-ufo")) {
+                    player = typeinfo_cast<SimplePlayer*>(node);
+                    player->updatePlayerFrame(GM->getPlayerBird(), IconType::Ufo);
+                    player->setColor(GM->colorForIdx(GM->getPlayerColor()));
+                    player->setSecondColor(GM->colorForIdx(GM->getPlayerColor2()));
+                    if (GM->getPlayerGlow()) player->setGlowOutline(GM->colorForIdx(GM->getPlayerGlowColor()));
+                    else player->disableGlowOutline();
+                }
 
-                player = as<SimplePlayer*>(menu->getChildByID("player-ufo")->getChildByID("player-ufo"));
-                player->updatePlayerFrame(GM->getPlayerBird(), IconType::Ufo);
-                player->setColor(GM->colorForIdx(GM->getPlayerColor()));
-                player->setSecondColor(GM->colorForIdx(GM->getPlayerColor2()));
-                if (GM->getPlayerGlow()) player->setGlowOutline(GM->colorForIdx(GM->getPlayerGlowColor()));
-                else player->disableGlowOutline();
+                if (auto node = menu->getChildByID("player-wave")->getChildByID("player-wave")) {
+                    player = typeinfo_cast<SimplePlayer*>(node);
+                    player->updatePlayerFrame(GM->getPlayerDart(), IconType::Wave);
+                    player->setColor(GM->colorForIdx(GM->getPlayerColor()));
+                    player->setSecondColor(GM->colorForIdx(GM->getPlayerColor2()));
+                    if (GM->getPlayerGlow()) player->setGlowOutline(GM->colorForIdx(GM->getPlayerGlowColor()));
+                    else player->disableGlowOutline();
+                }
 
-                player = as<SimplePlayer*>(menu->getChildByID("player-wave")->getChildByID("player-wave"));
-                player->updatePlayerFrame(GM->getPlayerDart(), IconType::Wave);
-                player->setColor(GM->colorForIdx(GM->getPlayerColor()));
-                player->setSecondColor(GM->colorForIdx(GM->getPlayerColor2()));
-                if (GM->getPlayerGlow()) player->setGlowOutline(GM->colorForIdx(GM->getPlayerGlowColor()));
-                else player->disableGlowOutline();
+                if (auto node = menu->getChildByID("player-robot")->getChildByID("player-robot")) {
+                    player = typeinfo_cast<SimplePlayer*>(node);
+                    player->updatePlayerFrame(GM->getPlayerRobot(), IconType::Robot);
+                    player->setColor(GM->colorForIdx(GM->getPlayerColor()));
+                    player->setSecondColor(GM->colorForIdx(GM->getPlayerColor2()));
+                    if (GM->getPlayerGlow()) player->setGlowOutline(GM->colorForIdx(GM->getPlayerGlowColor()));
+                    else player->disableGlowOutline();
+                }
 
-                player = as<SimplePlayer*>(menu->getChildByID("player-robot")->getChildByID("player-robot"));
-                player->updatePlayerFrame(GM->getPlayerRobot(), IconType::Robot);
-                player->setColor(GM->colorForIdx(GM->getPlayerColor()));
-                player->setSecondColor(GM->colorForIdx(GM->getPlayerColor2()));
-                if (GM->getPlayerGlow()) player->setGlowOutline(GM->colorForIdx(GM->getPlayerGlowColor()));
-                else player->disableGlowOutline();
+                if (auto node = menu->getChildByID("player-spider")->getChildByID("player-spider")) {
+                    player = typeinfo_cast<SimplePlayer*>(node);
+                    player->updatePlayerFrame(GM->getPlayerSpider(), IconType::Spider);
+                    player->setColor(GM->colorForIdx(GM->getPlayerColor()));
+                    player->setSecondColor(GM->colorForIdx(GM->getPlayerColor2()));
+                    if (GM->getPlayerGlow()) player->setGlowOutline(GM->colorForIdx(GM->getPlayerGlowColor()));
+                    else player->disableGlowOutline();
+                }
 
-                player = as<SimplePlayer*>(menu->getChildByID("player-spider")->getChildByID("player-spider"));
-                player->updatePlayerFrame(GM->getPlayerSpider(), IconType::Spider);
-                player->setColor(GM->colorForIdx(GM->getPlayerColor()));
-                player->setSecondColor(GM->colorForIdx(GM->getPlayerColor2()));
-                if (GM->getPlayerGlow()) player->setGlowOutline(GM->colorForIdx(GM->getPlayerGlowColor()));
-                else player->disableGlowOutline();
-
-                player = as<SimplePlayer*>(menu->getChildByID("player-swing")->getChildByID("player-swing"));
-                player->updatePlayerFrame(GM->getPlayerSwing(), IconType::Swing);
-                player->setColor(GM->colorForIdx(GM->getPlayerColor()));
-                player->setSecondColor(GM->colorForIdx(GM->getPlayerColor2()));
-                if (GM->getPlayerGlow()) player->setGlowOutline(GM->colorForIdx(GM->getPlayerGlowColor()));
-                else player->disableGlowOutline();
-
+                if (auto node = menu->getChildByID("player-swing")->getChildByID("player-swing")) {
+                    player = typeinfo_cast<SimplePlayer*>(node);
+                    player->updatePlayerFrame(GM->getPlayerSwing(), IconType::Swing);
+                    player->setColor(GM->colorForIdx(GM->getPlayerColor()));
+                    player->setSecondColor(GM->colorForIdx(GM->getPlayerColor2()));
+                    if (GM->getPlayerGlow()) player->setGlowOutline(GM->colorForIdx(GM->getPlayerGlowColor()));
+                    else player->disableGlowOutline();
+                }
             }
         }
         

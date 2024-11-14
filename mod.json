@@ -1,20 +1,20 @@
 {
-	"geode": "3.8.1",
+	"geode": "4.0.0-alpha.1",
 	"gd": {
-		"win": "2.206",
-		"android": "2.206",
-		"mac": "2.206"
+		"win": "2.2074",
+		"android": "2.2074",
+		"mac": "2.2074"
 	},
-	"version": "v1.2.4",
+	"version": "v1.3.0",
 	"id": "weebify.separate_dual_icons",
 	"name": "Separate Dual Icons",
 	"developer": "Weebify",
 	"description": "Allows you to customize your 2nd player",
-    "tags": ["Gameplay", "Interface", "Customization"],
+    "tags": ["gameplay", "interface", "customization"],
 	"dependencies": [
 		{
 			"id": "geode.node-ids",
-			"version": ">=1.12.0",
+			"version": ">=1.17.0-alpha.1",
 			"importance": "required"
 		}
 	],
@@ -24,5 +24,7 @@
 			"res/*.png"
 		]
 	},
-    "repository": "https://github.com/Weebifying/separate-dual-icons-geode"
+    "links": {
+		"source": "https://github.com/Weebifying/separate-dual-icons-geode"
+	}
 }
