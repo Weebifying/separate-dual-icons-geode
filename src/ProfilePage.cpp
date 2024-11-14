@@ -16,7 +16,7 @@ class $modify(MyProfilePage, ProfilePage) {
     void toggleShip(CCObject* sender) {
         ProfilePage::toggleShip(sender);
 
-        auto ship = getChildOfType<SimplePlayer>(as<CCNode*>(sender), 0);
+        auto ship = as<CCNode*>(sender)->getChildByType<SimplePlayer>(0);
         auto GM = GameManager::get();
 
         if (GDI_GET_VALUE(bool, "2pselected", false)) {
@@ -27,11 +27,16 @@ class $modify(MyProfilePage, ProfilePage) {
                 case 8:
                     ship->updatePlayerFrame(GDI_GET_VALUE(int64_t, "jetpack", 1), IconType::Jetpack);
                     break;
-                default:
-                    log::error("huh???");
+            }
+        } else {
+            switch (sender->getTag()) {
+                case 1:
+                    ship->updatePlayerFrame(GM->getPlayerShip(), IconType::Ship);
+                    break;
+                case 8:
+                    ship->updatePlayerFrame(GM->getPlayerJetpack(), IconType::Jetpack);
                     break;
             }
-
         }
     }
 
@@ -43,11 +48,11 @@ class $modify(MyProfilePage, ProfilePage) {
         auto BUI = Loader::get()->isModLoaded("rynat.better_unlock_info");
 
         auto shipType = (IconType)menu->getChildByID("player-ship")->getTag();
-        auto cube = getChildOfType<SimplePlayer>(menu->getChildByID("player-icon"), 0);
-        auto ship = getChildOfType<SimplePlayer>(menu->getChildByID("player-ship"), 0);
-        auto ball = getChildOfType<SimplePlayer>(menu->getChildByID("player-ball"), 0);
-        auto ufo = getChildOfType<SimplePlayer>(menu->getChildByID("player-ufo"), 0);
-        auto wave = getChildOfType<SimplePlayer>(menu->getChildByID("player-wave"), 0);
+        auto cube = menu->getChildByID("player-icon")->getChildByType<SimplePlayer>(0);
+        auto ship = menu->getChildByID("player-ship")->getChildByType<SimplePlayer>(0);
+        auto ball = menu->getChildByID("player-ball")->getChildByType<SimplePlayer>(0);
+        auto ufo = menu->getChildByID("player-ufo")->getChildByType<SimplePlayer>(0);
+        auto wave = menu->getChildByID("player-wave")->getChildByType<SimplePlayer>(0);
         CCNode* robotNode = nullptr;
         CCNode* spiderNode = nullptr;
         if (isAnimated && !BUI) {
@@ -57,15 +62,15 @@ class $modify(MyProfilePage, ProfilePage) {
             robotNode = menu->getChildByID("player-robot");
             spiderNode = menu->getChildByID("player-spider");
         }
-        auto robot = getChildOfType<SimplePlayer>(robotNode, 0);
-        auto spider = getChildOfType<SimplePlayer>(spiderNode, 0);
-        auto swing = getChildOfType<SimplePlayer>(menu->getChildByID("player-swing"), 0);
+        auto robot = robotNode->getChildByType<SimplePlayer>(0);
+        auto spider = spiderNode->getChildByType<SimplePlayer>(0);
+        auto swing = menu->getChildByID("player-swing")->getChildByType<SimplePlayer>(0);
         
         //BUI added
         
         SimplePlayer* jetpack = nullptr;
         if (BUI && menu->getChildByID("player-jetpack"))
-            jetpack = getChildOfType<SimplePlayer>(menu->getChildByID("player-jetpack"), 0);
+            jetpack = menu->getChildByID("player-jetpack")->getChildByType<SimplePlayer>(0);
         //
 
         if (as<CCMenuItemToggler*>(sender)->isOn()) {
@@ -301,6 +306,17 @@ class $modify(MyProfilePage, ProfilePage) {
                     player->setSecondColor(GM->colorForIdx(GM->getPlayerColor2()));
                     if (GM->getPlayerGlow()) player->setGlowOutline(GM->colorForIdx(GM->getPlayerGlowColor()));
                     else player->disableGlowOutline();
+                }
+
+                if (auto button = typeinfo_cast<CCMenuItemSpriteExtra*>(menu->getChildByID("player-ship"))) {
+                    if (auto node = button->getNormalImage()) {
+                        player = typeinfo_cast<SimplePlayer*>(node);
+                        player->updatePlayerFrame(GM->getPlayerShip(), IconType::Ship);
+                        player->setColor(GM->colorForIdx(GM->getPlayerColor()));
+                        player->setSecondColor(GM->colorForIdx(GM->getPlayerColor2()));
+                        if (GM->getPlayerGlow()) player->setGlowOutline(GM->colorForIdx(GM->getPlayerGlowColor()));
+                        else player->disableGlowOutline();
+                    }
                 }
 
                 if (auto node = menu->getChildByID("player-ball")->getChildByID("player-ball")) {

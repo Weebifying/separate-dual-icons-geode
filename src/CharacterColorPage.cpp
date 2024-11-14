@@ -29,7 +29,7 @@ class $modify(CharacterColorPage) {
                 cube->disableGlowOutline();
             }
 
-            auto ship = getChildOfType<SimplePlayer>(layer->getChildByID("buttons-menu")->getChildByID("ship-button"), 0);
+            auto ship = layer->getChildByID("buttons-menu")->getChildByID("ship-button")->getChildByType<SimplePlayer>(0);
             ship->updatePlayerFrame(GDI_GET_VALUE(int64_t, "ship", 1), IconType::Ship);
             ship->setColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color1", 0)));
             ship->setSecondColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color2", 0)));
@@ -129,7 +129,7 @@ class $modify(CharacterColorPage) {
         CharacterColorPage::toggleShip(sender);
         
         if (GDI_GET_VALUE(bool, "2pselected", false)) {
-            auto ship = getChildOfType<SimplePlayer>(as<CCMenuItemSpriteExtra*>(sender), 0);
+            auto ship = as<CCMenuItemSpriteExtra*>(sender)->getChildByType<SimplePlayer>(0);
 
             switch (m_fields->shipType) {
                 case IconType::Ship:
@@ -200,7 +200,7 @@ class $modify(CharacterColorPage) {
             std::vector<SimplePlayer*> icons;
 
             icons.push_back(as<SimplePlayer*>(layer->getChildByID("cube-icon")));
-            icons.push_back(getChildOfType<SimplePlayer>(layer->getChildByID("buttons-menu")->getChildByID("ship-button"), 0));
+            icons.push_back(layer->getChildByID("buttons-menu")->getChildByID("ship-button")->getChildByType<SimplePlayer>(0));
             icons.push_back(as<SimplePlayer*>(layer->getChildByID("ball-icon")));
             icons.push_back(as<SimplePlayer*>(layer->getChildByID("ufo-icon")));
             icons.push_back(as<SimplePlayer*>(layer->getChildByID("wave-icon")));
@@ -302,7 +302,7 @@ class $modify(CharacterColorPage) {
             std::vector<SimplePlayer*> icons;
 
             icons.push_back(as<SimplePlayer*>(layer->getChildByID("cube-icon")));
-            icons.push_back(getChildOfType<SimplePlayer>(layer->getChildByID("buttons-menu")->getChildByID("ship-button"), 0));
+            icons.push_back(layer->getChildByID("buttons-menu")->getChildByID("ship-button")->getChildByType<SimplePlayer>(0));
             icons.push_back(as<SimplePlayer*>(layer->getChildByID("ball-icon")));
             icons.push_back(as<SimplePlayer*>(layer->getChildByID("ufo-icon")));
             icons.push_back(as<SimplePlayer*>(layer->getChildByID("wave-icon")));

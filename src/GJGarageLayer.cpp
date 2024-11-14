@@ -16,12 +16,12 @@ class $modify(MyGarageLayer, GJGarageLayer) {
         auto GM = GameManager::get();
         auto winSize = CCDirector::get()->getWinSize();
 
-        auto iconBar = getChildOfType<ListButtonBar>(this, 0);
+        auto iconBar = this->getChildByType<ListButtonBar>(0);
 
-        auto menu = getChildOfType<CCMenu>(getChildOfType<ListButtonPage>(getChildOfType<ExtendedLayer>(getChildOfType<BoomScrollLayer>(iconBar, 0), 0), 0), 0);
+        auto menu = iconBar->getChildByType<BoomScrollLayer>(0)->getChildByType<ExtendedLayer>(0)->getChildByType<ListButtonPage>(0)->getChildByType<CCMenu>(0);
         CCMenu* menu2 = nullptr;
         if (m_fields->type == IconType::Special) 
-            menu2 = getChildOfType<CCMenu>(getChildOfType<ListButtonPage>(getChildOfType<ExtendedLayer>(getChildOfType<BoomScrollLayer>(getChildOfType<ListButtonBar>(iconBar, 0), 0), 0), 0), 0);
+            menu2 = iconBar->getChildByType<ListButtonBar>(0)->getChildByType<BoomScrollLayer>(0)->getChildByType<ExtendedLayer>(0)->getChildByType<ListButtonPage>(0)->getChildByType<CCMenu>(0);
 
         auto cursor1 = this->getChildByID("cursor-1");
         auto cursor2 = this->getChildByID("cursor-2");
@@ -68,7 +68,7 @@ class $modify(MyGarageLayer, GJGarageLayer) {
                     break;
                 case IconType::DeathEffect:
                     tag = GDI_GET_VALUE(int64_t, "death", 1);
-                    getChildOfType<CCMenuItemToggler>(getChildOfType<CCMenu>(iconBar, 0), 0)->toggle(GDI_GET_VALUE(bool, "deathexplode", false));
+                    iconBar->getChildByType<CCMenu>(0)->getChildByType<CCMenuItemToggler>(0)->toggle(GDI_GET_VALUE(bool, "deathexplode", false));
                     break;
                 default:
                     break;
@@ -146,7 +146,7 @@ class $modify(MyGarageLayer, GJGarageLayer) {
                     break;
                 case IconType::DeathEffect:
                     tag = GM->getPlayerDeathEffect();
-                    getChildOfType<CCMenuItemToggler>(getChildOfType<CCMenu>(iconBar, 0), 0)->toggle(GM->getGameVariable("0153"));
+                    iconBar->getChildByType<CCMenu>(0)->getChildByType<CCMenuItemToggler>(0)->toggle(GM->getGameVariable("0153"));
                     break;
                 default:
                     break;
@@ -498,10 +498,10 @@ class $modify(MyGarageLayer, GJGarageLayer) {
         m_fields->type = p2;
         if (p1 == -1) m_fields->page = 0;
 
-        auto iconBar = getChildOfType<ListButtonBar>(this, 0);
+        auto iconBar = this->getChildByType<ListButtonBar>(0);
         // DELETE WHEN TULIPHOOK IS FIXED
         if (p2 == IconType::DeathEffect) {
-            auto bruh = getChildOfType<CCMenuItemToggler>(getChildOfType<CCMenu>(iconBar, 0), 0);
+            auto bruh = iconBar->getChildByType<CCMenu>(0)->getChildByType<CCMenuItemToggler>(0);
             
             auto spriteOn = CCSprite::createWithSpriteFrameName("GJ_checkOn_001.png");
             auto spriteOff = CCSprite::createWithSpriteFrameName("GJ_checkOff_001.png");
@@ -529,11 +529,11 @@ class $modify(MyGarageLayer, GJGarageLayer) {
         if (GDI_GET_VALUE(bool, "2pselected", false)) {
             auto winSize = CCDirector::get()->getWinSize();
 
-            auto menu = getChildOfType<CCMenu>(getChildOfType<ListButtonPage>(getChildOfType<ExtendedLayer>(getChildOfType<BoomScrollLayer>(iconBar, 0), 0), 0), 0);
+            auto menu = iconBar->getChildByType<BoomScrollLayer>(0)->getChildByType<ExtendedLayer>(0)->getChildByType<ListButtonPage>(0)->getChildByType<CCMenu>(0);
             CCMenu* menu2 = nullptr;
 
             if (m_fields->type == IconType::Special) 
-                menu2 = getChildOfType<CCMenu>(getChildOfType<ListButtonPage>(getChildOfType<ExtendedLayer>(getChildOfType<BoomScrollLayer>(getChildOfType<ListButtonBar>(iconBar, 0), 0), 0), 0), 0);
+                menu2 = iconBar->getChildByType<ListButtonBar>(0)->getChildByType<BoomScrollLayer>(0)->getChildByType<ExtendedLayer>(0)->getChildByType<ListButtonPage>(0)->getChildByType<CCMenu>(0);
             
             int tag = 0;
             int tag2 = 0;
@@ -572,7 +572,7 @@ class $modify(MyGarageLayer, GJGarageLayer) {
                     break;
                 case IconType::DeathEffect:
                     tag = GDI_GET_VALUE(int64_t, "death", 1);
-                    getChildOfType<CCMenuItemToggler>(getChildOfType<CCMenu>(iconBar, 0), 0)->toggle(GDI_GET_VALUE(bool, "deathexplode", false));
+                    iconBar->getChildByType<CCMenu>(0)->getChildByType<CCMenuItemToggler>(0)->toggle(GDI_GET_VALUE(bool, "deathexplode", false));
                     break;
                 default:
                     break;
