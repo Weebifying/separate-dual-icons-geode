@@ -1,5 +1,5 @@
 ## v1.3.0
-- Added 2.2074 support
+- Updated for GD 2.2074
 ## v1.2.4
 - Fixed a crash when both Animated Profile Icon and Better Unlock Info are enabled
 ## v1.2.3
