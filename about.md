@@ -11,4 +11,4 @@ Allows you to customize your 2nd player
 
 ## Special thanks to:
 - [Alphalaneous](user:7834088), for making the original 2.1 version so I can replicate 80% of their code
-- [ninXout](user:7479054) and [zmx](user:5327860), for testing on MacOS
+- [Erymanthus](user:1941705), for testing on MacOS for me

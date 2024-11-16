@@ -1,4 +1,3 @@
-# Separate Dual Icons Changelog
 ## v1.3.0
 - Added 2.2074 support
 ## v1.2.4
