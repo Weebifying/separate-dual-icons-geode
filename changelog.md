@@ -1,3 +1,5 @@
+## v1.3.1
+- Fixed a crash with Better Unlock Info
 ## v1.3.0
 - Updated for GD 2.2074
 ## v1.2.4
