@@ -309,7 +309,7 @@ class $modify(MyProfilePage, ProfilePage) {
                 }
 
                 if (auto button = typeinfo_cast<CCMenuItemSpriteExtra*>(menu->getChildByID("player-ship"))) {
-                    if (auto node = button->getNormalImage()) {
+                    if (auto node = button->getChildByType<SimplePlayer>(0)) {
                         player = typeinfo_cast<SimplePlayer*>(node);
                         player->updatePlayerFrame(GM->getPlayerShip(), IconType::Ship);
                         player->setColor(GM->colorForIdx(GM->getPlayerColor()));
