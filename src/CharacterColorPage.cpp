@@ -1,125 +1,44 @@
-#include "PlayerData.hpp"
 #include "Macros.hpp"
 #include <Geode/modify/CharacterColorPage.hpp>
 
+using namespace geode::prelude;
 
-class $modify(CharacterColorPage) {
-    struct Fields {
-        IconType shipType = IconType::Ship;
-        int colorMode = 0;
-    };
+class $modify(MyCharacterColorPage, CharacterColorPage) {
+    static void onModify(auto& self) {
+        (void)self.setHookPriority("CharacterColorPage::onPlayerColor", Priority::Replace);
+        (void)self.setHookPriority("CharacterColorPage::toggleGlow", Priority::Replace);
+    }
 
     bool init() {
         if (!CharacterColorPage::init()) return false;
 
-        auto GM = GameManager::get();
-
         if (GDI_GET_VALUE(bool, "2pselected", false)) {
-            auto layer = this->getChildByID("colors-layer");
-            auto menu = layer->getChildByID("buttons-menu");
-            auto winSize = CCDirector::get()->getWinSize();
-
-            auto cube = as<SimplePlayer*>(layer->getChildByID("cube-icon"));
+            auto cube = static_cast<SimplePlayer*>(m_playerObjects->objectAtIndex(0));
             cube->updatePlayerFrame(GDI_GET_VALUE(int64_t, "cube", 1), IconType::Cube);
-            cube->setColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color1", 0)));
-            cube->setSecondColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color2", 0)));
-            if (GDI_GET_VALUE(bool, "glow", false) || GDI_GET_VALUE(int64_t, "color1", 0) == 15) {
-                cube->setGlowOutline(GM->colorForIdx(GDI_GET_VALUE(int64_t, "colorglow", 0)));
-            } else {
-                cube->disableGlowOutline();
-            }
 
-            auto ship = layer->getChildByID("buttons-menu")->getChildByID("ship-button")->getChildByType<SimplePlayer>(0);
+            auto ship = static_cast<SimplePlayer*>(m_playerObjects->objectAtIndex(1));
             ship->updatePlayerFrame(GDI_GET_VALUE(int64_t, "ship", 1), IconType::Ship);
-            ship->setColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color1", 0)));
-            ship->setSecondColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color2", 0)));
-            if (GDI_GET_VALUE(bool, "glow", false) || GDI_GET_VALUE(int64_t, "color1", 0) == 15) {
-                ship->setGlowOutline(GM->colorForIdx(GDI_GET_VALUE(int64_t, "colorglow", 0)));
-            } else {
-                ship->disableGlowOutline();
-            }
 
-            auto ball = as<SimplePlayer*>(layer->getChildByID("ball-icon"));
+            auto ball = static_cast<SimplePlayer*>(m_playerObjects->objectAtIndex(2));
             ball->updatePlayerFrame(GDI_GET_VALUE(int64_t, "roll", 1), IconType::Ball);
-            ball->setColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color1", 0)));
-            ball->setSecondColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color2", 0)));
-            if (GDI_GET_VALUE(bool, "glow", false) || GDI_GET_VALUE(int64_t, "color1", 0) == 15) {
-                ball->setGlowOutline(GM->colorForIdx(GDI_GET_VALUE(int64_t, "colorglow", 0)));
-            } else {
-                ball->disableGlowOutline();
-            }
 
-            auto ufo = as<SimplePlayer*>(layer->getChildByID("ufo-icon"));
+            auto ufo = static_cast<SimplePlayer*>(m_playerObjects->objectAtIndex(3));
             ufo->updatePlayerFrame(GDI_GET_VALUE(int64_t, "bird", 1), IconType::Ufo);
-            ufo->setColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color1", 0)));
-            ufo->setSecondColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color2", 0)));
-            if (GDI_GET_VALUE(bool, "glow", false) || GDI_GET_VALUE(int64_t, "color1", 0) == 15) {
-                ufo->setGlowOutline(GM->colorForIdx(GDI_GET_VALUE(int64_t, "colorglow", 0)));
-            } else {
-                ufo->disableGlowOutline();
-            }
 
-            auto wave = as<SimplePlayer*>(layer->getChildByID("wave-icon"));
+            auto wave = static_cast<SimplePlayer*>(m_playerObjects->objectAtIndex(4));
             wave->updatePlayerFrame(GDI_GET_VALUE(int64_t, "dart", 1), IconType::Wave);
-            wave->setColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color1", 0)));
-            wave->setSecondColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color2", 0)));
-            if (GDI_GET_VALUE(bool, "glow", false) || GDI_GET_VALUE(int64_t, "color1", 0) == 15) {
-                wave->setGlowOutline(GM->colorForIdx(GDI_GET_VALUE(int64_t, "colorglow", 0)));
-            } else {
-                wave->disableGlowOutline();
-            }
 
-            auto robot = as<SimplePlayer*>(layer->getChildByID("robot-icon"));
+            auto robot = static_cast<SimplePlayer*>(m_playerObjects->objectAtIndex(5));
             robot->updatePlayerFrame(GDI_GET_VALUE(int64_t, "robot", 1), IconType::Robot);
-            robot->setColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color1", 0)));
-            robot->setSecondColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color2", 0)));
-            if (GDI_GET_VALUE(bool, "glow", false) || GDI_GET_VALUE(int64_t, "color1", 0) == 15) {
-                robot->setGlowOutline(GM->colorForIdx(GDI_GET_VALUE(int64_t, "colorglow", 0)));
-            } else {
-                robot->disableGlowOutline();
-            }
 
-            auto spider = as<SimplePlayer*>(layer->getChildByID("spider-icon"));
+            auto spider = static_cast<SimplePlayer*>(m_playerObjects->objectAtIndex(6));
             spider->updatePlayerFrame(GDI_GET_VALUE(int64_t, "spider", 1), IconType::Spider);
-            spider->setColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color1", 0)));
-            spider->setSecondColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color2", 0)));
-            if (GDI_GET_VALUE(bool, "glow", false) || GDI_GET_VALUE(int64_t, "color1", 0) == 15) {
-                spider->setGlowOutline(GM->colorForIdx(GDI_GET_VALUE(int64_t, "colorglow", 0)));
-            } else {
-                spider->disableGlowOutline();
-            }
 
-            auto swing = as<SimplePlayer*>(layer->getChildByID("swing-icon"));
+            auto swing = static_cast<SimplePlayer*>(m_playerObjects->objectAtIndex(7));
             swing->updatePlayerFrame(GDI_GET_VALUE(int64_t, "swing", 1), IconType::Swing);
-            swing->setColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color1", 0)));
-            swing->setSecondColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color2", 0)));
-            if (GDI_GET_VALUE(bool, "glow", false) || GDI_GET_VALUE(int64_t, "color1", 0) == 15) {
-                swing->setGlowOutline(GM->colorForIdx(GDI_GET_VALUE(int64_t, "colorglow", 0)));
-            } else {
-                swing->disableGlowOutline();
-            }
-
-            auto cursor1 = layer->getChildByID("cursor-col1");
-            auto cursor2 = layer->getChildByID("cursor-col2");
-            auto cursorglow = layer->getChildByID("cursor-glow");
-
-            cursor1->setPosition({
-                menu->getChildByID(std::to_string(GDI_GET_VALUE(int64_t, "color1", 0)))->getPositionX() + menu->getPositionX(),
-                menu->getChildByID(std::to_string(GDI_GET_VALUE(int64_t, "color1", 0)))->getPositionY() + menu->getPositionY()
-            });
-
-            cursor2->setPosition({
-                menu->getChildByID(std::to_string(GDI_GET_VALUE(int64_t, "color2", 0)))->getPositionX() + menu->getPositionX(),
-                menu->getChildByID(std::to_string(GDI_GET_VALUE(int64_t, "color2", 0)))->getPositionY() + menu->getPositionY()
-            });
-
-            cursorglow->setPosition({
-                menu->getChildByID(std::to_string(GDI_GET_VALUE(int64_t, "colorglow", 0)))->getPositionX() + menu->getPositionX(),
-                menu->getChildByID(std::to_string(GDI_GET_VALUE(int64_t, "colorglow", 0)))->getPositionY() + menu->getPositionY()
-            });
 
             // ??? i have no idea why i need to do !player2Glow
-            as<CCMenuItemToggler*>(menu->getChildByID("glow-toggler"))->toggle(!GDI_GET_VALUE(bool, "glow", false));
+            m_glowToggler->toggle(!GDI_GET_VALUE(bool, "glow", false));
         }
 
         return true;
@@ -127,20 +46,16 @@ class $modify(CharacterColorPage) {
 
     void toggleShip(CCObject* sender) {
         CharacterColorPage::toggleShip(sender);
-        
-        if (GDI_GET_VALUE(bool, "2pselected", false)) {
-            auto ship = as<CCMenuItemSpriteExtra*>(sender)->getChildByType<SimplePlayer>(0);
 
-            switch (m_fields->shipType) {
-                case IconType::Ship:
-                    m_fields->shipType = IconType::Jetpack;
-                    ship->updatePlayerFrame(GDI_GET_VALUE(int64_t, "jetpack", 1), m_fields->shipType);
-                    ship->setScale(1.05f);
+        if (GDI_GET_VALUE(bool, "2pselected", false)) {
+            auto ship = static_cast<SimplePlayer*>(static_cast<CCMenuItemSprite*>(sender)->getNormalImage());
+
+            switch (sender->getTag()) {
+                case 1:
+                    ship->updatePlayerFrame(GDI_GET_VALUE(int64_t, "ship", 1), IconType::Ship);
                     break;
-                case IconType::Jetpack:
-                    m_fields->shipType = IconType::Ship;
-                    ship->updatePlayerFrame(GDI_GET_VALUE(int64_t, "ship", 1), m_fields->shipType);
-                    ship->setScale(1.15f);
+                case 8:
+                    ship->updatePlayerFrame(GDI_GET_VALUE(int64_t, "jetpack", 1), IconType::Jetpack);
                     break;
                 default:
                     log::error("what???");
@@ -149,33 +64,32 @@ class $modify(CharacterColorPage) {
         }
     }
 
-    
-    void onMode(CCObject* sender) {
-        CharacterColorPage::onMode(sender);
+
+    void updateColorMode(int p0) {
+        CharacterColorPage::updateColorMode(p0);
+
         if (GDI_GET_VALUE(bool, "2pselected", false)) {
-            auto layer = this->getChildByID("colors-layer");
-            auto menu = layer->getChildByID("buttons-menu");
+            auto color1 = GDI_GET_VALUE(int64_t, "color1", 0);
+            auto color2 = GDI_GET_VALUE(int64_t, "color2", 0);
+            auto colorglow = GDI_GET_VALUE(int64_t, "colorglow", 0);
 
-            auto cursor1 = layer->getChildByID("cursor-col1");
-            auto cursor2 = layer->getChildByID("cursor-col2");
-            auto cursorglow = layer->getChildByID("cursor-glow");
-
-            cursor1->setPosition({
-                menu->getChildByID(std::to_string(GDI_GET_VALUE(int64_t, "color1", 0)))->getPositionX() + menu->getPositionX(),
-                menu->getChildByID(std::to_string(GDI_GET_VALUE(int64_t, "color1", 0)))->getPositionY() + menu->getPositionY()
-            });
-
-            cursor2->setPosition({
-                menu->getChildByID(std::to_string(GDI_GET_VALUE(int64_t, "color2", 0)))->getPositionX() + menu->getPositionX(),
-                menu->getChildByID(std::to_string(GDI_GET_VALUE(int64_t, "color2", 0)))->getPositionY() + menu->getPositionY()
-            });
-
-            cursorglow->setPosition({
-                menu->getChildByID(std::to_string(GDI_GET_VALUE(int64_t, "colorglow", 0)))->getPositionX() + menu->getPositionX(),
-                menu->getChildByID(std::to_string(GDI_GET_VALUE(int64_t, "colorglow", 0)))->getPositionY() + menu->getPositionY()
-            });
-
-            m_fields->colorMode = as<CCMenuItemSpriteExtra*>(sender)->getTag();
+            for (auto [i, sprite] : CCDictionaryExt<intptr_t, ColorChannelSprite*>(m_colorButtons)) {
+                if (i == color1) {
+                    static_cast<CCNode*>(m_cursors->objectAtIndex(0))->setPosition(m_mainLayer->convertToNodeSpace(
+                        m_buttonMenu->convertToWorldSpace(sprite->getParent()->getPosition())
+                    ));
+                }
+                if (i == color2) {
+                    static_cast<CCNode*>(m_cursors->objectAtIndex(1))->setPosition(m_mainLayer->convertToNodeSpace(
+                        m_buttonMenu->convertToWorldSpace(sprite->getParent()->getPosition())
+                    ));
+                }
+                if (i == colorglow) {
+                    static_cast<CCNode*>(m_cursors->objectAtIndex(2))->setPosition(m_mainLayer->convertToNodeSpace(
+                        m_buttonMenu->convertToWorldSpace(sprite->getParent()->getPosition())
+                    ));
+                }
+            }
         }
     }
 
@@ -183,7 +97,7 @@ class $modify(CharacterColorPage) {
         UnlockType ut;
         auto GM = GameManager::get();
 
-        switch (m_fields->colorMode) {
+        switch (m_colorMode) {
             case 0:
                 ut = UnlockType::Col1;
                 break;
@@ -193,101 +107,29 @@ class $modify(CharacterColorPage) {
         }
 
         if (GDI_GET_VALUE(bool, "2pselected", false) && GM->isColorUnlocked(sender->getTag(), ut)) {
-            auto prevCol1 = GDI_GET_VALUE(int64_t, "color1", 0);
-
-            auto layer = this->getChildByID("colors-layer");
-            auto menu = layer->getChildByID("buttons-menu");
-            std::vector<SimplePlayer*> icons;
-
-            icons.push_back(as<SimplePlayer*>(layer->getChildByID("cube-icon")));
-            icons.push_back(layer->getChildByID("buttons-menu")->getChildByID("ship-button")->getChildByType<SimplePlayer>(0));
-            icons.push_back(as<SimplePlayer*>(layer->getChildByID("ball-icon")));
-            icons.push_back(as<SimplePlayer*>(layer->getChildByID("ufo-icon")));
-            icons.push_back(as<SimplePlayer*>(layer->getChildByID("wave-icon")));
-            icons.push_back(as<SimplePlayer*>(layer->getChildByID("robot-icon")));
-            icons.push_back(as<SimplePlayer*>(layer->getChildByID("spider-icon")));
-            icons.push_back(as<SimplePlayer*>(layer->getChildByID("swing-icon")));
-
-            auto player2 = as<SimplePlayer*>(CCDirector::get()->getRunningScene()->getChildByID("GJGarageLayer")->getChildByID("player2-icon"));
-            CCNode* cursor = nullptr;
-
-            switch (m_fields->colorMode) {
+            auto colorKey = "";
+            switch (m_colorMode) {
                 case 0:
-                    if (GDI_GET_VALUE(int64_t, "color1", 0) != sender->getTag()) {
-                        cursor = layer->getChildByID("cursor-col1");
-                        cursor->setPosition({
-                            menu->getChildByID(std::to_string(sender->getTag()))->getPositionX() + menu->getPositionX(),
-                            menu->getChildByID(std::to_string(sender->getTag()))->getPositionY() + menu->getPositionY()
-                        });
-;
-                        GDI_SET_VALUE(int64_t, "color1", sender->getTag());
-                        for (auto* icon : icons) {
-                            icon->setColor(GM->colorForIdx(sender->getTag()));
-                        }
-                        player2->setColor(GM->colorForIdx(sender->getTag()));
-
-                        if (prevCol1 == 15) {
-                            for (auto* icon : icons) {
-                                icon->disableGlowOutline();
-                            }
-                            player2->disableGlowOutline();
-                        } else if (sender->getTag() == 15) {
-                            for (auto* icon : icons) {
-                                icon->setGlowOutline(GM->colorForIdx(GDI_GET_VALUE(int64_t, "colorglow", 0)));
-                            }
-                            player2->setGlowOutline(GM->colorForIdx(GDI_GET_VALUE(int64_t, "colorglow", 0)));
-                        }
-
-                    } else {
-                        ItemInfoPopup::create(sender->getTag(), UnlockType::Col1)->show();
-                        return;
-                    }
+                    colorKey = "color1";
                     break;
                 case 1:
-                    if (GDI_GET_VALUE(int64_t, "color2", 0) != sender->getTag()) {
-                        cursor = layer->getChildByID("cursor-col2");
-                        cursor->setPosition({
-                            menu->getChildByID(std::to_string(sender->getTag()))->getPositionX() + menu->getPositionX(),
-                            menu->getChildByID(std::to_string(sender->getTag()))->getPositionY() + menu->getPositionY()
-                        });
-
-                        GDI_SET_VALUE(int64_t, "color2", sender->getTag());
-                        for (auto* icon : icons) {
-                            icon->setSecondColor(GM->colorForIdx(sender->getTag()));
-                        }
-                        player2->setSecondColor(GM->colorForIdx(sender->getTag()));
-
-                    } else {
-                        ItemInfoPopup::create(sender->getTag(), UnlockType::Col2)->show();
-                        return;
-                    }
+                    colorKey = "color2";
                     break;
                 case 2:
-                    if (GDI_GET_VALUE(int64_t, "colorglow", 0) != sender->getTag()) {
-                        cursor = layer->getChildByID("cursor-glow");
-                        cursor->setPosition({
-                            menu->getChildByID(std::to_string(sender->getTag()))->getPositionX() + menu->getPositionX(),
-                            menu->getChildByID(std::to_string(sender->getTag()))->getPositionY() + menu->getPositionY()
-                        });
-
-                        GDI_SET_VALUE(int64_t, "colorglow", sender->getTag());
-                        if (GDI_GET_VALUE(bool, "glow", false) || GDI_GET_VALUE(int64_t, "color1", 0) == 15) {
-                            for (auto* icon : icons) {
-                                icon->setGlowOutline(GM->colorForIdx(sender->getTag()));
-                            }
-                            player2->setGlowOutline(GM->colorForIdx(sender->getTag()));
-                        }
-
-                    } else {
-                        ItemInfoPopup::create(sender->getTag(), UnlockType::Col2)->show();
-                        return;
-                    }
-                    break;
-                default:
-                    log::error("what did you do lmao");
+                    colorKey = "colorglow";
                     break;
             }
 
+            if (GDI_GET_VALUE(int64_t, colorKey, 0) != sender->getTag()) {
+                static_cast<CCNode*>(m_cursors->objectAtIndex(m_colorMode))->setPosition(m_mainLayer->convertToNodeSpace(
+                    m_buttonMenu->convertToWorldSpace(static_cast<CCNode*>(sender)->getPosition())
+                ));
+                GDI_SET_VALUE(int64_t, colorKey, sender->getTag());
+            } else {
+                m_delegate->showUnlockPopup(sender->getTag(), ut);
+            }
+
+            updateIconColors();
         } else {
             CharacterColorPage::onPlayerColor(sender);
         }
@@ -295,41 +137,25 @@ class $modify(CharacterColorPage) {
 
     void toggleGlow(CCObject* sender) {
         if (GDI_GET_VALUE(bool, "2pselected", false)) {
-            auto GM = GameManager::get();
-
-            auto layer = this->getChildByID("colors-layer");
-            auto menu = layer->getChildByID("buttons-menu");
-            std::vector<SimplePlayer*> icons;
-
-            icons.push_back(as<SimplePlayer*>(layer->getChildByID("cube-icon")));
-            icons.push_back(layer->getChildByID("buttons-menu")->getChildByID("ship-button")->getChildByType<SimplePlayer>(0));
-            icons.push_back(as<SimplePlayer*>(layer->getChildByID("ball-icon")));
-            icons.push_back(as<SimplePlayer*>(layer->getChildByID("ufo-icon")));
-            icons.push_back(as<SimplePlayer*>(layer->getChildByID("wave-icon")));
-            icons.push_back(as<SimplePlayer*>(layer->getChildByID("robot-icon")));
-            icons.push_back(as<SimplePlayer*>(layer->getChildByID("spider-icon")));
-            icons.push_back(as<SimplePlayer*>(layer->getChildByID("swing-icon")));
-
-            auto player2 = as<SimplePlayer*>(CCDirector::get()->getRunningScene()->getChildByID("GJGarageLayer")->getChildByID("player2-icon"));
-
-            GDI_SET_VALUE(bool, "glow", as<CCMenuItemToggler*>(sender)->isOn());
-
-
-            for (auto* icon : icons) {
-                if (GDI_GET_VALUE(bool, "glow", false) || GDI_GET_VALUE(int64_t, "color1", 0) == 15) {
-                    icon->setGlowOutline(GM->colorForIdx(GDI_GET_VALUE(int64_t, "colorglow", 0)));
-                } else {
-                    icon->disableGlowOutline();
-                }
-            }
-            if (GDI_GET_VALUE(bool, "glow", false)) 
-                player2->setGlowOutline(GM->colorForIdx(GDI_GET_VALUE(int64_t, "colorglow", 0)));
-            else
-                player2->disableGlowOutline();
-
-
+            GDI_SET_VALUE(bool, "glow", static_cast<CCMenuItemToggler*>(sender)->isOn());
+            updateIconColors();
         } else {
             CharacterColorPage::toggleGlow(sender);
+        }
+    }
+
+    void updateIconColors() {
+        CharacterColorPage::updateIconColors();
+
+        if (GDI_GET_VALUE(bool, "2pselected", false)) {
+            auto GM = GameManager::get();
+            for (auto* icon : CCArrayExt<SimplePlayer*>(m_playerObjects)) {
+                icon->setColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color1", 0)));
+                icon->setSecondColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color2", 0)));
+                icon->enableCustomGlowColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "colorglow", 0)));
+                icon->m_hasGlowOutline = GDI_GET_VALUE(bool, "glow", false);
+                icon->updateColors();
+            }
         }
     }
 };
