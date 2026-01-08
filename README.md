@@ -14,3 +14,4 @@ Allows you to customize your 2nd player
 ## Special thanks to:
 - [Alphalaneous](https://github.com/Alphalaneous), for making the original 2.1 version so I can replicate 80% of their code
 - [Erymanthus](https://github.com/RayDeeUx), for testing on MacOS for me
+- [Jasmine](https://github.com/hiimjasmine00), for the iOS support
