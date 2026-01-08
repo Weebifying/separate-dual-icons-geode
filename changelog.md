@@ -1,3 +1,6 @@
+## v1.3.2
+- iOS support
+- Huge optimization rewrite thanks to Jasmine!!!
 ## v1.3.1
 - Fixed a crash with Better Unlock Info
 ## v1.3.0

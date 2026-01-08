@@ -1,4 +1,5 @@
 #include "Macros.hpp"
+#include <Geode/Geode.hpp>
 #include <Geode/modify/PlayerObject.hpp>
 
 using namespace geode::prelude;
@@ -7,7 +8,7 @@ class $modify(MyPlayerObject, PlayerObject) {
     void setupStreak() {
         // thanks alphalaneous for the fucking genius code
         // theres no way i dont copy this
-        auto GM = GameManager::get();
+        GameManager* GM = GameManager::get();
         int origStreak = GM->m_playerStreak;
         int origShipStreak = GM->m_playerShipFire;
         bool origGlow = GM->m_playerGlow;

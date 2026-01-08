@@ -1,4 +1,5 @@
 #include "Macros.hpp"
+#include <Geode/Geode.hpp>
 #include <Geode/modify/GJGarageLayer.hpp>
 
 using namespace geode::prelude;
