@@ -1,17 +1,21 @@
 {
-	"geode": "4.10.0",
+	"geode": "5.0.0-alpha.1",
 	"gd": {
-		"win": "2.2074",
-		"android": "2.2074",
-		"mac": "2.2074",
-		"ios": "2.2074"
+		"win": "2.2081",
+		"android": "2.2081",
+		"mac": "2.2081",
+		"ios": "2.2081"
 	},
-	"version": "v1.3.2",
+	"version": "v1.3.3",
 	"id": "weebify.separate_dual_icons",
 	"name": "Separate Dual Icons",
 	"developer": "Weebify",
 	"description": "Allows you to customize your 2nd player",
-	"tags": ["gameplay", "interface", "customization"],
+	"tags": [
+		"gameplay",
+		"interface",
+		"customization"
+	],
 	"dependencies": {
 		"geode.node-ids": ">=1.21.0"
 	},
@@ -23,5 +27,13 @@
 	},
 	"links": {
 		"source": "https://github.com/Weebifying/separate-dual-icons-geode"
+	},
+	"settings": {
+		"exitDualSwitch": {
+			"type": "bool",
+			"default": false,
+			"name": "Exit Dual Switch",
+			"description": "If player 2 exits the dual, player 1 switches to player 2's icon set"
+		}
 	}
 }

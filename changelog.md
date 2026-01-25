@@ -1,3 +1,5 @@
+## v1.3.3
+- Updated for GD 2.2081/Geode 5.0.0
 ## v1.3.2
 - iOS support
 - Huge optimization rewrite thanks to Jasmine!!!

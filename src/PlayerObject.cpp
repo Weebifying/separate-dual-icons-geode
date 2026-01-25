@@ -1,22 +1,32 @@
 #include "Macros.hpp"
+#include "SDIHelper.hpp"
 #include <Geode/Geode.hpp>
 #include <Geode/modify/PlayerObject.hpp>
 
 using namespace geode::prelude;
 
 class $modify(MyPlayerObject, PlayerObject) {
+    bool isPlayer2() {
+        return isPlayer2(m_gameLayer);
+    }
+
+    bool isPlayer2(GJBaseGameLayer* gameLayer) {
+        return gameLayer && ((gameLayer->m_player1 && !gameLayer->m_player2 && this != gameLayer->m_player1) || this == gameLayer->m_player2);
+    }
+
     void setupStreak() {
         // thanks alphalaneous for the fucking genius code
         // theres no way i dont copy this
-        GameManager* GM = GameManager::get();
-        int origStreak = GM->m_playerStreak;
-        int origShipStreak = GM->m_playerShipFire;
-        bool origGlow = GM->m_playerGlow;
+        auto GM = GameManager::get();
+        auto SDI = SDIHelper::get();
+        int origStreak = SDI->getTrail(false);
+        int origShipStreak = SDI->getShipTrail(false);
+        bool origGlow = SDI->getGlow(false);
 
         if (this->isPlayer2()) {
-            GM->m_playerStreak = GDI_GET_VALUE(int64_t, "trail", 1);
-            GM->m_playerShipFire = GDI_GET_VALUE(int64_t, "shiptrail", 1);
-            GM->m_playerGlow = GDI_GET_VALUE(bool, "glow", false);
+            GM->m_playerStreak = SDI->getTrail(true);
+            GM->m_playerShipFire = SDI->getShipTrail(true);
+            GM->m_playerGlow = SDI->getGlow(true);
         }
 
         PlayerObject::setupStreak();
@@ -26,34 +36,31 @@ class $modify(MyPlayerObject, PlayerObject) {
         GM->m_playerGlow = origGlow;
     }
 
-    bool isPlayer2() {
-        return isPlayer2(m_gameLayer);
-    }
+    // void playDeathEffect() {
+    //     auto GM = GameManager::get();
+    //     auto SDI = SDIHelper::get();
+    //     int origDeath = SDI->getDeathEffect(false);
+    //     bool orgDeathExplode = SDI->getDeathExplode(false);
 
-    bool isPlayer2(GJBaseGameLayer* gameLayer) {
-        return gameLayer && ((gameLayer->m_player1 && !gameLayer->m_player2 && this != gameLayer->m_player1) || this == gameLayer->m_player2);
-    }
+    //     if (this->isPlayer2()) {
+    //         GM->m_playerDeathEffect = SDI->getDeathEffect(true);
+    //         GM->setGameVariable("0153", SDI->getDeathExplode(true));
+    //     }
 
-    void playDeathEffect() {
-        auto GM = GameManager::get();
-        int origDeath = GM->m_playerDeathEffect;
-        bool orgDeathExplode = GM->getGameVariable("0153");
+    //     PlayerObject::playDeathEffect();
 
-        if (this->isPlayer2()) {
-            GM->m_playerDeathEffect = GDI_GET_VALUE(int64_t, "death", 1);
-            GM->setGameVariable("0153", GDI_GET_VALUE(bool, "deathexplode", false));
-        }
-
-        PlayerObject::playDeathEffect();
-
-        GM->m_playerDeathEffect = origDeath;
-        GM->setGameVariable("0153", orgDeathExplode);
-    }
+    //     queueInMainThread([GM, origDeath, orgDeathExplode]() {
+    //         GM->m_playerDeathEffect = origDeath;
+    //         GM->setGameVariable("0153", orgDeathExplode);
+    //     });
+    // }
 
     bool init(int player, int ship, GJBaseGameLayer* gameLayer, CCLayer* layer, bool playLayer) {
+        log::info("PlayerObject::init({}, {}, {}, layer, {})", player, ship, gameLayer ? (int)std::addressof(gameLayer) : 0, playLayer);
+        auto SDI = SDIHelper::get();
         return PlayerObject::init(
-            this->isPlayer2(gameLayer) ? GDI_GET_VALUE(int64_t, "cube", 1) : player,
-            this->isPlayer2(gameLayer) ? GDI_GET_VALUE(int64_t, "ship", 1) : ship,
+            this->isPlayer2(gameLayer) ? SDI->getCube(true): player,
+            this->isPlayer2(gameLayer) ? SDI->getShip(true) : ship,
             gameLayer,
             layer,
             playLayer
@@ -61,52 +68,52 @@ class $modify(MyPlayerObject, PlayerObject) {
     }
 
     void setColor(ccColor3B const &color) {
-        PlayerObject::setColor(this->isPlayer2() ? GameManager::get()->colorForIdx(GDI_GET_VALUE(int64_t, "color1", 0)) : color);
+        PlayerObject::setColor(!m_gameLayer ? color : this->isPlayer2() ? GameManager::get()->colorForIdx(SDIHelper::get()->getColor1(true)) : GameManager::get()->colorForIdx(SDIHelper::get()->getColor1(false)));
     }
 
     void setSecondColor(ccColor3B const &color) {
-        PlayerObject::setSecondColor(this->isPlayer2() ? GameManager::get()->colorForIdx(GDI_GET_VALUE(int64_t, "color2", 0)) : color);
+        PlayerObject::setSecondColor(!m_gameLayer ? color : this->isPlayer2() ? GameManager::get()->colorForIdx(SDIHelper::get()->getColor2(true)) : GameManager::get()->colorForIdx(SDIHelper::get()->getColor2(false)));
     }
 
     void updatePlayerFrame(int p0) {
-        PlayerObject::updatePlayerFrame(p0 != 0 && this->isPlayer2() ? GDI_GET_VALUE(int64_t, "cube", 1) : p0);
+        PlayerObject::updatePlayerFrame(!m_gameLayer ? p0 : p0 != 0 && this->isPlayer2() ? SDIHelper::get()->getCube(true): SDIHelper::get()->getCube(false));
     }
 
     void updatePlayerShipFrame(int p0) {
-        PlayerObject::updatePlayerShipFrame(p0 != 0 && this->isPlayer2() ? GDI_GET_VALUE(int64_t, "ship", 1) : p0);
+        PlayerObject::updatePlayerShipFrame(!m_gameLayer ? p0 : p0 != 0 && this->isPlayer2() ? SDIHelper::get()->getShip(true) : SDIHelper::get()->getShip(false));
     }
 
     void updatePlayerRollFrame(int p0) {
-        PlayerObject::updatePlayerRollFrame(p0 != 0 && this->isPlayer2() ? GDI_GET_VALUE(int64_t, "roll", 1) : p0);
+        PlayerObject::updatePlayerRollFrame(!m_gameLayer ? p0 : p0 != 0 && this->isPlayer2() ? SDIHelper::get()->getBall(true) : SDIHelper::get()->getBall(false));
     }
 
     void updatePlayerBirdFrame(int p0) {
-        PlayerObject::updatePlayerBirdFrame(p0 != 0 && this->isPlayer2() ? GDI_GET_VALUE(int64_t, "bird", 1) : p0);
+        PlayerObject::updatePlayerBirdFrame(!m_gameLayer ? p0 : p0 != 0 && this->isPlayer2() ? SDIHelper::get()->getUFO(true) : SDIHelper::get()->getUFO(false));
     }
 
     void updatePlayerDartFrame(int p0) {
-        PlayerObject::updatePlayerDartFrame(p0 != 0 && this->isPlayer2() ? GDI_GET_VALUE(int64_t, "dart", 1) : p0);
+        PlayerObject::updatePlayerDartFrame(!m_gameLayer ? p0 : p0 != 0 && this->isPlayer2() ? SDIHelper::get()->getWave(true) : SDIHelper::get()->getWave(false));
     }
 
     void createRobot(int p0) {
-        PlayerObject::createRobot(p0 != 0 && this->isPlayer2() ? GDI_GET_VALUE(int64_t, "robot", 1) : p0);
+        PlayerObject::createRobot(!m_gameLayer ? p0 : p0 != 0 && this->isPlayer2() ? SDIHelper::get()->getRobot(true) : SDIHelper::get()->getRobot(false));
     }
 
     void createSpider(int p0) {
-        PlayerObject::createSpider(p0 != 0 && this->isPlayer2() ? GDI_GET_VALUE(int64_t, "spider", 1) : p0);
+        PlayerObject::createSpider(!m_gameLayer ? p0 : p0 != 0 && this->isPlayer2() ? SDIHelper::get()->getSpider(true) : SDIHelper::get()->getSpider(false));
     }
 
     void updatePlayerSwingFrame(int p0) {
-        PlayerObject::updatePlayerSwingFrame(p0 != 0 && this->isPlayer2() ? GDI_GET_VALUE(int64_t, "swing", 1) : p0);
+        PlayerObject::updatePlayerSwingFrame(!m_gameLayer ? p0 : p0 != 0 && this->isPlayer2() ? SDIHelper::get()->getSwing(true) : SDIHelper::get()->getSwing(false));
     }
 
     void updatePlayerJetpackFrame(int p0) {
-        PlayerObject::updatePlayerJetpackFrame(p0 != 0 && this->isPlayer2() ? GDI_GET_VALUE(int64_t, "jetpack", 1) : p0);
+        PlayerObject::updatePlayerJetpackFrame(!m_gameLayer ? p0 : p0 != 0 && this->isPlayer2() ? SDIHelper::get()->getJetpack(true) : SDIHelper::get()->getJetpack(false));
     }
 
     void updateGlowColor() {
         if (this->isPlayer2()) {
-            enableCustomGlowColor(GameManager::get()->colorForIdx(GDI_GET_VALUE(int64_t, "colorglow", 0)));
+            enableCustomGlowColor(GameManager::get()->colorForIdx(SDIHelper::get()->getGlowColor(true)));
         }
         PlayerObject::updateGlowColor();
     }
