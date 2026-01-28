@@ -9,15 +9,15 @@ class $modify(MyBaseGameLayer, GJBaseGameLayer) {
     void setInfo(PlayerObject* player, bool isP2) {
         auto GM = GameManager::get();
         auto SDI = SDIHelper::get();
-        bool orgGlow = GM->m_playerGlow;
 
         player->setColor(GM->colorForIdx(SDI->getColor1(isP2)));
         player->setSecondColor(GM->colorForIdx(SDI->getColor2(isP2)));
         player->m_originalMainColor = GM->colorForIdx(SDI->getColor1(isP2));
         player->m_originalSecondColor = GM->colorForIdx(SDI->getColor2(isP2));
-        GM->m_playerGlow = SDI->getGlow(isP2);
+        player->m_hasGlow = SDI->getGlow(isP2);
         player->enableCustomGlowColor(GM->colorForIdx(SDI->getGlowColor(isP2)));
         player->updatePlayerGlow();
+        player->updateGlowColor();
         if (player->m_isShip) {
             if (player->m_isPlatformer) {
                 player->updatePlayerJetpackFrame(SDI->getJetpack(isP2));
@@ -43,8 +43,7 @@ class $modify(MyBaseGameLayer, GJBaseGameLayer) {
             player->updatePlayerFrame(SDI->getCube(isP2));
         }
         setupNormalStreak(player, isP2);
-
-        GM->m_playerGlow = orgGlow;
+        // setupShipFire(player, isP2);
     }
 
     void setupNormalStreak(PlayerObject* player, bool isP2) {
@@ -79,6 +78,7 @@ class $modify(MyBaseGameLayer, GJBaseGameLayer) {
                 streakStroke = 3.0;
                 player->m_streakStrokeWidth = 3.0;
                 player->m_alwaysShowStreak = true;
+                break;
         }
         
         player->m_playerStreak = SDI->getTrail(isP2);
@@ -86,12 +86,51 @@ class $modify(MyBaseGameLayer, GJBaseGameLayer) {
         if (SDI->getTrail(isP2) == 6) {
             player->m_regularTrail->enableRepeatMode(0.1);
         }
+        player->m_regularTrail->m_fMaxSeg = 50.0;
         player->m_regularTrail->setBlendFunc({GL_SRC_ALPHA, GL_ONE});
+        player->m_regularTrail->stopStroke();        
+    }
+
+    void setupShipFire(PlayerObject* player, bool isP2) {
+        auto SDI = SDIHelper::get();
+
+        float streakFade = 0.0;
+        float streakStroke = 0.0;
+        switch (SDI->getShipTrail(isP2)) {
+            case 2:
+                streakFade = 0.0636;
+                streakStroke = 22.0;
+                break;
+            case 3:
+                streakFade = 0.1278;
+                streakStroke = 28.6;
+                break;
+            case 4:
+                streakFade = 0.105;
+                streakStroke = 28.6;
+                break;
+            case 5:
+                streakFade = 0.09;
+                streakStroke = 18.7;
+                break;
+            case 6:
+                streakFade = 0.096;
+                streakStroke = 27.0;
+                break;
+        }
+
+        player->m_shipStreakType = static_cast<ShipStreak>(SDI->getShipTrail(isP2));
+        player->m_shipStreak->initWithFade(streakFade, 5.0, streakStroke, ccc3(255, 255, 255), CCString::createWithFormat("shipfire_%02d_001.png", SDI->getShipTrail(isP2))->getCString());
+        player->m_shipStreak->m_fMaxSeg = 50.0;
+        player->m_shipStreak->m_bDontOpacityFade = true;
+        player->m_shipStreak->setBlendFunc({GL_SRC_ALPHA, GL_ONE});
     }
 
     void resetPlayer() {
-        SDIHelper::get()->m_isP2Main = false;
-        SDIHelper::get()->reset();
+        if (!this->m_isPracticeMode) {
+            SDIHelper::get()->m_isP2Main = false;
+            SDIHelper::get()->reset();
+        }
         GJBaseGameLayer::resetPlayer();
         setInfo(this->m_player1, false);
     }
@@ -100,6 +139,12 @@ class $modify(MyBaseGameLayer, GJBaseGameLayer) {
         SDIHelper::get()->m_isP2Main = false;
         SDIHelper::get()->reset();
         return GJBaseGameLayer::init();
+    }
+
+    void onExit() {
+        GJBaseGameLayer::onExit();
+        SDIHelper::get()->m_isP2Main = false;
+        SDIHelper::get()->reset();
     }
 
     void playExitDualEffect(PlayerObject* p0) {
