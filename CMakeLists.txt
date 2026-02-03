@@ -8,7 +8,7 @@ else()
 endif()
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 
-project(SeparateDualIcons VERSION 1.3.0)
+project(SeparateDualIcons VERSION 1.3.3)
 
 file(GLOB SOURCES
 	src/*.cpp

@@ -19,40 +19,27 @@ class $modify(MyPlayerObject, PlayerObject) {
         // theres no way i dont copy this
         auto GM = GameManager::get();
         auto SDI = SDIHelper::get();
-        int origStreak = SDI->getTrail(false);
-        int origShipStreak = SDI->getShipTrail(false);
-        bool origGlow = SDI->getGlow(false);
 
-        if (this->isPlayer2()) {
-            GM->m_playerStreak = SDI->getTrail(true);
-            GM->m_playerShipFire = SDI->getShipTrail(true);
-            GM->m_playerGlow = SDI->getGlow(true);
-        }
+        GM->m_playerStreak = SDI->getTrail(this->isPlayer2());
+        GM->m_playerShipFire = SDI->getShipTrail(this->isPlayer2());
 
         PlayerObject::setupStreak();
 
-        GM->m_playerStreak = origStreak;
-        GM->m_playerShipFire = origShipStreak;
-        GM->m_playerGlow = origGlow;
+        GM->m_playerStreak = SDI->m_isP2Main ? SDI->m_p2Trail : SDI->m_p1Trail;
+        GM->m_playerShipFire = SDI->m_isP2Main ? SDI->m_p2ShipTrail : SDI->m_p1ShipTrail;
     }
 
     // void playDeathEffect() {
     //     auto GM = GameManager::get();
     //     auto SDI = SDIHelper::get();
-    //     int origDeath = SDI->getDeathEffect(false);
-    //     bool orgDeathExplode = SDI->getDeathExplode(false);
 
-    //     if (this->isPlayer2()) {
-    //         GM->m_playerDeathEffect = SDI->getDeathEffect(true);
-    //         GM->setGameVariable("0153", SDI->getDeathExplode(true));
-    //     }
-
+    //     GM->m_playerDeathEffect = SDI->getDeathEffect(this->isPlayer2());
+    //     GM->setGameVariable("0153", SDI->getDeathExplode(this->isPlayer2()));
+        
     //     PlayerObject::playDeathEffect();
 
-    //     queueInMainThread([GM, origDeath, orgDeathExplode]() {
-    //         GM->m_playerDeathEffect = origDeath;
-    //         GM->setGameVariable("0153", orgDeathExplode);
-    //     });
+    //     GM->m_playerDeathEffect = SDI->m_isP2Main ? SDI->m_p2DeathEffect : SDI->m_p1DeathEffect;
+    //     GM->setGameVariable("0153", SDI->m_isP2Main ? SDI->m_p2DeathExplode : SDI->m_p1DeathExplode);
     // }
 
     bool init(int player, int ship, GJBaseGameLayer* gameLayer, CCLayer* layer, bool playLayer) {
@@ -102,6 +89,11 @@ class $modify(MyPlayerObject, PlayerObject) {
         int target = !m_gameLayer ? this->m_robotSprite->m_iconRequestID : this->m_robotSprite->m_iconRequestID != 0 && this->isPlayer2() ? SDIHelper::get()->getRobot(true) : SDIHelper::get()->getRobot(false);
         if (this->m_robotSprite->m_iconRequestID != target) {
             this->createRobot(target);
+            this->toggleGhostEffect(this->m_ghostType);
+            this->m_hasGlow = SDIHelper::get()->getGlow(this->isPlayer2());
+            this->enableCustomGlowColor(GameManager::get()->colorForIdx(SDIHelper::get()->getGlowColor(this->isPlayer2())));
+            this->updatePlayerGlow();
+            this->updateGlowColor();
         }
         PlayerObject::toggleRobotMode(enable, noEffects);
     }
@@ -114,6 +106,11 @@ class $modify(MyPlayerObject, PlayerObject) {
         int target = !m_gameLayer ? this->m_spiderSprite->m_iconRequestID : this->m_spiderSprite->m_iconRequestID != 0 && this->isPlayer2() ? SDIHelper::get()->getSpider(true) : SDIHelper::get()->getSpider(false);
         if (this->m_spiderSprite->m_iconRequestID != target) {
             this->createSpider(target);
+            this->toggleGhostEffect(this->m_ghostType);
+            this->m_hasGlow = SDIHelper::get()->getGlow(this->isPlayer2());
+            this->enableCustomGlowColor(GameManager::get()->colorForIdx(SDIHelper::get()->getGlowColor(this->isPlayer2())));
+            this->updatePlayerGlow();
+            this->updateGlowColor();
         }
         PlayerObject::toggleSpiderMode(enable, noEffects);
     }

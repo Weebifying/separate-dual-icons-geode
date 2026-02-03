@@ -228,10 +228,10 @@ class $modify(MyGarageLayer, GJGarageLayer) {
             m_fields->arrow2->setVisible(false);
         }
 
-        if (m_cursor1->getColor() == ccColor3B({255, 255, 0})) {
+        if (m_cursor1->getColor() == ccc3(255, 255, 0)) {
             m_cursor1->setColor({0, 255, 255});
             m_cursor2->setColor({0, 255, 255});
-        } else if (m_cursor1->getColor() == ccColor3B({0, 255, 255})) {
+        } else if (m_cursor1->getColor() == ccc3(0, 255, 255)) {
             m_cursor1->setColor({255, 255, 0});
             m_cursor2->setColor({255, 255, 0});
         }

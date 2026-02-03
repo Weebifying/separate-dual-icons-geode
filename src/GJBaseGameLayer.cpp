@@ -14,10 +14,6 @@ class $modify(MyBaseGameLayer, GJBaseGameLayer) {
         player->setSecondColor(GM->colorForIdx(SDI->getColor2(isP2)));
         player->m_originalMainColor = GM->colorForIdx(SDI->getColor1(isP2));
         player->m_originalSecondColor = GM->colorForIdx(SDI->getColor2(isP2));
-        player->m_hasGlow = SDI->getGlow(isP2);
-        player->enableCustomGlowColor(GM->colorForIdx(SDI->getGlowColor(isP2)));
-        player->updatePlayerGlow();
-        player->updateGlowColor();
         if (player->m_isShip) {
             if (player->m_isPlatformer) {
                 player->updatePlayerJetpackFrame(SDI->getJetpack(isP2));
@@ -42,6 +38,11 @@ class $modify(MyBaseGameLayer, GJBaseGameLayer) {
         } else {
             player->updatePlayerFrame(SDI->getCube(isP2));
         }
+        player->toggleGhostEffect(player->m_ghostType);
+        player->m_hasGlow = SDI->getGlow(isP2);
+        player->enableCustomGlowColor(GM->colorForIdx(SDI->getGlowColor(isP2)));
+        player->updatePlayerGlow();
+        player->updateGlowColor();
         setupNormalStreak(player, isP2);
         // setupShipFire(player, isP2);
     }
@@ -128,7 +129,6 @@ class $modify(MyBaseGameLayer, GJBaseGameLayer) {
 
     void resetPlayer() {
         if (!this->m_isPracticeMode) {
-            SDIHelper::get()->m_isP2Main = false;
             SDIHelper::get()->reset();
         }
         GJBaseGameLayer::resetPlayer();
@@ -136,14 +136,12 @@ class $modify(MyBaseGameLayer, GJBaseGameLayer) {
     }
 
     bool init() {
-        SDIHelper::get()->m_isP2Main = false;
         SDIHelper::get()->reset();
         return GJBaseGameLayer::init();
     }
 
     void onExit() {
         GJBaseGameLayer::onExit();
-        SDIHelper::get()->m_isP2Main = false;
         SDIHelper::get()->reset();
     }
 
@@ -154,8 +152,7 @@ class $modify(MyBaseGameLayer, GJBaseGameLayer) {
         auto SDI = SDIHelper::get();
         
         if (p0 == m_player1) {
-            if (Mod::get()->getSettingValue<bool>("exitDualSwitch")) {
-                SDI->m_isP2Main = !SDIHelper::get()->m_isP2Main;
+            if (Mod::get()->getSettingValue<bool>("exitDualSwitch") && SDI->m_shouldSwap) {
                 SDI->swapAll();
 
                 setInfo(m_player1, false);
