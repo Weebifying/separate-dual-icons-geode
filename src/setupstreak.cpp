@@ -129,32 +129,32 @@
 //     }
 // }
 
-// std::string FUN_140386060(int shipFire, float delta) {
-//     int spritesCount;
-//     float timeStep;
-//     if (shipFire == 4) {
-//         timeStep = 5.0/12;
-//     } else if (shipFire == 5) {
-//         timeStep = 0.05;
-//     } else if (shipFire == 6) {
-//         timeStep = 5.0/12;
-//     } else {
-//         timeStep = 3.0/96;
-//     }
+std::string getFrameForStreak(int shipFire, float delta) {
+    int spritesCount;
+    float timeStep;
+    if (shipFire == 4) {
+        timeStep = 5.0/12;
+    } else if (shipFire == 5) {
+        timeStep = 0.05;
+    } else if (shipFire == 6) {
+        timeStep = 5.0/12;
+    } else {
+        timeStep = 3.0/96;
+    }
 
-//     if (shipFire == 2) {
-//         spritesCount = 9;
-//     } else if (shipFire == 3) {
-//         spritesCount = 10;
-//     } else {
-//         if (shipFire == 4) spritesCount = 6;
-//         if (shipFire == 5) spritesCount = 16;
-//         if (shipFire == 6) spritesCount = 5;
-//         spritesCount = 0;
-//     }
+    if (shipFire == 2) {
+        spritesCount = 9;
+    } else if (shipFire == 3) {
+        spritesCount = 10;
+    } else {
+        if (shipFire == 4) spritesCount = 6;
+        if (shipFire == 5) spritesCount = 16;
+        if (shipFire == 6) spritesCount = 5;
+        spritesCount = 0;
+    }
 
-//     int step = (int)floorf(delta / timeStep);
-//     int spriteStep = step % spritesCount + 1;
+    int step = (int)floorf(delta / timeStep);
+    int spriteStep = step % spritesCount + 1;
 
-//     return fmt::format("shipfire%02d_%03d.png", shipFire, spriteStep);
-// }
+    return fmt::format("shipfire%02d_%03d.png", shipFire, spriteStep);
+}

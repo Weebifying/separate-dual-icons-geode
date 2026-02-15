@@ -17,7 +17,7 @@ class $modify(MyGarageLayer, GJGarageLayer) {
     }
 
     void on2PToggle(CCObject* sender) {
-        GDI_SET_VALUE(bool, "2pselected", static_cast<CCNode*>(sender)->getID() == "player2-button");
+        SDI_SET_VALUE(bool, "2pselected", static_cast<CCNode*>(sender)->getID() == "player2-button");
 
         auto GM = GameManager::get();
         auto winSize = CCDirector::get()->getWinSize();
@@ -27,7 +27,7 @@ class $modify(MyGarageLayer, GJGarageLayer) {
         if (m_iconType == IconType::Special)
             menu2 = static_cast<CCNode*>(m_iconSelection->getChildByType<ListButtonBar>(0)->m_pages->objectAtIndex(0))->getChildByType<CCMenu>(0);
 
-        if (GDI_GET_VALUE(bool, "2pselected", false)) {
+        if (SDI_GET_VALUE(bool, "2pselected", false)) {
 
             int tag = 0;
             int tag2 = 0;
@@ -37,39 +37,39 @@ class $modify(MyGarageLayer, GJGarageLayer) {
 
             switch (m_iconType) {
                 case IconType::Cube:
-                    tag = GDI_GET_VALUE(int64_t, "cube", 1);
+                    tag = SDI_GET_VALUE(int64_t, "cube", 1);
                     break;
                 case IconType::Ship:
-                    tag = GDI_GET_VALUE(int64_t, "ship", 1);
+                    tag = SDI_GET_VALUE(int64_t, "ship", 1);
                     break;
                 case IconType::Ball:
-                    tag = GDI_GET_VALUE(int64_t, "roll", 1);
+                    tag = SDI_GET_VALUE(int64_t, "roll", 1);
                     break;
                 case IconType::Ufo:
-                    tag = GDI_GET_VALUE(int64_t, "bird", 1);
+                    tag = SDI_GET_VALUE(int64_t, "bird", 1);
                     break;
                 case IconType::Wave:
-                    tag = GDI_GET_VALUE(int64_t, "dart", 1);
+                    tag = SDI_GET_VALUE(int64_t, "dart", 1);
                     break;
                 case IconType::Robot:
-                    tag = GDI_GET_VALUE(int64_t, "robot", 1);
+                    tag = SDI_GET_VALUE(int64_t, "robot", 1);
                     break;
                 case IconType::Spider:
-                    tag = GDI_GET_VALUE(int64_t, "spider", 1);
+                    tag = SDI_GET_VALUE(int64_t, "spider", 1);
                     break;
                 case IconType::Swing:
-                    tag = GDI_GET_VALUE(int64_t, "swing", 1);
+                    tag = SDI_GET_VALUE(int64_t, "swing", 1);
                     break;
                 case IconType::Jetpack:
-                    tag = GDI_GET_VALUE(int64_t, "jetpack", 1);
+                    tag = SDI_GET_VALUE(int64_t, "jetpack", 1);
                     break;
                 case IconType::Special:
-                    tag = GDI_GET_VALUE(int64_t, "trail", 1);
-                    tag2 = GDI_GET_VALUE(int64_t, "shiptrail", 1);
+                    tag = SDI_GET_VALUE(int64_t, "trail", 1);
+                    tag2 = SDI_GET_VALUE(int64_t, "shiptrail", 1);
                     break;
                 case IconType::DeathEffect:
-                    tag = GDI_GET_VALUE(int64_t, "death", 1);
-                    m_iconSelection->getChildByType<CCMenu>(0)->getChildByType<CCMenuItemToggler>(0)->toggle(GDI_GET_VALUE(bool, "deathexplode", false));
+                    tag = SDI_GET_VALUE(int64_t, "death", 1);
+                    m_iconSelection->getChildByType<CCMenu>(0)->getChildByType<CCMenuItemToggler>(0)->toggle(!SDI_GET_VALUE(bool, "deathexplode", false));
                     break;
                 default:
                     break;
@@ -135,7 +135,7 @@ class $modify(MyGarageLayer, GJGarageLayer) {
                     break;
                 case IconType::DeathEffect:
                     tag = GM->getPlayerDeathEffect();
-                    m_iconSelection->getChildByType<CCMenu>(0)->getChildByType<CCMenuItemToggler>(0)->toggle(GM->getGameVariable("0153"));
+                    m_iconSelection->getChildByType<CCMenu>(0)->getChildByType<CCMenuItemToggler>(0)->toggle(!GM->getGameVariable("0153"));
                     break;
                 default:
                     break;
@@ -184,43 +184,43 @@ class $modify(MyGarageLayer, GJGarageLayer) {
         int oldColorGlow = GM->getPlayerGlowColor();
         bool oldGlow = GM->getPlayerGlow();
 
-        GM->setPlayerFrame(GDI_GET_VALUE(int64_t, "cube", 1));
-        GM->setPlayerShip(GDI_GET_VALUE(int64_t, "ship", 1));
-        GM->setPlayerBall(GDI_GET_VALUE(int64_t, "roll", 1));
-        GM->setPlayerBird(GDI_GET_VALUE(int64_t, "bird", 1));
-        GM->setPlayerDart(GDI_GET_VALUE(int64_t, "dart", 1));
-        GM->setPlayerRobot(GDI_GET_VALUE(int64_t, "robot", 1));
-        GM->setPlayerSpider(GDI_GET_VALUE(int64_t, "spider", 1));
-        GM->setPlayerSwing(GDI_GET_VALUE(int64_t, "swing", 1));
-        GM->setPlayerJetpack(GDI_GET_VALUE(int64_t, "jetpack", 1));
-        GM->setPlayerStreak(GDI_GET_VALUE(int64_t, "trail", 1));
-        GM->setPlayerShipStreak(GDI_GET_VALUE(int64_t, "shiptrail", 1));
-        GM->setPlayerDeathEffect(GDI_GET_VALUE(int64_t, "death", 1));
-        GM->setGameVariable("0153", GDI_GET_VALUE(bool, "deathexplode", false));
-        GM->setPlayerColor(GDI_GET_VALUE(int64_t, "color1", 0));
-        GM->setPlayerColor2(GDI_GET_VALUE(int64_t, "color2", 0));
-        GM->setPlayerColor3(GDI_GET_VALUE(int64_t, "colorglow", 0));
-        GM->setPlayerGlow(GDI_GET_VALUE(bool, "glow", false));
+        GM->setPlayerFrame(SDI_GET_VALUE(int64_t, "cube", 1));
+        GM->setPlayerShip(SDI_GET_VALUE(int64_t, "ship", 1));
+        GM->setPlayerBall(SDI_GET_VALUE(int64_t, "roll", 1));
+        GM->setPlayerBird(SDI_GET_VALUE(int64_t, "bird", 1));
+        GM->setPlayerDart(SDI_GET_VALUE(int64_t, "dart", 1));
+        GM->setPlayerRobot(SDI_GET_VALUE(int64_t, "robot", 1));
+        GM->setPlayerSpider(SDI_GET_VALUE(int64_t, "spider", 1));
+        GM->setPlayerSwing(SDI_GET_VALUE(int64_t, "swing", 1));
+        GM->setPlayerJetpack(SDI_GET_VALUE(int64_t, "jetpack", 1));
+        GM->setPlayerStreak(SDI_GET_VALUE(int64_t, "trail", 1));
+        GM->setPlayerShipStreak(SDI_GET_VALUE(int64_t, "shiptrail", 1));
+        GM->setPlayerDeathEffect(SDI_GET_VALUE(int64_t, "death", 1));
+        GM->setGameVariable("0153", SDI_GET_VALUE(bool, "deathexplode", false));
+        GM->setPlayerColor(SDI_GET_VALUE(int64_t, "color1", 0));
+        GM->setPlayerColor2(SDI_GET_VALUE(int64_t, "color2", 0));
+        GM->setPlayerColor3(SDI_GET_VALUE(int64_t, "colorglow", 0));
+        GM->setPlayerGlow(SDI_GET_VALUE(bool, "glow", false));
 
-        GDI_SET_VALUE(int64_t, "cube", oldCube);
-        GDI_SET_VALUE(int64_t, "ship", oldShip);
-        GDI_SET_VALUE(int64_t, "roll", oldRoll);
-        GDI_SET_VALUE(int64_t, "bird", oldBird);
-        GDI_SET_VALUE(int64_t, "dart", oldDart);
-        GDI_SET_VALUE(int64_t, "robot", oldRobot);
-        GDI_SET_VALUE(int64_t, "spider", oldSpider);
-        GDI_SET_VALUE(int64_t, "swing", oldSwing);
-        GDI_SET_VALUE(int64_t, "jetpack", oldJetpack);
-        GDI_SET_VALUE(int64_t, "trail", oldTrail);
-        GDI_SET_VALUE(int64_t, "shiptrail", oldShipTrail);
-        GDI_SET_VALUE(int64_t, "death", oldDeath);
-        GDI_SET_VALUE(bool, "deathexplode", oldDeathExplode);
-        GDI_SET_VALUE(int64_t, "color1", oldColor1);
-        GDI_SET_VALUE(int64_t, "color2", oldColor2);
-        GDI_SET_VALUE(int64_t, "colorglow", oldColorGlow);
-        GDI_SET_VALUE(bool, "glow", oldGlow);
+        SDI_SET_VALUE(int64_t, "cube", oldCube);
+        SDI_SET_VALUE(int64_t, "ship", oldShip);
+        SDI_SET_VALUE(int64_t, "roll", oldRoll);
+        SDI_SET_VALUE(int64_t, "bird", oldBird);
+        SDI_SET_VALUE(int64_t, "dart", oldDart);
+        SDI_SET_VALUE(int64_t, "robot", oldRobot);
+        SDI_SET_VALUE(int64_t, "spider", oldSpider);
+        SDI_SET_VALUE(int64_t, "swing", oldSwing);
+        SDI_SET_VALUE(int64_t, "jetpack", oldJetpack);
+        SDI_SET_VALUE(int64_t, "trail", oldTrail);
+        SDI_SET_VALUE(int64_t, "shiptrail", oldShipTrail);
+        SDI_SET_VALUE(int64_t, "death", oldDeath);
+        SDI_SET_VALUE(bool, "deathexplode", oldDeathExplode);
+        SDI_SET_VALUE(int64_t, "color1", oldColor1);
+        SDI_SET_VALUE(int64_t, "color2", oldColor2);
+        SDI_SET_VALUE(int64_t, "colorglow", oldColorGlow);
+        SDI_SET_VALUE(bool, "glow", oldGlow);
 
-        if (GDI_GET_VALUE(bool, "2pselected", false)) {
+        if (SDI_GET_VALUE(bool, "2pselected", false)) {
             m_fields->arrow1->setVisible(false);
             m_fields->arrow2->setVisible(true);
         } else {
@@ -272,54 +272,52 @@ class $modify(MyGarageLayer, GJGarageLayer) {
         m_playerObject->m_hasGlowOutline = GM->m_playerGlow;
         m_playerObject->updateColors();
 
-        switch (GDI_GET_VALUE(int64_t, "lastmode", 0)) {
+        switch (SDI_GET_VALUE(int64_t, "lastmode", 0)) {
             case 0:
-                m_fields->player2->updatePlayerFrame(GDI_GET_VALUE(int64_t, "cube", 1), IconType::Cube);
+                m_fields->player2->updatePlayerFrame(SDI_GET_VALUE(int64_t, "cube", 1), IconType::Cube);
                 break;
             case 1:
-                m_fields->player2->updatePlayerFrame(GDI_GET_VALUE(int64_t, "ship", 1), IconType::Ship);
+                m_fields->player2->updatePlayerFrame(SDI_GET_VALUE(int64_t, "ship", 1), IconType::Ship);
                 break;
             case 2:
-                m_fields->player2->updatePlayerFrame(GDI_GET_VALUE(int64_t, "roll", 1), IconType::Ball);
+                m_fields->player2->updatePlayerFrame(SDI_GET_VALUE(int64_t, "roll", 1), IconType::Ball);
                 break;
             case 3:
-                m_fields->player2->updatePlayerFrame(GDI_GET_VALUE(int64_t, "bird", 1), IconType::Ufo);
+                m_fields->player2->updatePlayerFrame(SDI_GET_VALUE(int64_t, "bird", 1), IconType::Ufo);
                 break;
             case 4:
-                m_fields->player2->updatePlayerFrame(GDI_GET_VALUE(int64_t, "dart", 1), IconType::Wave);
+                m_fields->player2->updatePlayerFrame(SDI_GET_VALUE(int64_t, "dart", 1), IconType::Wave);
                 break;
             case 5:
-                m_fields->player2->updatePlayerFrame(GDI_GET_VALUE(int64_t, "robot", 1), IconType::Robot);
+                m_fields->player2->updatePlayerFrame(SDI_GET_VALUE(int64_t, "robot", 1), IconType::Robot);
                 break;
             case 6:
-                m_fields->player2->updatePlayerFrame(GDI_GET_VALUE(int64_t, "spider", 1), IconType::Spider);
+                m_fields->player2->updatePlayerFrame(SDI_GET_VALUE(int64_t, "spider", 1), IconType::Spider);
                 break;
             case 7:
-                m_fields->player2->updatePlayerFrame(GDI_GET_VALUE(int64_t, "swing", 1), IconType::Swing);
+                m_fields->player2->updatePlayerFrame(SDI_GET_VALUE(int64_t, "swing", 1), IconType::Swing);
                 break;
             case 8:
-                m_fields->player2->updatePlayerFrame(GDI_GET_VALUE(int64_t, "jetpack", 1), IconType::Jetpack);
+                m_fields->player2->updatePlayerFrame(SDI_GET_VALUE(int64_t, "jetpack", 1), IconType::Jetpack);
                 break;
         }
-        m_fields->player2->setColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color1", 0)));
-        m_fields->player2->setSecondColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color2", 0)));
-        m_fields->player2->enableCustomGlowColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "colorglow", 0)));
-        m_fields->player2->m_hasGlowOutline = GDI_GET_VALUE(bool, "glow", false);
+        m_fields->player2->setColor(GM->colorForIdx(SDI_GET_VALUE(int64_t, "color1", 0)));
+        m_fields->player2->setSecondColor(GM->colorForIdx(SDI_GET_VALUE(int64_t, "color2", 0)));
+        m_fields->player2->enableCustomGlowColor(GM->colorForIdx(SDI_GET_VALUE(int64_t, "colorglow", 0)));
+        m_fields->player2->m_hasGlowOutline = SDI_GET_VALUE(bool, "glow", false);
         m_fields->player2->updateColors();
-
-
     }
 
     void onSpecial(CCObject* sender) {
-        if (GDI_GET_VALUE(bool, "2pselected", false)) {
-            GDI_SET_VALUE(bool, "deathexplode", !static_cast<CCMenuItemToggler*>(sender)->isOn());
+        if (SDI_GET_VALUE(bool, "2pselected", false)) {
+            SDI_SET_VALUE(bool, "deathexplode", static_cast<CCMenuItemToggler*>(sender)->isOn());
         } else {
             GJGarageLayer::onSpecial(sender);
         }
     }
 
     bool init() {
-        GDI_SET_VALUE(bool, "2pselected", false);
+        SDI_SET_VALUE(bool, "2pselected", false);
         if (!GJGarageLayer::init()) return false;
 
         auto GM = GameManager::get();
@@ -336,46 +334,46 @@ class $modify(MyGarageLayer, GJGarageLayer) {
         m_fields->player2->setPosition(m_playerObject->getPosition());
         m_fields->player2->setPositionX(m_fields->player2->getPositionX() + winSize.width/6);
 
-        m_fields->player2->setColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color1", 0)));
-        m_fields->player2->setSecondColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color2", 0)));
-        m_fields->player2->enableCustomGlowColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "colorglow", 0)));
-        m_fields->player2->m_hasGlowOutline = GDI_GET_VALUE(bool, "glow", false);
+        m_fields->player2->setColor(GM->colorForIdx(SDI_GET_VALUE(int64_t, "color1", 0)));
+        m_fields->player2->setSecondColor(GM->colorForIdx(SDI_GET_VALUE(int64_t, "color2", 0)));
+        m_fields->player2->enableCustomGlowColor(GM->colorForIdx(SDI_GET_VALUE(int64_t, "colorglow", 0)));
+        m_fields->player2->m_hasGlowOutline = SDI_GET_VALUE(bool, "glow", false);
         m_fields->player2->updateColors();
 
         // first time initiation loooool
         // god i write such shit code
-        if (GDI_GET_VALUE(int64_t, "lasttype", 0) < 90
-        && GDI_GET_VALUE(int64_t, "lastmode", 0) == 0) {
-            GDI_SET_VALUE(int64_t, "lasttype", 0);
+        if (SDI_GET_VALUE(int64_t, "lasttype", 0) < 90
+        && SDI_GET_VALUE(int64_t, "lastmode", 0) == 0) {
+            SDI_SET_VALUE(int64_t, "lasttype", 0);
         }
 
-        switch (GDI_GET_VALUE(int64_t, "lastmode", 0)) {
+        switch (SDI_GET_VALUE(int64_t, "lastmode", 0)) {
             case 0:
-                m_fields->player2->updatePlayerFrame(GDI_GET_VALUE(int64_t, "cube", 1), IconType::Cube);
+                m_fields->player2->updatePlayerFrame(SDI_GET_VALUE(int64_t, "cube", 1), IconType::Cube);
                 break;
             case 1:
-                m_fields->player2->updatePlayerFrame(GDI_GET_VALUE(int64_t, "ship", 1), IconType::Ship);
+                m_fields->player2->updatePlayerFrame(SDI_GET_VALUE(int64_t, "ship", 1), IconType::Ship);
                 break;
             case 2:
-                m_fields->player2->updatePlayerFrame(GDI_GET_VALUE(int64_t, "roll", 1), IconType::Ball);
+                m_fields->player2->updatePlayerFrame(SDI_GET_VALUE(int64_t, "roll", 1), IconType::Ball);
                 break;
             case 3:
-                m_fields->player2->updatePlayerFrame(GDI_GET_VALUE(int64_t, "bird", 1), IconType::Ufo);
+                m_fields->player2->updatePlayerFrame(SDI_GET_VALUE(int64_t, "bird", 1), IconType::Ufo);
                 break;
             case 4:
-                m_fields->player2->updatePlayerFrame(GDI_GET_VALUE(int64_t, "dart", 1), IconType::Wave);
+                m_fields->player2->updatePlayerFrame(SDI_GET_VALUE(int64_t, "dart", 1), IconType::Wave);
                 break;
             case 5:
-                m_fields->player2->updatePlayerFrame(GDI_GET_VALUE(int64_t, "robot", 1), IconType::Robot);
+                m_fields->player2->updatePlayerFrame(SDI_GET_VALUE(int64_t, "robot", 1), IconType::Robot);
                 break;
             case 6:
-                m_fields->player2->updatePlayerFrame(GDI_GET_VALUE(int64_t, "spider", 1), IconType::Spider);
+                m_fields->player2->updatePlayerFrame(SDI_GET_VALUE(int64_t, "spider", 1), IconType::Spider);
                 break;
             case 7:
-                m_fields->player2->updatePlayerFrame(GDI_GET_VALUE(int64_t, "swing", 1), IconType::Swing);
+                m_fields->player2->updatePlayerFrame(SDI_GET_VALUE(int64_t, "swing", 1), IconType::Swing);
                 break;
             case 8:
-                m_fields->player2->updatePlayerFrame(GDI_GET_VALUE(int64_t, "jetpack", 1), IconType::Jetpack);
+                m_fields->player2->updatePlayerFrame(SDI_GET_VALUE(int64_t, "jetpack", 1), IconType::Jetpack);
                 break;
         }
 
@@ -459,7 +457,7 @@ class $modify(MyGarageLayer, GJGarageLayer) {
     void setupPage(int p1, IconType p2) {
         GJGarageLayer::setupPage(p1, p2);
 
-        if (GDI_GET_VALUE(bool, "2pselected", false)) {
+        if (SDI_GET_VALUE(bool, "2pselected", false)) {
             auto winSize = CCDirector::get()->getWinSize();
 
             auto menu = static_cast<CCNode*>(m_iconSelection->m_pages->objectAtIndex(0))->getChildByType<CCMenu>(0);
@@ -473,39 +471,39 @@ class $modify(MyGarageLayer, GJGarageLayer) {
 
             switch (m_iconType) {
                 case IconType::Cube:
-                    tag = GDI_GET_VALUE(int64_t, "cube", 1);
+                    tag = SDI_GET_VALUE(int64_t, "cube", 1);
                     break;
                 case IconType::Ship:
-                    tag = GDI_GET_VALUE(int64_t, "ship", 1);
+                    tag = SDI_GET_VALUE(int64_t, "ship", 1);
                     break;
                 case IconType::Ball:
-                    tag = GDI_GET_VALUE(int64_t, "roll", 1);
+                    tag = SDI_GET_VALUE(int64_t, "roll", 1);
                     break;
                 case IconType::Ufo:
-                    tag = GDI_GET_VALUE(int64_t, "bird", 1);
+                    tag = SDI_GET_VALUE(int64_t, "bird", 1);
                     break;
                 case IconType::Wave:
-                    tag = GDI_GET_VALUE(int64_t, "dart", 1);
+                    tag = SDI_GET_VALUE(int64_t, "dart", 1);
                     break;
                 case IconType::Robot:
-                    tag = GDI_GET_VALUE(int64_t, "robot", 1);
+                    tag = SDI_GET_VALUE(int64_t, "robot", 1);
                     break;
                 case IconType::Spider:
-                    tag = GDI_GET_VALUE(int64_t, "spider", 1);
+                    tag = SDI_GET_VALUE(int64_t, "spider", 1);
                     break;
                 case IconType::Swing:
-                    tag = GDI_GET_VALUE(int64_t, "swing", 1);
+                    tag = SDI_GET_VALUE(int64_t, "swing", 1);
                     break;
                 case IconType::Jetpack:
-                    tag = GDI_GET_VALUE(int64_t, "jetpack", 1);
+                    tag = SDI_GET_VALUE(int64_t, "jetpack", 1);
                     break;
                 case IconType::Special:
-                    tag = GDI_GET_VALUE(int64_t, "trail", 1);
-                    tag2 = GDI_GET_VALUE(int64_t, "shiptrail", 1);
+                    tag = SDI_GET_VALUE(int64_t, "trail", 1);
+                    tag2 = SDI_GET_VALUE(int64_t, "shiptrail", 1);
                     break;
                 case IconType::DeathEffect:
-                    tag = GDI_GET_VALUE(int64_t, "death", 1);
-                    m_iconSelection->getChildByType<CCMenu>(0)->getChildByType<CCMenuItemToggler>(0)->toggle(GDI_GET_VALUE(bool, "deathexplode", false));
+                    tag = SDI_GET_VALUE(int64_t, "death", 1);
+                    m_iconSelection->getChildByType<CCMenu>(0)->getChildByType<CCMenuItemToggler>(0)->toggle(!SDI_GET_VALUE(bool, "deathexplode", false));
                     break;
                 default:
                     break;
@@ -539,7 +537,7 @@ class $modify(MyGarageLayer, GJGarageLayer) {
 
         // same death effect cuz not working rn :(
         if (
-            GDI_GET_VALUE(bool, "2pselected", false)
+            SDI_GET_VALUE(bool, "2pselected", false)
             && isUnlocked
             // && m_fields->type != IconType::DeathEffect
         ) {
@@ -554,10 +552,10 @@ class $modify(MyGarageLayer, GJGarageLayer) {
 
             switch (m_iconType) {
                 case IconType::Cube:
-                    if (GDI_GET_VALUE(int64_t, "lasttype", 0) != 0 || GDI_GET_VALUE(int64_t, "cube", 1) != n) {
-                        GDI_SET_VALUE(int64_t, "cube", n);
-                        GDI_SET_VALUE(int64_t, "lasttype", 0);
-                        GDI_SET_VALUE(int64_t, "lastmode", 0);
+                    if (SDI_GET_VALUE(int64_t, "lasttype", 0) != 0 || SDI_GET_VALUE(int64_t, "cube", 1) != n) {
+                        SDI_SET_VALUE(int64_t, "cube", n);
+                        SDI_SET_VALUE(int64_t, "lasttype", 0);
+                        SDI_SET_VALUE(int64_t, "lastmode", 0);
                         m_fields->player2->setScale(1.6f);
                     } else {
                         GJGarageLayer::showUnlockPopup(n, UnlockType::Cube);
@@ -565,10 +563,10 @@ class $modify(MyGarageLayer, GJGarageLayer) {
                     }
                     break;
                 case IconType::Ship:
-                    if (GDI_GET_VALUE(int64_t, "lasttype", 0) != 1 || GDI_GET_VALUE(int64_t, "ship", 1) != n) {
-                        GDI_SET_VALUE(int64_t, "ship", n);
-                        GDI_SET_VALUE(int64_t, "lasttype", 1);
-                        GDI_SET_VALUE(int64_t, "lastmode", 1);
+                    if (SDI_GET_VALUE(int64_t, "lasttype", 0) != 1 || SDI_GET_VALUE(int64_t, "ship", 1) != n) {
+                        SDI_SET_VALUE(int64_t, "ship", n);
+                        SDI_SET_VALUE(int64_t, "lasttype", 1);
+                        SDI_SET_VALUE(int64_t, "lastmode", 1);
                         m_fields->player2->setScale(1.6f);
                     } else {
                         GJGarageLayer::showUnlockPopup(n, UnlockType::Ship);
@@ -576,10 +574,10 @@ class $modify(MyGarageLayer, GJGarageLayer) {
                     }
                     break;
                 case IconType::Ball:
-                    if (GDI_GET_VALUE(int64_t, "lasttype", 0) != 2 || GDI_GET_VALUE(int64_t, "roll", 1) != n) {
-                        GDI_SET_VALUE(int64_t, "roll", n);
-                        GDI_SET_VALUE(int64_t, "lasttype", 2);
-                        GDI_SET_VALUE(int64_t, "lastmode", 2);
+                    if (SDI_GET_VALUE(int64_t, "lasttype", 0) != 2 || SDI_GET_VALUE(int64_t, "roll", 1) != n) {
+                        SDI_SET_VALUE(int64_t, "roll", n);
+                        SDI_SET_VALUE(int64_t, "lasttype", 2);
+                        SDI_SET_VALUE(int64_t, "lastmode", 2);
                         m_fields->player2->setScale(1.6f);
                     } else {
                         GJGarageLayer::showUnlockPopup(n, UnlockType::Ball);
@@ -587,10 +585,10 @@ class $modify(MyGarageLayer, GJGarageLayer) {
                     }
                     break;
                 case IconType::Ufo:
-                    if (GDI_GET_VALUE(int64_t, "lasttype", 0) != 3 || GDI_GET_VALUE(int64_t, "bird", 1) != n) {
-                        GDI_SET_VALUE(int64_t, "bird", n);
-                        GDI_SET_VALUE(int64_t, "lasttype", 3);
-                        GDI_SET_VALUE(int64_t, "lastmode", 3);
+                    if (SDI_GET_VALUE(int64_t, "lasttype", 0) != 3 || SDI_GET_VALUE(int64_t, "bird", 1) != n) {
+                        SDI_SET_VALUE(int64_t, "bird", n);
+                        SDI_SET_VALUE(int64_t, "lasttype", 3);
+                        SDI_SET_VALUE(int64_t, "lastmode", 3);
                         m_fields->player2->setScale(1.6f);
                     } else {
                         GJGarageLayer::showUnlockPopup(n, UnlockType::Bird);
@@ -598,10 +596,10 @@ class $modify(MyGarageLayer, GJGarageLayer) {
                     }
                     break;
                 case IconType::Wave:
-                    if (GDI_GET_VALUE(int64_t, "lasttype", 0) != 4 || GDI_GET_VALUE(int64_t, "dart", 1) != n) {
-                        GDI_SET_VALUE(int64_t, "dart", n);
-                        GDI_SET_VALUE(int64_t, "lasttype", 4);
-                        GDI_SET_VALUE(int64_t, "lastmode", 4);
+                    if (SDI_GET_VALUE(int64_t, "lasttype", 0) != 4 || SDI_GET_VALUE(int64_t, "dart", 1) != n) {
+                        SDI_SET_VALUE(int64_t, "dart", n);
+                        SDI_SET_VALUE(int64_t, "lasttype", 4);
+                        SDI_SET_VALUE(int64_t, "lastmode", 4);
                         m_fields->player2->setScale(1.6f);
                     } else {
                         GJGarageLayer::showUnlockPopup(n, UnlockType::Dart);
@@ -609,10 +607,10 @@ class $modify(MyGarageLayer, GJGarageLayer) {
                     }
                     break;
                 case IconType::Robot:
-                    if (GDI_GET_VALUE(int64_t, "lasttype", 0) != 5 || GDI_GET_VALUE(int64_t, "robot", 1) != n) {
-                        GDI_SET_VALUE(int64_t, "robot", n);
-                        GDI_SET_VALUE(int64_t, "lasttype", 5);
-                        GDI_SET_VALUE(int64_t, "lastmode", 5);
+                    if (SDI_GET_VALUE(int64_t, "lasttype", 0) != 5 || SDI_GET_VALUE(int64_t, "robot", 1) != n) {
+                        SDI_SET_VALUE(int64_t, "robot", n);
+                        SDI_SET_VALUE(int64_t, "lasttype", 5);
+                        SDI_SET_VALUE(int64_t, "lastmode", 5);
                         m_fields->player2->setScale(1.6f);
                     } else {
                         GJGarageLayer::showUnlockPopup(n, UnlockType::Robot);
@@ -620,10 +618,10 @@ class $modify(MyGarageLayer, GJGarageLayer) {
                     }
                     break;
                 case IconType::Spider:
-                    if (GDI_GET_VALUE(int64_t, "lasttype", 0) != 6 || GDI_GET_VALUE(int64_t, "spider", 1) != n) {
-                        GDI_SET_VALUE(int64_t, "spider", n);
-                        GDI_SET_VALUE(int64_t, "lasttype", 6);
-                        GDI_SET_VALUE(int64_t, "lastmode", 6);
+                    if (SDI_GET_VALUE(int64_t, "lasttype", 0) != 6 || SDI_GET_VALUE(int64_t, "spider", 1) != n) {
+                        SDI_SET_VALUE(int64_t, "spider", n);
+                        SDI_SET_VALUE(int64_t, "lasttype", 6);
+                        SDI_SET_VALUE(int64_t, "lastmode", 6);
                         m_fields->player2->setScale(1.6f);
                     } else {
                         GJGarageLayer::showUnlockPopup(n, UnlockType::Spider);
@@ -631,10 +629,10 @@ class $modify(MyGarageLayer, GJGarageLayer) {
                     }
                     break;
                 case IconType::Swing:
-                    if (GDI_GET_VALUE(int64_t, "lasttype", 0) != 7 || GDI_GET_VALUE(int64_t, "swing", 1) != n) {
-                        GDI_SET_VALUE(int64_t, "swing", n);
-                        GDI_SET_VALUE(int64_t, "lasttype", 7);
-                        GDI_SET_VALUE(int64_t, "lastmode", 7);
+                    if (SDI_GET_VALUE(int64_t, "lasttype", 0) != 7 || SDI_GET_VALUE(int64_t, "swing", 1) != n) {
+                        SDI_SET_VALUE(int64_t, "swing", n);
+                        SDI_SET_VALUE(int64_t, "lasttype", 7);
+                        SDI_SET_VALUE(int64_t, "lastmode", 7);
                         m_fields->player2->setScale(1.6f);
                     } else {
                         GJGarageLayer::showUnlockPopup(n, UnlockType::Swing);
@@ -642,10 +640,10 @@ class $modify(MyGarageLayer, GJGarageLayer) {
                     }
                     break;
                 case IconType::Jetpack:
-                    if (GDI_GET_VALUE(int64_t, "lasttype", 0) != 8 || GDI_GET_VALUE(int64_t, "jetpack", 1) != n) {
-                        GDI_SET_VALUE(int64_t, "jetpack", n);
-                        GDI_SET_VALUE(int64_t, "lasttype", 8);
-                        GDI_SET_VALUE(int64_t, "lastmode", 8);
+                    if (SDI_GET_VALUE(int64_t, "lasttype", 0) != 8 || SDI_GET_VALUE(int64_t, "jetpack", 1) != n) {
+                        SDI_SET_VALUE(int64_t, "jetpack", n);
+                        SDI_SET_VALUE(int64_t, "lasttype", 8);
+                        SDI_SET_VALUE(int64_t, "lastmode", 8);
                         m_fields->player2->setScale(1.5f);
                     } else {
                         GJGarageLayer::showUnlockPopup(n, UnlockType::Jetpack);
@@ -654,17 +652,17 @@ class $modify(MyGarageLayer, GJGarageLayer) {
                     break;
                 case IconType::Special:
                     if (static_cast<CCMenuItemSpriteExtra*>(sender)->m_iconType == IconType::Special) {
-                        if (GM->isIconUnlocked(n, IconType::Special) && (GDI_GET_VALUE(int64_t, "lasttype", 0) != 99 || GDI_GET_VALUE(int64_t, "trail", 1) != n)) {
-                            GDI_SET_VALUE(int64_t, "trail", n);
-                            GDI_SET_VALUE(int64_t, "lasttype", 99);
+                        if (GM->isIconUnlocked(n, IconType::Special) && (SDI_GET_VALUE(int64_t, "lasttype", 0) != 99 || SDI_GET_VALUE(int64_t, "trail", 1) != n)) {
+                            SDI_SET_VALUE(int64_t, "trail", n);
+                            SDI_SET_VALUE(int64_t, "lasttype", 99);
                         } else {
                             GJGarageLayer::showUnlockPopup(n, UnlockType::Streak);
                             return;
                         }
                     } else if (static_cast<CCMenuItemSpriteExtra*>(sender)->m_iconType == IconType::ShipFire) {
-                        if (GM->isIconUnlocked(n, IconType::ShipFire) && (GDI_GET_VALUE(int64_t, "lasttype", 0) != 101 || GDI_GET_VALUE(int64_t, "shiptrail", 1) != n)) {
-                            GDI_SET_VALUE(int64_t, "shiptrail", n);
-                            GDI_SET_VALUE(int64_t, "lasttype", 101);
+                        if (GM->isIconUnlocked(n, IconType::ShipFire) && (SDI_GET_VALUE(int64_t, "lasttype", 0) != 101 || SDI_GET_VALUE(int64_t, "shiptrail", 1) != n)) {
+                            SDI_SET_VALUE(int64_t, "shiptrail", n);
+                            SDI_SET_VALUE(int64_t, "lasttype", 101);
                             isShipTrail = true;
                         } else {
                             GJGarageLayer::showUnlockPopup(n, UnlockType::ShipFire);
@@ -673,9 +671,9 @@ class $modify(MyGarageLayer, GJGarageLayer) {
                     }
                     break;
                 case IconType::DeathEffect:
-                    if (GDI_GET_VALUE(int64_t, "lasttype", 0) != 98 || GDI_GET_VALUE(int64_t, "death", 1) != n) {
-                        GDI_SET_VALUE(int64_t, "death", n);
-                        GDI_SET_VALUE(int64_t, "lasttype", 98);
+                    if (SDI_GET_VALUE(int64_t, "lasttype", 0) != 98 || SDI_GET_VALUE(int64_t, "death", 1) != n) {
+                        SDI_SET_VALUE(int64_t, "death", n);
+                        SDI_SET_VALUE(int64_t, "lasttype", 98);
                     } else {
                         GJGarageLayer::showUnlockPopup(n, UnlockType::Death);
                         return;
@@ -704,12 +702,12 @@ class $modify(MyGarageLayer, GJGarageLayer) {
     void updatePlayerColors() {
         GJGarageLayer::updatePlayerColors();
 
-        if (GDI_GET_VALUE(bool, "2pselected", false)) {
+        if (SDI_GET_VALUE(bool, "2pselected", false)) {
             auto GM = GameManager::get();
-            m_fields->player2->setColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color1", 0)));
-            m_fields->player2->setSecondColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "color2", 0)));
-            m_fields->player2->enableCustomGlowColor(GM->colorForIdx(GDI_GET_VALUE(int64_t, "colorglow", 0)));
-            m_fields->player2->m_hasGlowOutline = GDI_GET_VALUE(bool, "glow", false);
+            m_fields->player2->setColor(GM->colorForIdx(SDI_GET_VALUE(int64_t, "color1", 0)));
+            m_fields->player2->setSecondColor(GM->colorForIdx(SDI_GET_VALUE(int64_t, "color2", 0)));
+            m_fields->player2->enableCustomGlowColor(GM->colorForIdx(SDI_GET_VALUE(int64_t, "colorglow", 0)));
+            m_fields->player2->m_hasGlowOutline = SDI_GET_VALUE(bool, "glow", false);
             m_fields->player2->updateColors();
         }
     }

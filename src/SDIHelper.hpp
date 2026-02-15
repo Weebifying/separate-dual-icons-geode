@@ -14,6 +14,13 @@ public:
     void swapAll();
     void logAll();
 
+    void loadDeathTextures(int id);
+    void unloadDeathTextures(int id);
+    void setPlayerInfo(PlayerObject* player, bool isP2);
+    void setupNormalStreak(PlayerObject* player, bool isP2);
+    void setupShipFire(PlayerObject* player, bool isP2);
+    const char* getFrameForStreak(int shipFire, float delta);
+
     int getCube(bool isP2);
     int getShip(bool isP2);
     int getBall(bool isP2);

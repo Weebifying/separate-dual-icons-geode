@@ -15,32 +15,43 @@ class $modify(MyPlayerObject, PlayerObject) {
     }
 
     void setupStreak() {
-        // thanks alphalaneous for the fucking genius code
-        // theres no way i dont copy this
         auto GM = GameManager::get();
         auto SDI = SDIHelper::get();
-
+    
+        int orgStreak = GM->getPlayerStreak();
+        int orgShipFire = GM->getPlayerShipFire();
         GM->m_playerStreak = SDI->getTrail(this->isPlayer2());
         GM->m_playerShipFire = SDI->getShipTrail(this->isPlayer2());
 
         PlayerObject::setupStreak();
 
-        GM->m_playerStreak = SDI->m_isP2Main ? SDI->m_p2Trail : SDI->m_p1Trail;
-        GM->m_playerShipFire = SDI->m_isP2Main ? SDI->m_p2ShipTrail : SDI->m_p1ShipTrail;
+        GM->m_playerStreak = orgStreak;
+        GM->m_playerShipFire = orgShipFire;
     }
 
-    // void playDeathEffect() {
-    //     auto GM = GameManager::get();
-    //     auto SDI = SDIHelper::get();
-
-    //     GM->m_playerDeathEffect = SDI->getDeathEffect(this->isPlayer2());
-    //     GM->setGameVariable("0153", SDI->getDeathExplode(this->isPlayer2()));
+    void playDeathEffect() {
+        auto GM = GameManager::get();
+        auto SDI = SDIHelper::get();
         
-    //     PlayerObject::playDeathEffect();
+        int orgDeathEffect = GM->getPlayerDeathEffect();
+        bool orgDeathExplode = GM->getGameVariable("0153");
+        GM->m_playerDeathEffect = SDI->getDeathEffect(this->isPlayer2());
+        GM->setGameVariable("0153", SDI->getDeathExplode(this->isPlayer2()));
+        
+        PlayerObject::playDeathEffect();
 
-    //     GM->m_playerDeathEffect = SDI->m_isP2Main ? SDI->m_p2DeathEffect : SDI->m_p1DeathEffect;
-    //     GM->setGameVariable("0153", SDI->m_isP2Main ? SDI->m_p2DeathExplode : SDI->m_p1DeathExplode);
-    // }
+        GM->m_playerDeathEffect = orgDeathEffect;
+        GM->setGameVariable("0153", orgDeathExplode);
+    }
+
+    void update(float delta) {
+        ShipStreak orgShipStreak = this->m_shipStreakType;
+        this->m_shipStreakType = static_cast<ShipStreak>(SDIHelper::get()->getShipTrail(this->isPlayer2()));
+
+        PlayerObject::update(delta);
+
+        this->m_shipStreakType = orgShipStreak;
+    }
 
     bool init(int player, int ship, GJBaseGameLayer* gameLayer, CCLayer* layer, bool playLayer) {
         auto SDI = SDIHelper::get();
