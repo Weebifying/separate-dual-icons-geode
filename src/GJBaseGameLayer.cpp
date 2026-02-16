@@ -12,6 +12,7 @@ class $modify(MyBaseGameLayer, GJBaseGameLayer) {
         }
         GJBaseGameLayer::resetPlayer();
         SDIHelper::get()->setPlayerInfo(this->m_player1, false);
+        SDIHelper::get()->setPlayerInfo(this->m_player2, true);
     }
 
     bool init() {
@@ -24,6 +25,8 @@ class $modify(MyBaseGameLayer, GJBaseGameLayer) {
         GJBaseGameLayer::onExit();
         SDIHelper::get()->reset();
         SDIHelper::get()->unloadDeathTextures(SDIHelper::get()->getDeathEffect(true));
+        SDIHelper::get()->m_p1ShipFire = nullptr;
+        SDIHelper::get()->m_p2ShipFire = nullptr;
     }
 
     void playExitDualEffect(PlayerObject* p0) {

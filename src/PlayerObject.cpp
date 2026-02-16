@@ -27,6 +27,12 @@ class $modify(MyPlayerObject, PlayerObject) {
 
         GM->m_playerStreak = orgStreak;
         GM->m_playerShipFire = orgShipFire;
+
+        if (SDI->m_isP2Main != this->isPlayer2()) { // just this->isPlayer2() works but for the sake of consistency
+            SDI->m_p2ShipFire = this->m_shipStreak;
+        } else {
+            SDI->m_p1ShipFire = this->m_shipStreak;
+        }
     }
 
     void playDeathEffect() {

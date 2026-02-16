@@ -82,6 +82,7 @@ void SDIHelper::setPlayerInfo(PlayerObject* player, bool isP2) {
 
 void SDIHelper::setupNormalStreak(PlayerObject* player, bool isP2) {
     player->m_streakStrokeWidth = 10.0;
+    player->m_alwaysShowStreak = false;
 
     float streakFade = 0.3;
     float streakStroke = 10.0;
@@ -132,8 +133,6 @@ void SDIHelper::setupNormalStreak(PlayerObject* player, bool isP2) {
 void SDIHelper::setupShipFire(PlayerObject* player, bool isP2) {
     auto SDI = SDIHelper::get();
 
-    log::info("setting up ship fire for {}", isP2 ? "P2" : "P1");
-
     float streakFade = 0.0;
     float streakStroke = 0.0;
     switch (this->getShipTrail(isP2)) {
@@ -163,13 +162,17 @@ void SDIHelper::setupShipFire(PlayerObject* player, bool isP2) {
 
     if (this->getShipTrail(isP2) > 1) {
         CCTexture2D* texture2d = CCTextureCache::get()->addImage(this->getFrameForStreak(this->getShipTrail(isP2), 0), false);
-        player->m_shipStreak = CCMotionStreak::create(streakFade, 5.0, streakStroke, ccc3(255, 255, 255), texture2d);
-        player->m_shipStreak->m_fMaxSeg = 50.0;
-        player->m_shipStreak->m_bDontOpacityFade = true;
-        player->m_shipStreak->setBlendFunc({GL_SRC_ALPHA, GL_ONE});
+        CCMotionStreak* p = SDI->getShipFireNode(isP2);
+        if (p) {
+            p->setTexture(texture2d);
+            player->m_shipStreak = p;
+        }
+        // player->m_shipStreak = CCMotionStreak::create(streakFade, 5.0, streakStroke, ccc3(255, 255, 255), texture2d);
+        // player->m_shipStreak->m_fMaxSeg = 50.0;
+        // player->m_shipStreak->m_bDontOpacityFade = true;
+        // player->m_shipStreak->setBlendFunc({GL_SRC_ALPHA, GL_ONE});
     } else {
         player->m_shipStreak = nullptr;
-    
     }
 }
 
@@ -309,6 +312,10 @@ int SDIHelper::getGlowColor(bool isP2) {
 
 void SDIHelper::logAll() {
     log::info("isP2Main: {}", m_isP2Main);
+}
+
+CCMotionStreak* SDIHelper::getShipFireNode(bool isP2) {
+    return m_isP2Main != isP2 ? m_p2ShipFire : m_p1ShipFire;
 }
 
 $on_mod(Loaded) {

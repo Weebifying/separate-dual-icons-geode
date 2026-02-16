@@ -8,6 +8,10 @@ class SDIHelper {
 public:
     bool m_isP2Main = false;
     bool m_shouldSwap = true;
+    // this is so cursed but also like the only way to do this
+    // plan: store the streaks in the helper upon setupStreak, then replace/remove accordingly bla bla
+    CCMotionStreak* m_p1ShipFire = nullptr;
+    CCMotionStreak* m_p2ShipFire = nullptr;
 
     static SDIHelper* get();
     void reset();
@@ -38,6 +42,7 @@ public:
     int getColor2(bool isP2);
     bool getGlow(bool isP2);
     int getGlowColor(bool isP2);
+    CCMotionStreak* getShipFireNode(bool isP2);
 
 private:
     SDIHelper() = default;
