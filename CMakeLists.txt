@@ -10,7 +10,7 @@ set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 
 project(SeparateDualIcons VERSION 1.3.3)
 
-file(GLOB SOURCES
+file(GLOB_RECURSE SOURCES
 	src/*.cpp
 )
 

@@ -9,6 +9,9 @@ class $modify(MyGarageLayer, GJGarageLayer) {
         CCSprite* arrow1;
         CCSprite* arrow2;
         SimplePlayer* player2;
+
+        CCSprite* m_cursor3;
+        CCSprite* m_cursor4;
     };
 
     static void onModify(auto& self) {
@@ -31,9 +34,6 @@ class $modify(MyGarageLayer, GJGarageLayer) {
 
             int tag = 0;
             int tag2 = 0;
-
-            m_cursor1->setColor({0, 255, 255});
-            m_cursor2->setColor({0, 255, 255});
 
             switch (m_iconType) {
                 case IconType::Cube:
@@ -77,18 +77,18 @@ class $modify(MyGarageLayer, GJGarageLayer) {
 
             if (menu) {
                 if (auto child = menu->getChildByTag(tag)) {
-                    m_cursor1->setVisible(true);
-                    m_cursor1->setPosition({child->getPositionX() + winSize.width/2, child->getPositionY() + winSize.height/2});
+                    m_fields->m_cursor3->setVisible(true);
+                    m_fields->m_cursor3->setPosition({child->getPositionX() + winSize.width/2, child->getPositionY() + winSize.height/2});
                 }
-                else m_cursor1->setVisible(false);
+                else m_fields->m_cursor3->setVisible(false);
             }
 
             if (menu2) {
                 if (auto child = menu2->getChildByTag(tag2)) {
-                    m_cursor2->setVisible(true);
-                    m_cursor2->setPosition({child->getPositionX() + winSize.width/2, child->getPositionY() + winSize.height/2});
+                    m_fields->m_cursor4->setVisible(true);
+                    m_fields->m_cursor4->setPosition({child->getPositionX() + winSize.width/2, child->getPositionY() + winSize.height/2});
                 }
-                else m_cursor2->setVisible(false);
+                else m_fields->m_cursor4->setVisible(false);
             }
 
             m_fields->arrow1->setVisible(false);
@@ -97,9 +97,6 @@ class $modify(MyGarageLayer, GJGarageLayer) {
         } else {
             int tag = 0;
             int tag2 = 0;
-
-            m_cursor1->setColor({255, 255, 0});
-            m_cursor2->setColor({255, 255, 0});
 
             switch (m_iconType) {
                 case IconType::Cube:
@@ -228,14 +225,18 @@ class $modify(MyGarageLayer, GJGarageLayer) {
             m_fields->arrow2->setVisible(false);
         }
 
-        if (m_cursor1->getColor() == ccc3(255, 255, 0)) {
-            m_cursor1->setColor({0, 255, 255});
-            m_cursor2->setColor({0, 255, 255});
-        } else if (m_cursor1->getColor() == ccc3(0, 255, 255)) {
-            m_cursor1->setColor({255, 255, 0});
-            m_cursor2->setColor({255, 255, 0});
-        }
-
+        bool c1Visible = m_cursor1->isVisible();
+        CCPoint c1Pos = m_cursor1->getPosition();
+        bool c2Visible = m_cursor2->isVisible();
+        CCPoint c2Pos = m_cursor2->getPosition();
+        m_cursor1->setVisible(m_fields->m_cursor3->isVisible());
+        m_cursor1->setPosition(m_fields->m_cursor3->getPosition());
+        m_cursor2->setVisible(m_fields->m_cursor4->isVisible());
+        m_cursor2->setPosition(m_fields->m_cursor4->getPosition());
+        m_fields->m_cursor3->setVisible(c1Visible);
+        m_fields->m_cursor3->setPosition(c1Pos);
+        m_fields->m_cursor4->setVisible(c2Visible);
+        m_fields->m_cursor4->setPosition(c2Pos);
 
         switch ((int)GM->m_playerIconType) {
             case 0:
@@ -318,13 +319,55 @@ class $modify(MyGarageLayer, GJGarageLayer) {
 
     bool init() {
         SDI_SET_VALUE(bool, "2pselected", false);
+        m_fields->m_cursor3 = CCSprite::createWithSpriteFrameName("GJ_select_001.png");
+        m_fields->m_cursor3->setScale(0.85f);
+        m_fields->m_cursor3->setID("cursor-3");
+        m_fields->m_cursor3->setVisible(false);
+
+        m_fields->m_cursor4 = CCSprite::createWithSpriteFrameName("GJ_select_001.png");
+        m_fields->m_cursor4->setScale(0.85f);
+        m_fields->m_cursor4->setID("cursor-4");
+        m_fields->m_cursor4->setVisible(false);
+
         if (!GJGarageLayer::init()) return false;
 
         auto GM = GameManager::get();
         auto winSize = CCDirector::get()->getWinSize();
 
-        m_cursor1->setColor({255, 255, 0});
-        m_cursor2->setColor({255, 255, 0});
+        auto menu = static_cast<CCNode*>(m_iconSelection->m_pages->objectAtIndex(0))->getChildByType<CCMenu>(0);
+
+        m_cursor1->setZOrder(101);
+        m_cursor2->setZOrder(101);
+        this->addChild(m_fields->m_cursor3, 101);
+        this->addChild(m_fields->m_cursor4, 101);
+
+        auto c1Label = CCLabelBMFont::create("P1", "bigFont.fnt");
+        c1Label->setScale(0.3f);
+        c1Label->setAnchorPoint({0.f, 1.f});
+        c1Label->setColor({255, 255, 0});
+        m_cursor1->addChild(c1Label);
+        c1Label->setPosition({2.5f, m_cursor1->getContentHeight() - 1.f});
+
+        auto c2Label = CCLabelBMFont::create("P1", "bigFont.fnt");
+        c2Label->setScale(0.3f);
+        c2Label->setAnchorPoint({0.f, 1.f});
+        c2Label->setColor({255, 255, 0});
+        m_cursor2->addChild(c2Label);
+        c2Label->setPosition({2.5f, m_cursor2->getContentHeight() - 1.f});
+
+        auto c3Label = CCLabelBMFont::create("P2", "bigFont.fnt");
+        c3Label->setScale(0.3f);
+        c3Label->setAnchorPoint({1.f, 1.f});
+        c3Label->setColor({0, 255, 255});
+        m_fields->m_cursor3->addChild(c3Label);
+        c3Label->setPosition({m_fields->m_cursor3->getContentWidth() - 2.5f, m_fields->m_cursor3->getContentHeight() - 1.f});
+
+        auto c4Label = CCLabelBMFont::create("P2", "bigFont.fnt");
+        c4Label->setScale(0.3f);
+        c4Label->setAnchorPoint({1.f, 1.f});
+        c4Label->setColor({0, 255, 255});
+        m_fields->m_cursor4->addChild(c4Label);
+        c4Label->setPosition({m_fields->m_cursor4->getContentWidth() - 2.5f, m_fields->m_cursor4->getContentHeight() - 1.f});
 
         m_playerObject->setPositionX(m_playerObject->getPositionX() - winSize.width/12);
 
@@ -379,7 +422,6 @@ class $modify(MyGarageLayer, GJGarageLayer) {
 
         m_fields->player2->updateColors();
         this->addChild(m_fields->player2);
-
 
         auto playerMenu = CCMenu::create();
         playerMenu->setContentSize(winSize);
@@ -457,73 +499,75 @@ class $modify(MyGarageLayer, GJGarageLayer) {
     void setupPage(int p1, IconType p2) {
         GJGarageLayer::setupPage(p1, p2);
 
-        if (SDI_GET_VALUE(bool, "2pselected", false)) {
-            auto winSize = CCDirector::get()->getWinSize();
+        auto winSize = CCDirector::get()->getWinSize();
+        auto menu = static_cast<CCNode*>(m_iconSelection->m_pages->objectAtIndex(0))->getChildByType<CCMenu>(0);
+        CCMenu* menu2 = nullptr;
+        if (m_iconType == IconType::Special) {
+            menu2 = static_cast<CCNode*>(m_iconSelection->getChildByType<ListButtonBar>(0)->m_pages->objectAtIndex(0))->getChildByType<CCMenu>(0);
+        }
 
-            auto menu = static_cast<CCNode*>(m_iconSelection->m_pages->objectAtIndex(0))->getChildByType<CCMenu>(0);
-            CCMenu* menu2 = nullptr;
+        int tag = 0;
+        int tag2 = 0;
 
-            if (m_iconType == IconType::Special)
-                menu2 = static_cast<CCNode*>(m_iconSelection->getChildByType<ListButtonBar>(0)->m_pages->objectAtIndex(0))->getChildByType<CCMenu>(0);
+        switch (m_iconType) {
+            case IconType::Cube:
+                tag = SDI_GET_VALUE(int64_t, "cube", 1);
+                break;
+            case IconType::Ship:
+                tag = SDI_GET_VALUE(int64_t, "ship", 1);
+                break;
+            case IconType::Ball:
+                tag = SDI_GET_VALUE(int64_t, "roll", 1);
+                break;
+            case IconType::Ufo:
+                tag = SDI_GET_VALUE(int64_t, "bird", 1);
+                break;
+            case IconType::Wave:
+                tag = SDI_GET_VALUE(int64_t, "dart", 1);
+                break;
+            case IconType::Robot:
+                tag = SDI_GET_VALUE(int64_t, "robot", 1);
+                break;
+            case IconType::Spider:
+                tag = SDI_GET_VALUE(int64_t, "spider", 1);
+                break;
+            case IconType::Swing:
+                tag = SDI_GET_VALUE(int64_t, "swing", 1);
+                break;
+            case IconType::Jetpack:
+                tag = SDI_GET_VALUE(int64_t, "jetpack", 1);
+                break;
+            case IconType::Special:
+                tag = SDI_GET_VALUE(int64_t, "trail", 1);
+                tag2 = SDI_GET_VALUE(int64_t, "shiptrail", 1);
+                break;
+            case IconType::DeathEffect:
+                tag = SDI_GET_VALUE(int64_t, "death", 1);
+                m_iconSelection->getChildByType<CCMenu>(0)->getChildByType<CCMenuItemToggler>(0)->toggle(!SDI_GET_VALUE(bool, "deathexplode", false));
+                break;
+            default:
+                break;
+        }
 
-            int tag = 0;
-            int tag2 = 0;
-
-            switch (m_iconType) {
-                case IconType::Cube:
-                    tag = SDI_GET_VALUE(int64_t, "cube", 1);
-                    break;
-                case IconType::Ship:
-                    tag = SDI_GET_VALUE(int64_t, "ship", 1);
-                    break;
-                case IconType::Ball:
-                    tag = SDI_GET_VALUE(int64_t, "roll", 1);
-                    break;
-                case IconType::Ufo:
-                    tag = SDI_GET_VALUE(int64_t, "bird", 1);
-                    break;
-                case IconType::Wave:
-                    tag = SDI_GET_VALUE(int64_t, "dart", 1);
-                    break;
-                case IconType::Robot:
-                    tag = SDI_GET_VALUE(int64_t, "robot", 1);
-                    break;
-                case IconType::Spider:
-                    tag = SDI_GET_VALUE(int64_t, "spider", 1);
-                    break;
-                case IconType::Swing:
-                    tag = SDI_GET_VALUE(int64_t, "swing", 1);
-                    break;
-                case IconType::Jetpack:
-                    tag = SDI_GET_VALUE(int64_t, "jetpack", 1);
-                    break;
-                case IconType::Special:
-                    tag = SDI_GET_VALUE(int64_t, "trail", 1);
-                    tag2 = SDI_GET_VALUE(int64_t, "shiptrail", 1);
-                    break;
-                case IconType::DeathEffect:
-                    tag = SDI_GET_VALUE(int64_t, "death", 1);
-                    m_iconSelection->getChildByType<CCMenu>(0)->getChildByType<CCMenuItemToggler>(0)->toggle(!SDI_GET_VALUE(bool, "deathexplode", false));
-                    break;
-                default:
-                    break;
+        if (menu) {
+            if (auto child = menu->getChildByTag(tag)) {
+                m_fields->m_cursor3->setVisible(true);
+                m_fields->m_cursor3->setPosition({child->getPositionX() + winSize.width/2, child->getPositionY() + winSize.height/2});
+            } else {
+                m_fields->m_cursor3->setVisible(false);
             }
-
-            if (menu) {
-                if (auto child = menu->getChildByTag(tag)) {
-                    m_cursor1->setVisible(true);
-                    m_cursor1->setPosition({child->getPositionX() + winSize.width/2, child->getPositionY() + winSize.height/2});
-                }
-                else m_cursor1->setVisible(false);
+        } else {
+            m_fields->m_cursor3->setVisible(false);
+        }
+        if (menu2) {
+            if (auto child = menu2->getChildByTag(tag2)) {
+                m_fields->m_cursor4->setVisible(true);
+                m_fields->m_cursor4->setPosition({child->getPositionX() + winSize.width/2, child->getPositionY() + winSize.height/2});
+            } else {
+                m_fields->m_cursor4->setVisible(false);
             }
-
-            if (menu2) {
-                if (auto child = menu2->getChildByTag(tag2)) {
-                    m_cursor2->setVisible(true);
-                    m_cursor2->setPosition({child->getPositionX() + winSize.width/2, child->getPositionY() + winSize.height/2});
-                }
-                else m_cursor2->setVisible(false);
-            }
+        } else {
+            m_fields->m_cursor4->setVisible(false);
         }
     }
 
@@ -689,7 +733,7 @@ class $modify(MyGarageLayer, GJGarageLayer) {
                 m_fields->player2->updateColors();
             }
 
-            auto cursor = isShipTrail ? m_cursor2 : m_cursor1;
+            auto cursor = isShipTrail ? m_fields->m_cursor4 : m_fields->m_cursor3;
 
             cursor->setPosition({static_cast<CCNode*>(sender)->getPositionX() + winSize.width/2, static_cast<CCNode*>(sender)->getPositionY() + winSize.height/2});
             cursor->setVisible(true);

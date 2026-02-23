@@ -1,5 +1,5 @@
 #include "Macros.hpp"
-#include "SDIHelper.hpp"
+#include "../SDIHelper.hpp"
 #include <Geode/Geode.hpp>
 #include <Geode/modify/PlayerObject.hpp>
 
@@ -106,7 +106,13 @@ class $modify(MyPlayerObject, PlayerObject) {
         int target = !m_gameLayer ? this->m_robotSprite->m_iconRequestID : this->m_robotSprite->m_iconRequestID != 0 && this->isPlayer2() ? SDIHelper::get()->getRobot(true) : SDIHelper::get()->getRobot(false);
         if (this->m_robotSprite->m_iconRequestID != target) {
             this->createRobot(target);
+            
+            if (this->m_ghostType == GhostType::Enabled) {
+                this->toggleGhostEffect(GhostType::Disabled);
+            }
             this->toggleGhostEffect(this->m_ghostType);
+            // TODO: recreate toggleGhostEffect because this doesnt work :)))))) (fucking pain)
+            
             this->m_hasGlow = SDIHelper::get()->getGlow(this->isPlayer2());
             this->enableCustomGlowColor(GameManager::get()->colorForIdx(SDIHelper::get()->getGlowColor(this->isPlayer2())));
             this->updatePlayerGlow();
@@ -123,7 +129,12 @@ class $modify(MyPlayerObject, PlayerObject) {
         int target = !m_gameLayer ? this->m_spiderSprite->m_iconRequestID : this->m_spiderSprite->m_iconRequestID != 0 && this->isPlayer2() ? SDIHelper::get()->getSpider(true) : SDIHelper::get()->getSpider(false);
         if (this->m_spiderSprite->m_iconRequestID != target) {
             this->createSpider(target);
+
+            if (this->m_ghostType == GhostType::Enabled) {
+                this->toggleGhostEffect(GhostType::Disabled);
+            }
             this->toggleGhostEffect(this->m_ghostType);
+
             this->m_hasGlow = SDIHelper::get()->getGlow(this->isPlayer2());
             this->enableCustomGlowColor(GameManager::get()->colorForIdx(SDIHelper::get()->getGlowColor(this->isPlayer2())));
             this->updatePlayerGlow();

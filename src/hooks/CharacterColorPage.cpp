@@ -1,10 +1,13 @@
 #include "Macros.hpp"
 #include <Geode/Geode.hpp>
 #include <Geode/modify/CharacterColorPage.hpp>
-
 using namespace geode::prelude;
 
 class $modify(MyCharacterColorPage, CharacterColorPage) {
+    struct Fields {
+        CCLabelBMFont* m_pLabel;
+    };
+
     static void onModify(auto& self) {
         (void)self.setHookPriority("CharacterColorPage::onPlayerColor", Priority::Replace);
         (void)self.setHookPriority("CharacterColorPage::toggleGlow", Priority::Replace);
@@ -39,7 +42,31 @@ class $modify(MyCharacterColorPage, CharacterColorPage) {
             swing->updatePlayerFrame(SDI_GET_VALUE(int64_t, "swing", 1), IconType::Swing);
 
             // ??? i have no idea why i need to do !player2Glow
+            // honestly i might jus be stupid
             m_glowToggler->toggle(!SDI_GET_VALUE(bool, "glow", false));
+
+            m_fields->m_pLabel = CCLabelBMFont::create("P2", "bigFont.fnt");
+            m_fields->m_pLabel->retain();
+            m_fields->m_pLabel->setScale(0.3f);
+            m_fields->m_pLabel->setAnchorPoint({1.f, 1.f});
+            m_fields->m_pLabel->setColor({0, 255, 255});
+            static_cast<CCNode*>(m_cursors->objectAtIndex(0))->addChild(m_fields->m_pLabel);
+            m_fields->m_pLabel->setPosition({
+                static_cast<CCNode*>(m_cursors->objectAtIndex(0))->getContentWidth() - 2.5f,
+                static_cast<CCNode*>(m_cursors->objectAtIndex(0))->getContentHeight() - 1.f
+            });
+            
+        } else {
+            m_fields->m_pLabel = CCLabelBMFont::create("P1", "bigFont.fnt");
+            m_fields->m_pLabel->retain();
+            m_fields->m_pLabel->setScale(0.3f);
+            m_fields->m_pLabel->setAnchorPoint({0.f, 1.f});
+            m_fields->m_pLabel->setColor({255, 255, 0});
+            static_cast<CCNode*>(m_cursors->objectAtIndex(0))->addChild(m_fields->m_pLabel);
+            m_fields->m_pLabel->setPosition({
+                2.5f,
+                static_cast<CCNode*>(m_cursors->objectAtIndex(0))->getContentHeight() - 1.f
+            });
         }
 
         return true;
@@ -68,6 +95,11 @@ class $modify(MyCharacterColorPage, CharacterColorPage) {
 
     void updateColorMode(int p0) {
         CharacterColorPage::updateColorMode(p0);
+
+        if (m_fields->m_pLabel) {
+            m_fields->m_pLabel->removeFromParentAndCleanup(false);
+            static_cast<CCNode*>(m_cursors->objectAtIndex(p0))->addChild(m_fields->m_pLabel);
+        }
 
         if (SDI_GET_VALUE(bool, "2pselected", false)) {
             auto color1 = SDI_GET_VALUE(int64_t, "color1", 0);
@@ -157,6 +189,16 @@ class $modify(MyCharacterColorPage, CharacterColorPage) {
                 icon->m_hasGlowOutline = SDI_GET_VALUE(bool, "glow", false);
                 icon->updateColors();
             }
+        }
+    }
+
+    
+    void onExit() {
+        CharacterColorPage::onExit();
+
+        if (m_fields->m_pLabel) {
+            m_fields->m_pLabel->removeFromParentAndCleanup(true);
+            CC_SAFE_DELETE(m_fields->m_pLabel);
         }
     }
 };

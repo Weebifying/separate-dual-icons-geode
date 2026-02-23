@@ -205,7 +205,7 @@ const char* SDIHelper::getFrameForStreak(int shipFire, float delta) {
     int step = (int)floorf(delta / timeStep);
     int spriteStep = step % spritesCount + 1;
 
-    return CCString::createWithFormat("shipfire%02d_%03d.png", shipFire, spriteStep)->getCString();
+    return CCString::createWithFormat("shipfire%02d_%03d.png", shipFire, spriteStep)->getCString(); // org actually uses fmt but i cba
 }
 
 int SDIHelper::getCube(bool isP2) {
