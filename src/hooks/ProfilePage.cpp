@@ -216,9 +216,8 @@ class $modify(MyProfilePage, ProfilePage) {
 
     void loadPageFromUserInfo(GJUserScore* p0){
         ProfilePage::loadPageFromUserInfo(p0);
-        // log::warn("ProfilePage::loadPageFromUserInfo");
-        SDI_SET_VALUE(bool, "2pselected", false);
 
+        SDI_SET_VALUE(bool, "2pselected", false);
         auto GM = GameManager::get();
 
         if (this->m_ownProfile) {
@@ -298,12 +297,9 @@ class $modify(MyProfilePage, ProfilePage) {
         }
 
         if (this->m_ownProfile && !m_fields->hasLoaded) {
-
             m_fields->hasLoaded = true;
-            auto winSize = CCDirector::get()->getWinSize();
 
             if (auto menu = m_mainLayer->getChildByID("left-menu")) {
-
                 menu->setContentHeight(menu->getContentHeight()*2);
                 menu->setPositionY(menu->getPositionY() - menu->getContentHeight()/4);
 
@@ -317,7 +313,6 @@ class $modify(MyProfilePage, ProfilePage) {
                 toggler->setID("2p-toggler");
                 menu->addChild(toggler);
                 menu->updateLayout();
-
             }
         }
     }
