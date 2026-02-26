@@ -11,5 +11,6 @@ Allows you to customize your 2nd player
 
 ## Special thanks to:
 - [Alphalaneous](user:7834088), for making the original 2.1 version so I can replicate 80% of their code
-- [Erymanthus](user:1941705), for testing on MacOS for me
+- [Erymanthus](user:1941705), for testing this mod on MacOS
 - [Jasmine](user:7466002), for the iOS support
+- [CatXus](user:14467409), for testing this mod on Android
