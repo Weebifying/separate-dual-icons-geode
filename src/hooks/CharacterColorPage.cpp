@@ -50,6 +50,7 @@ class $modify(MyCharacterColorPage, CharacterColorPage) {
             m_fields->m_pLabel->setScale(0.3f);
             m_fields->m_pLabel->setAnchorPoint({1.f, 1.f});
             m_fields->m_pLabel->setColor({0, 255, 255});
+            m_fields->m_pLabel->setID("player-label");
             static_cast<CCNode*>(m_cursors->objectAtIndex(0))->addChild(m_fields->m_pLabel);
             m_fields->m_pLabel->setPosition({
                 static_cast<CCNode*>(m_cursors->objectAtIndex(0))->getContentWidth() - 2.5f,
@@ -62,6 +63,7 @@ class $modify(MyCharacterColorPage, CharacterColorPage) {
             m_fields->m_pLabel->setScale(0.3f);
             m_fields->m_pLabel->setAnchorPoint({0.f, 1.f});
             m_fields->m_pLabel->setColor({255, 255, 0});
+            m_fields->m_pLabel->setID("player-label");
             static_cast<CCNode*>(m_cursors->objectAtIndex(0))->addChild(m_fields->m_pLabel);
             m_fields->m_pLabel->setPosition({
                 2.5f,

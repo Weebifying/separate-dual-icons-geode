@@ -1,6 +1,6 @@
-## v1.3.3
+## v1.4.0
 - Updated for GD 2.2081/Geode 5.0.0
-- Added a new setting: Exit Dual Switch (I KNOW, TERRIBLE NAME, WILL CHANGE PROBABLY)
+- Added a new setting: Exit Dual Switch (read setting description idk its hard to explain)
 - Separated the 2 players cursors in the icon garage, similar to Alphalaneous's 2.1 version of the mod
 - Labeled P1 and P2 for the cursors in icon garage and color picker
 ## v1.3.2

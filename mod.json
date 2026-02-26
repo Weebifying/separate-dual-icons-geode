@@ -1,12 +1,12 @@
 {
-	"geode": "5.0.0",
+	"geode": "5.0.1",
 	"gd": {
 		"win": "2.2081",
 		"android": "2.2081",
 		"mac": "2.2081",
 		"ios": "2.2081"
 	},
-	"version": "v1.3.3",
+	"version": "v1.4.0",
 	"id": "weebify.separate_dual_icons",
 	"name": "Separate Dual Icons",
 	"developer": "Weebify",
@@ -33,7 +33,7 @@
 			"type": "bool",
 			"default": false,
 			"name": "Exit Dual Switch",
-			"description": "If player 2 exits the dual, player 1 switches to player 2's icon set"
+			"description": "Switch between both player's icon sets when exiting dual mode with the player that initiated the exit (example: P2 exits the dual, your player's icon set will remain on P2's configuration indefinitely, until you reverse the effects by exiting dual mode with P1)"
 		}
 	}
 }

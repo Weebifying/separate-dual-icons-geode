@@ -345,6 +345,7 @@ class $modify(MyGarageLayer, GJGarageLayer) {
         c1Label->setScale(0.3f);
         c1Label->setAnchorPoint({0.f, 1.f});
         c1Label->setColor({255, 255, 0});
+        c1Label->setID("c1-player-label");
         m_cursor1->addChild(c1Label);
         c1Label->setPosition({2.5f, m_cursor1->getContentHeight() - 1.f});
 
@@ -352,6 +353,7 @@ class $modify(MyGarageLayer, GJGarageLayer) {
         c2Label->setScale(0.3f);
         c2Label->setAnchorPoint({0.f, 1.f});
         c2Label->setColor({255, 255, 0});
+        c2Label->setID("c2-player-label");
         m_cursor2->addChild(c2Label);
         c2Label->setPosition({2.5f, m_cursor2->getContentHeight() - 1.f});
 
@@ -359,6 +361,7 @@ class $modify(MyGarageLayer, GJGarageLayer) {
         c3Label->setScale(0.3f);
         c3Label->setAnchorPoint({1.f, 1.f});
         c3Label->setColor({0, 255, 255});
+        c3Label->setID("c3-player-label");
         m_fields->m_cursor3->addChild(c3Label);
         c3Label->setPosition({m_fields->m_cursor3->getContentWidth() - 2.5f, m_fields->m_cursor3->getContentHeight() - 1.f});
 
@@ -366,6 +369,7 @@ class $modify(MyGarageLayer, GJGarageLayer) {
         c4Label->setScale(0.3f);
         c4Label->setAnchorPoint({1.f, 1.f});
         c4Label->setColor({0, 255, 255});
+        c4Label->setID("c4-player-label");
         m_fields->m_cursor4->addChild(c4Label);
         c4Label->setPosition({m_fields->m_cursor4->getContentWidth() - 2.5f, m_fields->m_cursor4->getContentHeight() - 1.f});
 
