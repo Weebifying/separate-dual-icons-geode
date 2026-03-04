@@ -319,5 +319,16 @@ CCMotionStreak* SDIHelper::getShipFireNode(bool isP2) {
 }
 
 $on_mod(Loaded) {
-    SDIHelper::get()->reset();
+    auto SDI = SDIHelper::get();
+    SDI->reset();
+
+    if (Loader::get()->isModLoaded("absolllute.megahack")) {
+        SDI->m_incompatFound = true;
+        SDI->m_incompatMod = "Mega Hack";
+        SDI->m_shouldWarnIncompat = true;
+    } else if (Loader::get()->isModLoaded("thesillydoggo.qolmod")) {
+        SDI->m_incompatFound = true;
+        SDI->m_incompatMod = "QOLMod";
+        SDI->m_shouldWarnIncompat = true;
+    }
 };

@@ -10,8 +10,16 @@ class $modify(MyPlayerObject, PlayerObject) {
         return isPlayer2(m_gameLayer);
     }
 
+    bool isPlayer1() {
+        return isPlayer1(m_gameLayer);
+    }
+
     bool isPlayer2(GJBaseGameLayer* gameLayer) {
         return gameLayer && ((gameLayer->m_player1 && !gameLayer->m_player2 && this != gameLayer->m_player1) || this == gameLayer->m_player2);
+    }
+
+    bool isPlayer1(GJBaseGameLayer* gameLayer) {
+        return gameLayer && ((gameLayer->m_player1 && !gameLayer->m_player2 && this == gameLayer->m_player1) || this == gameLayer->m_player1);
     }
 
     void setupStreak() {
@@ -71,39 +79,39 @@ class $modify(MyPlayerObject, PlayerObject) {
     }
 
     void setColor(ccColor3B const &color) {
-        PlayerObject::setColor(!m_gameLayer ? color : this->isPlayer2() ? GameManager::get()->colorForIdx(SDIHelper::get()->getColor1(true)) : GameManager::get()->colorForIdx(SDIHelper::get()->getColor1(false)));
+        PlayerObject::setColor(RESOLVE_VALUE(color, GameManager::get()->colorForIdx(SDIHelper::get()->getColor1(false)), GameManager::get()->colorForIdx(SDIHelper::get()->getColor1(true))));
     }
 
     void setSecondColor(ccColor3B const &color) {
-        PlayerObject::setSecondColor(!m_gameLayer ? color : this->isPlayer2() ? GameManager::get()->colorForIdx(SDIHelper::get()->getColor2(true)) : GameManager::get()->colorForIdx(SDIHelper::get()->getColor2(false)));
+        PlayerObject::setSecondColor(RESOLVE_VALUE(color, GameManager::get()->colorForIdx(SDIHelper::get()->getColor2(false)), GameManager::get()->colorForIdx(SDIHelper::get()->getColor2(true))));
     }
 
     void updatePlayerFrame(int frame) {
-        PlayerObject::updatePlayerFrame(!m_gameLayer ? frame : frame != 0 && this->isPlayer2() ? SDIHelper::get()->getCube(true): SDIHelper::get()->getCube(false));
+        PlayerObject::updatePlayerFrame(RESOLVE_VALUE(frame, SDIHelper::get()->getCube(false), SDIHelper::get()->getCube(true)));
     }
 
     void updatePlayerShipFrame(int frame) {
-        PlayerObject::updatePlayerShipFrame(!m_gameLayer ? frame : frame != 0 && this->isPlayer2() ? SDIHelper::get()->getShip(true) : SDIHelper::get()->getShip(false));
+        PlayerObject::updatePlayerShipFrame(RESOLVE_VALUE(frame, SDIHelper::get()->getShip(false), SDIHelper::get()->getShip(true)));
     }
 
     void updatePlayerRollFrame(int frame) {
-        PlayerObject::updatePlayerRollFrame(!m_gameLayer ? frame : frame != 0 && this->isPlayer2() ? SDIHelper::get()->getBall(true) : SDIHelper::get()->getBall(false));
+        PlayerObject::updatePlayerRollFrame(RESOLVE_VALUE(frame, SDIHelper::get()->getBall(false), SDIHelper::get()->getBall(true)));
     }
 
     void updatePlayerBirdFrame(int frame) {
-        PlayerObject::updatePlayerBirdFrame(!m_gameLayer ? frame : frame != 0 && this->isPlayer2() ? SDIHelper::get()->getUFO(true) : SDIHelper::get()->getUFO(false));
+        PlayerObject::updatePlayerBirdFrame(RESOLVE_VALUE(frame, SDIHelper::get()->getUFO(false), SDIHelper::get()->getUFO(true)));
     }
 
     void updatePlayerDartFrame(int frame) {
-        PlayerObject::updatePlayerDartFrame(!m_gameLayer ? frame : frame != 0 && this->isPlayer2() ? SDIHelper::get()->getWave(true) : SDIHelper::get()->getWave(false));
+        PlayerObject::updatePlayerDartFrame(RESOLVE_VALUE(frame, SDIHelper::get()->getWave(false), SDIHelper::get()->getWave(true)));
     }
 
     void createRobot(int frame) {
-        PlayerObject::createRobot(!m_gameLayer ? frame : frame != 0 && this->isPlayer2() ? SDIHelper::get()->getRobot(true) : SDIHelper::get()->getRobot(false));
+        PlayerObject::createRobot(RESOLVE_VALUE(frame, SDIHelper::get()->getRobot(false), SDIHelper::get()->getRobot(true)));
     }
 
     void toggleRobotMode(bool enable, bool noEffects) {
-        int target = !m_gameLayer ? this->m_robotSprite->m_iconRequestID : this->m_robotSprite->m_iconRequestID != 0 && this->isPlayer2() ? SDIHelper::get()->getRobot(true) : SDIHelper::get()->getRobot(false);
+        int target = RESOLVE_VALUE(this->m_robotSprite->m_iconRequestID, SDIHelper::get()->getRobot(false), SDIHelper::get()->getRobot(true));
         if (this->m_robotSprite->m_iconRequestID != target) {
             this->createRobot(target);
             
@@ -122,11 +130,11 @@ class $modify(MyPlayerObject, PlayerObject) {
     }
 
     void createSpider(int frame) {
-        PlayerObject::createSpider(!m_gameLayer ? frame : frame != 0 && this->isPlayer2() ? SDIHelper::get()->getSpider(true) : SDIHelper::get()->getSpider(false));
+        PlayerObject::createSpider(RESOLVE_VALUE(frame, SDIHelper::get()->getSpider(false), SDIHelper::get()->getSpider(true)));
     }
 
     void toggleSpiderMode(bool enable, bool noEffects) {
-        int target = !m_gameLayer ? this->m_spiderSprite->m_iconRequestID : this->m_spiderSprite->m_iconRequestID != 0 && this->isPlayer2() ? SDIHelper::get()->getSpider(true) : SDIHelper::get()->getSpider(false);
+        int target = RESOLVE_VALUE(this->m_spiderSprite->m_iconRequestID, SDIHelper::get()->getSpider(false), SDIHelper::get()->getSpider(true));
         if (this->m_spiderSprite->m_iconRequestID != target) {
             this->createSpider(target);
 
@@ -144,11 +152,11 @@ class $modify(MyPlayerObject, PlayerObject) {
     }
 
     void updatePlayerSwingFrame(int frame) {
-        PlayerObject::updatePlayerSwingFrame(!m_gameLayer ? frame : frame != 0 && this->isPlayer2() ? SDIHelper::get()->getSwing(true) : SDIHelper::get()->getSwing(false));
+        PlayerObject::updatePlayerSwingFrame(RESOLVE_VALUE(frame, SDIHelper::get()->getSwing(false), SDIHelper::get()->getSwing(true)));
     }
 
     void updatePlayerJetpackFrame(int frame) {
-        PlayerObject::updatePlayerJetpackFrame(!m_gameLayer ? frame : frame != 0 && this->isPlayer2() ? SDIHelper::get()->getJetpack(true) : SDIHelper::get()->getJetpack(false));
+        PlayerObject::updatePlayerJetpackFrame(RESOLVE_VALUE(frame, SDIHelper::get()->getJetpack(false), SDIHelper::get()->getJetpack(true)));
     }
 
     void updateGlowColor() {

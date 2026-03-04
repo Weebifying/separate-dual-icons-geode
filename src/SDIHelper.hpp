@@ -6,6 +6,10 @@ using namespace geode::prelude;
 
 class SDIHelper {
 public:
+    bool m_incompatFound = false;
+    std::string m_incompatMod = "";
+    bool m_shouldWarnIncompat = false;
+
     bool m_isP2Main = false;
     bool m_shouldSwap = true;
     // this is so cursed but also like the only way to do this
