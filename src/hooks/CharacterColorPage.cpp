@@ -107,6 +107,7 @@ class $modify(MyCharacterColorPage, CharacterColorPage) {
             auto color1 = SDI_GET_VALUE(int64_t, "color1", 0);
             auto color2 = SDI_GET_VALUE(int64_t, "color2", 0);
             auto colorglow = SDI_GET_VALUE(int64_t, "colorglow", 0);
+            if (colorglow == -1) colorglow = color2;
 
             for (auto [i, sprite] : CCDictionaryExt<intptr_t, ColorChannelSprite*>(m_colorButtons)) {
                 if (i == color1) {
@@ -186,8 +187,13 @@ class $modify(MyCharacterColorPage, CharacterColorPage) {
             auto GM = GameManager::get();
             for (auto* icon : CCArrayExt<SimplePlayer*>(m_playerObjects)) {
                 icon->setColor(GM->colorForIdx(SDI_GET_VALUE(int64_t, "color1", 0)));
-                icon->setSecondColor(GM->colorForIdx(SDI_GET_VALUE(int64_t, "color2", 0)));
-                icon->enableCustomGlowColor(GM->colorForIdx(SDI_GET_VALUE(int64_t, "colorglow", 0)));
+                int color2 = SDI_GET_VALUE(int64_t, "color2", 0);
+                int colorglow = SDI_GET_VALUE(int64_t, "colorglow", 0);
+                icon->setSecondColor(GM->colorForIdx(color2));
+                if (colorglow == -1)
+                  icon->enableCustomGlowColor(GM->colorForIdx(color2));
+                else 
+                  icon->enableCustomGlowColor(GM->colorForIdx(colorglow));
                 icon->m_hasGlowOutline = SDI_GET_VALUE(bool, "glow", false);
                 icon->updateColors();
             }
