@@ -10,11 +10,6 @@ class $modify(MyProfilePage, ProfilePage) {
         bool hasLoaded = false;
     };
 
-    static void onModify(auto& self) {
-        Result<> result = self.setHookPriorityBefore("ProfilePage::loadPageFromUserInfo", "rynat.better_unlock_info");
-        if (!result && *result.err() != "Mod not found") log::error("Failed to set hook priority. Glow colors may break on the jetpack with Better Unlock Info.");
-    }
-
     void toggleShip(CCObject* sender) {
         ProfilePage::toggleShip(sender);
 
@@ -65,7 +60,7 @@ class $modify(MyProfilePage, ProfilePage) {
         if (static_cast<CCMenuItemToggler*>(sender)->isOn()) {
             SDI_SET_VALUE(bool, "2pselected", false);
             int glowidx = GM->getPlayerGlowColor();
-            if (glowidx == -1) glowidx = GM->getPlayerColor2();
+            if (glowidx == -1) glowidx = 0;
 
             cube->updatePlayerFrame(GM->getPlayerFrame(), IconType::Cube);
             cube->setColor(GM->colorForIdx(GM->getPlayerColor()));
@@ -138,7 +133,7 @@ class $modify(MyProfilePage, ProfilePage) {
         } else {
             SDI_SET_VALUE(bool, "2pselected", true);
             int glowidx = SDI_GET_VALUE(int64_t, "colorglow", 0);
-            if (glowidx == -1) glowidx = SDI_GET_VALUE(int64_t, "color2", 0);
+            if (glowidx == -1) glowidx = 0;
 
             cube->updatePlayerFrame(SDI_GET_VALUE(int64_t, "cube", 1), IconType::Cube);
             cube->setColor(GM->colorForIdx(SDI_GET_VALUE(int64_t, "color1", 0)));
@@ -232,7 +227,7 @@ class $modify(MyProfilePage, ProfilePage) {
         if (this->m_ownProfile) {
             if (auto menu = m_mainLayer->getChildByID("player-menu")) {
                 int glowidx = GM->getPlayerGlowColor();
-                if (glowidx == -1) glowidx = GM->getPlayerColor2();
+                if (glowidx == -1) glowidx = 0;
 
                 if (auto player = getPlayer(menu->getChildByID("player-icon"))) {
                     player->updatePlayerFrame(GM->getPlayerFrame(), IconType::Cube);
@@ -304,16 +299,6 @@ class $modify(MyProfilePage, ProfilePage) {
                     player->enableCustomGlowColor(GM->colorForIdx(glowidx));
                     player->m_hasGlowOutline = GM->getPlayerGlow();
                     player->updateColors();
-                }
-                // BUI added
-                auto jetpack = menu->getChildByID("player-jetpack") ? getPlayer(menu->getChildByID("player-jetpack")) : nullptr;
-                if (jetpack) {
-                    jetpack->updatePlayerFrame(GM->getPlayerJetpack(), IconType::Jetpack);
-                    jetpack->setColor(GM->colorForIdx(GM->getPlayerColor()));
-                    jetpack->setSecondColor(GM->colorForIdx(GM->getPlayerColor2()));
-                    jetpack->enableCustomGlowColor(GM->colorForIdx(glowidx));
-                    jetpack->m_hasGlowOutline = GM->getPlayerGlow();
-                    jetpack->updateColors();
                 }
             }
         }
