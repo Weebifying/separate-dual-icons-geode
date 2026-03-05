@@ -59,11 +59,13 @@ class $modify(MyProfilePage, ProfilePage) {
 
         if (static_cast<CCMenuItemToggler*>(sender)->isOn()) {
             SDI_SET_VALUE(bool, "2pselected", false);
+            int glowidx = GM->getPlayerGlowColor();
+            if (glowidx == -1) glowidx = 0;
 
             cube->updatePlayerFrame(GM->getPlayerFrame(), IconType::Cube);
             cube->setColor(GM->colorForIdx(GM->getPlayerColor()));
             cube->setSecondColor(GM->colorForIdx(GM->getPlayerColor2()));
-            cube->enableCustomGlowColor(GM->colorForIdx(GM->getPlayerGlowColor()));
+            cube->enableCustomGlowColor(GM->colorForIdx(glowidx));
             cube->m_hasGlowOutline = GM->getPlayerGlow();
             cube->updateColors();
 
@@ -74,7 +76,7 @@ class $modify(MyProfilePage, ProfilePage) {
 
                 jetpack->setColor(GM->colorForIdx(GM->getPlayerColor()));
                 jetpack->setSecondColor(GM->colorForIdx(GM->getPlayerColor2()));
-                jetpack->enableCustomGlowColor(GM->colorForIdx(GM->getPlayerGlowColor()));
+                jetpack->enableCustomGlowColor(GM->colorForIdx(glowidx));
                 jetpack->m_hasGlowOutline = GM->getPlayerGlow();
                 jetpack->updateColors();
             } else {
@@ -83,58 +85,60 @@ class $modify(MyProfilePage, ProfilePage) {
             }
             ship->setColor(GM->colorForIdx(GM->getPlayerColor()));
             ship->setSecondColor(GM->colorForIdx(GM->getPlayerColor2()));
-            ship->enableCustomGlowColor(GM->colorForIdx(GM->getPlayerGlowColor()));
+            ship->enableCustomGlowColor(GM->colorForIdx(glowidx));
             ship->m_hasGlowOutline = GM->getPlayerGlow();
             ship->updateColors();
 
             ball->updatePlayerFrame(GM->getPlayerBall(), IconType::Ball);
             ball->setColor(GM->colorForIdx(GM->getPlayerColor()));
             ball->setSecondColor(GM->colorForIdx(GM->getPlayerColor2()));
-            ball->enableCustomGlowColor(GM->colorForIdx(GM->getPlayerGlowColor()));
+            ball->enableCustomGlowColor(GM->colorForIdx(glowidx));
             ball->m_hasGlowOutline = GM->getPlayerGlow();
             ball->updateColors();
 
             ufo->updatePlayerFrame(GM->getPlayerBird(), IconType::Ufo);
             ufo->setColor(GM->colorForIdx(GM->getPlayerColor()));
             ufo->setSecondColor(GM->colorForIdx(GM->getPlayerColor2()));
-            ufo->enableCustomGlowColor(GM->colorForIdx(GM->getPlayerGlowColor()));
+            ufo->enableCustomGlowColor(GM->colorForIdx(glowidx));
             ufo->m_hasGlowOutline = GM->getPlayerGlow();
             ufo->updateColors();
 
             wave->updatePlayerFrame(GM->getPlayerDart(), IconType::Wave);
             wave->setColor(GM->colorForIdx(GM->getPlayerColor()));
             wave->setSecondColor(GM->colorForIdx(GM->getPlayerColor2()));
-            wave->enableCustomGlowColor(GM->colorForIdx(GM->getPlayerGlowColor()));
+            wave->enableCustomGlowColor(GM->colorForIdx(glowidx));
             wave->m_hasGlowOutline = GM->getPlayerGlow();
             wave->updateColors();
 
             robot->updatePlayerFrame(GM->getPlayerRobot(), IconType::Robot);
             robot->setColor(GM->colorForIdx(GM->getPlayerColor()));
             robot->setSecondColor(GM->colorForIdx(GM->getPlayerColor2()));
-            robot->enableCustomGlowColor(GM->colorForIdx(GM->getPlayerGlowColor()));
+            robot->enableCustomGlowColor(GM->colorForIdx(glowidx));
             robot->m_hasGlowOutline = GM->getPlayerGlow();
             robot->updateColors();
 
             spider->updatePlayerFrame(GM->getPlayerSpider(), IconType::Spider);
             spider->setColor(GM->colorForIdx(GM->getPlayerColor()));
             spider->setSecondColor(GM->colorForIdx(GM->getPlayerColor2()));
-            spider->enableCustomGlowColor(GM->colorForIdx(GM->getPlayerGlowColor()));
+            spider->enableCustomGlowColor(GM->colorForIdx(glowidx));
             spider->m_hasGlowOutline = GM->getPlayerGlow();
             spider->updateColors();
 
             swing->updatePlayerFrame(GM->getPlayerSwing(), IconType::Swing);
             swing->setColor(GM->colorForIdx(GM->getPlayerColor()));
             swing->setSecondColor(GM->colorForIdx(GM->getPlayerColor2()));
-            swing->enableCustomGlowColor(GM->colorForIdx(GM->getPlayerGlowColor()));
+            swing->enableCustomGlowColor(GM->colorForIdx(glowidx));
             swing->m_hasGlowOutline = GM->getPlayerGlow();
             swing->updateColors();
         } else {
             SDI_SET_VALUE(bool, "2pselected", true);
+            int glowidx = SDI_GET_VALUE(int64_t, "colorglow", 0);
+            if (glowidx == -1) glowidx = 0;
 
             cube->updatePlayerFrame(SDI_GET_VALUE(int64_t, "cube", 1), IconType::Cube);
             cube->setColor(GM->colorForIdx(SDI_GET_VALUE(int64_t, "color1", 0)));
             cube->setSecondColor(GM->colorForIdx(SDI_GET_VALUE(int64_t, "color2", 0)));
-            cube->enableCustomGlowColor(GM->colorForIdx(SDI_GET_VALUE(int64_t, "colorglow", 0)));
+            cube->enableCustomGlowColor(GM->colorForIdx(glowidx));
             cube->m_hasGlowOutline = SDI_GET_VALUE(bool, "glow", false);
             cube->updateColors();
 
@@ -145,7 +149,7 @@ class $modify(MyProfilePage, ProfilePage) {
 
                 jetpack->setColor(GM->colorForIdx(SDI_GET_VALUE(int64_t, "color1", 0)));
                 jetpack->setSecondColor(GM->colorForIdx(SDI_GET_VALUE(int64_t, "color2", 0)));
-                jetpack->enableCustomGlowColor(GM->colorForIdx(SDI_GET_VALUE(int64_t, "colorglow", 0)));
+                jetpack->enableCustomGlowColor(GM->colorForIdx(glowidx));
                 jetpack->m_hasGlowOutline = SDI_GET_VALUE(bool, "glow", false);
                 jetpack->updateColors();
             } else {
@@ -154,7 +158,7 @@ class $modify(MyProfilePage, ProfilePage) {
             }
             ship->setColor(GM->colorForIdx(SDI_GET_VALUE(int64_t, "color1", 0)));
             ship->setSecondColor(GM->colorForIdx(SDI_GET_VALUE(int64_t, "color2", 0)));
-            ship->enableCustomGlowColor(GM->colorForIdx(SDI_GET_VALUE(int64_t, "colorglow", 0)));
+            ship->enableCustomGlowColor(GM->colorForIdx(glowidx));
             ship->m_hasGlowOutline = SDI_GET_VALUE(bool, "glow", false);
             ship->updateColors();
             //
@@ -162,42 +166,42 @@ class $modify(MyProfilePage, ProfilePage) {
             ball->updatePlayerFrame(SDI_GET_VALUE(int64_t, "roll", 1), IconType::Ball);
             ball->setColor(GM->colorForIdx(SDI_GET_VALUE(int64_t, "color1", 0)));
             ball->setSecondColor(GM->colorForIdx(SDI_GET_VALUE(int64_t, "color2", 0)));
-            ball->enableCustomGlowColor(GM->colorForIdx(SDI_GET_VALUE(int64_t, "colorglow", 0)));
+            ball->enableCustomGlowColor(GM->colorForIdx(glowidx));
             ball->m_hasGlowOutline = SDI_GET_VALUE(bool, "glow", false);
             ball->updateColors();
 
             ufo->updatePlayerFrame(SDI_GET_VALUE(int64_t, "bird", 1), IconType::Ufo);
             ufo->setColor(GM->colorForIdx(SDI_GET_VALUE(int64_t, "color1", 0)));
             ufo->setSecondColor(GM->colorForIdx(SDI_GET_VALUE(int64_t, "color2", 0)));
-            ufo->enableCustomGlowColor(GM->colorForIdx(SDI_GET_VALUE(int64_t, "colorglow", 0)));
+            ufo->enableCustomGlowColor(GM->colorForIdx(glowidx));
             ufo->m_hasGlowOutline = SDI_GET_VALUE(bool, "glow", false);
             ufo->updateColors();
 
             wave->updatePlayerFrame(SDI_GET_VALUE(int64_t, "dart", 1), IconType::Wave);
             wave->setColor(GM->colorForIdx(SDI_GET_VALUE(int64_t, "color1", 0)));
             wave->setSecondColor(GM->colorForIdx(SDI_GET_VALUE(int64_t, "color2", 0)));
-            wave->enableCustomGlowColor(GM->colorForIdx(SDI_GET_VALUE(int64_t, "colorglow", 0)));
+            wave->enableCustomGlowColor(GM->colorForIdx(glowidx));
             wave->m_hasGlowOutline = SDI_GET_VALUE(bool, "glow", false);
             wave->updateColors();
 
             robot->updatePlayerFrame(SDI_GET_VALUE(int64_t, "robot", 1), IconType::Robot);
             robot->setColor(GM->colorForIdx(SDI_GET_VALUE(int64_t, "color1", 0)));
             robot->setSecondColor(GM->colorForIdx(SDI_GET_VALUE(int64_t, "color2", 0)));
-            robot->enableCustomGlowColor(GM->colorForIdx(SDI_GET_VALUE(int64_t, "colorglow", 0)));
+            robot->enableCustomGlowColor(GM->colorForIdx(glowidx));
             robot->m_hasGlowOutline = SDI_GET_VALUE(bool, "glow", false);
             robot->updateColors();
 
             spider->updatePlayerFrame(SDI_GET_VALUE(int64_t, "spider", 1), IconType::Spider);
             spider->setColor(GM->colorForIdx(SDI_GET_VALUE(int64_t, "color1", 0)));
             spider->setSecondColor(GM->colorForIdx(SDI_GET_VALUE(int64_t, "color2", 0)));
-            spider->enableCustomGlowColor(GM->colorForIdx(SDI_GET_VALUE(int64_t, "colorglow", 0)));
+            spider->enableCustomGlowColor(GM->colorForIdx(glowidx));
             spider->m_hasGlowOutline = SDI_GET_VALUE(bool, "glow", false);
             spider->updateColors();
 
             swing->updatePlayerFrame(SDI_GET_VALUE(int64_t, "swing", 1), IconType::Swing);
             swing->setColor(GM->colorForIdx(SDI_GET_VALUE(int64_t, "color1", 0)));
             swing->setSecondColor(GM->colorForIdx(SDI_GET_VALUE(int64_t, "color2", 0)));
-            swing->enableCustomGlowColor(GM->colorForIdx(SDI_GET_VALUE(int64_t, "colorglow", 0)));
+            swing->enableCustomGlowColor(GM->colorForIdx(glowidx));
             swing->m_hasGlowOutline = SDI_GET_VALUE(bool, "glow", false);
             swing->updateColors();
         }
@@ -222,11 +226,14 @@ class $modify(MyProfilePage, ProfilePage) {
 
         if (this->m_ownProfile) {
             if (auto menu = m_mainLayer->getChildByID("player-menu")) {
+                int glowidx = GM->getPlayerGlowColor();
+                if (glowidx == -1) glowidx = 0;
+
                 if (auto player = getPlayer(menu->getChildByID("player-icon"))) {
                     player->updatePlayerFrame(GM->getPlayerFrame(), IconType::Cube);
                     player->setColor(GM->colorForIdx(GM->getPlayerColor()));
                     player->setSecondColor(GM->colorForIdx(GM->getPlayerColor2()));
-                    player->enableCustomGlowColor(GM->colorForIdx(GM->getPlayerGlowColor()));
+                    player->enableCustomGlowColor(GM->colorForIdx(glowidx));
                     player->m_hasGlowOutline = GM->getPlayerGlow();
                     player->updateColors();
                 }
@@ -235,7 +242,7 @@ class $modify(MyProfilePage, ProfilePage) {
                     player->updatePlayerFrame(GM->getPlayerShip(), IconType::Ship);
                     player->setColor(GM->colorForIdx(GM->getPlayerColor()));
                     player->setSecondColor(GM->colorForIdx(GM->getPlayerColor2()));
-                    player->enableCustomGlowColor(GM->colorForIdx(GM->getPlayerGlowColor()));
+                    player->enableCustomGlowColor(GM->colorForIdx(glowidx));
                     player->m_hasGlowOutline = GM->getPlayerGlow();
                     player->updateColors();
                 }
@@ -244,7 +251,7 @@ class $modify(MyProfilePage, ProfilePage) {
                     player->updatePlayerFrame(GM->getPlayerBall(), IconType::Ball);
                     player->setColor(GM->colorForIdx(GM->getPlayerColor()));
                     player->setSecondColor(GM->colorForIdx(GM->getPlayerColor2()));
-                    player->enableCustomGlowColor(GM->colorForIdx(GM->getPlayerGlowColor()));
+                    player->enableCustomGlowColor(GM->colorForIdx(glowidx));
                     player->m_hasGlowOutline = GM->getPlayerGlow();
                     player->updateColors();
                 }
@@ -253,7 +260,7 @@ class $modify(MyProfilePage, ProfilePage) {
                     player->updatePlayerFrame(GM->getPlayerBird(), IconType::Ufo);
                     player->setColor(GM->colorForIdx(GM->getPlayerColor()));
                     player->setSecondColor(GM->colorForIdx(GM->getPlayerColor2()));
-                    player->enableCustomGlowColor(GM->colorForIdx(GM->getPlayerGlowColor()));
+                    player->enableCustomGlowColor(GM->colorForIdx(glowidx));
                     player->m_hasGlowOutline = GM->getPlayerGlow();
                     player->updateColors();
                 }
@@ -262,7 +269,7 @@ class $modify(MyProfilePage, ProfilePage) {
                     player->updatePlayerFrame(GM->getPlayerDart(), IconType::Wave);
                     player->setColor(GM->colorForIdx(GM->getPlayerColor()));
                     player->setSecondColor(GM->colorForIdx(GM->getPlayerColor2()));
-                    player->enableCustomGlowColor(GM->colorForIdx(GM->getPlayerGlowColor()));
+                    player->enableCustomGlowColor(GM->colorForIdx(glowidx));
                     player->m_hasGlowOutline = GM->getPlayerGlow();
                     player->updateColors();
                 }
@@ -271,7 +278,7 @@ class $modify(MyProfilePage, ProfilePage) {
                     player->updatePlayerFrame(GM->getPlayerRobot(), IconType::Robot);
                     player->setColor(GM->colorForIdx(GM->getPlayerColor()));
                     player->setSecondColor(GM->colorForIdx(GM->getPlayerColor2()));
-                    player->enableCustomGlowColor(GM->colorForIdx(GM->getPlayerGlowColor()));
+                    player->enableCustomGlowColor(GM->colorForIdx(glowidx));
                     player->m_hasGlowOutline = GM->getPlayerGlow();
                     player->updateColors();
                 }
@@ -280,7 +287,7 @@ class $modify(MyProfilePage, ProfilePage) {
                     player->updatePlayerFrame(GM->getPlayerSpider(), IconType::Spider);
                     player->setColor(GM->colorForIdx(GM->getPlayerColor()));
                     player->setSecondColor(GM->colorForIdx(GM->getPlayerColor2()));
-                    player->enableCustomGlowColor(GM->colorForIdx(GM->getPlayerGlowColor()));
+                    player->enableCustomGlowColor(GM->colorForIdx(glowidx));
                     player->m_hasGlowOutline = GM->getPlayerGlow();
                     player->updateColors();
                 }
@@ -289,7 +296,7 @@ class $modify(MyProfilePage, ProfilePage) {
                     player->updatePlayerFrame(GM->getPlayerSwing(), IconType::Swing);
                     player->setColor(GM->colorForIdx(GM->getPlayerColor()));
                     player->setSecondColor(GM->colorForIdx(GM->getPlayerColor2()));
-                    player->enableCustomGlowColor(GM->colorForIdx(GM->getPlayerGlowColor()));
+                    player->enableCustomGlowColor(GM->colorForIdx(glowidx));
                     player->m_hasGlowOutline = GM->getPlayerGlow();
                     player->updateColors();
                 }

@@ -268,8 +268,10 @@ class $modify(MyGarageLayer, GJGarageLayer) {
                 break;
         }
         m_playerObject->setColor(GM->colorForIdx(GM->m_playerColor));
-        m_playerObject->setSecondColor(GM->colorForIdx(GM->m_playerColor2));
-        m_playerObject->enableCustomGlowColor(GM->colorForIdx(GM->m_playerGlowColor));
+        int col2idx = GM->m_playerGlowColor;
+        int glowidx = GM->m_playerGlowColor;
+        m_playerObject->setSecondColor(GM->colorForIdx(col2idx));
+        m_playerObject->enableCustomGlowColor(GM->colorForIdx((glowidx == -1) ? col2idx : glowidx));
         m_playerObject->m_hasGlowOutline = GM->m_playerGlow;
         m_playerObject->updateColors();
 
@@ -303,8 +305,10 @@ class $modify(MyGarageLayer, GJGarageLayer) {
                 break;
         }
         m_fields->player2->setColor(GM->colorForIdx(SDI_GET_VALUE(int64_t, "color1", 0)));
-        m_fields->player2->setSecondColor(GM->colorForIdx(SDI_GET_VALUE(int64_t, "color2", 0)));
-        m_fields->player2->enableCustomGlowColor(GM->colorForIdx(SDI_GET_VALUE(int64_t, "colorglow", 0)));
+        col2idx = SDI_GET_VALUE(int64_t, "color2", 0);
+        glowidx = SDI_GET_VALUE(int64_t, "colorglow", 0);
+        m_fields->player2->setSecondColor(GM->colorForIdx(col2idx));
+        m_fields->player2->enableCustomGlowColor(GM->colorForIdx((glowidx == -1) ? col2idx : glowidx));
         m_fields->player2->m_hasGlowOutline = SDI_GET_VALUE(bool, "glow", false);
         m_fields->player2->updateColors();
     }
@@ -382,8 +386,10 @@ class $modify(MyGarageLayer, GJGarageLayer) {
         m_fields->player2->setPositionX(m_fields->player2->getPositionX() + winSize.width/6);
 
         m_fields->player2->setColor(GM->colorForIdx(SDI_GET_VALUE(int64_t, "color1", 0)));
-        m_fields->player2->setSecondColor(GM->colorForIdx(SDI_GET_VALUE(int64_t, "color2", 0)));
-        m_fields->player2->enableCustomGlowColor(GM->colorForIdx(SDI_GET_VALUE(int64_t, "colorglow", 0)));
+        int col2idx = SDI_GET_VALUE(int64_t, "color2", 0);
+        int glowidx = SDI_GET_VALUE(int64_t, "colorglow", 0);
+        m_fields->player2->setSecondColor(GM->colorForIdx(col2idx));
+        m_fields->player2->enableCustomGlowColor(GM->colorForIdx((glowidx == -1) ? col2idx : glowidx));
         m_fields->player2->m_hasGlowOutline = SDI_GET_VALUE(bool, "glow", false);
         m_fields->player2->updateColors();
 
@@ -753,8 +759,10 @@ class $modify(MyGarageLayer, GJGarageLayer) {
         if (SDI_GET_VALUE(bool, "2pselected", false)) {
             auto GM = GameManager::get();
             m_fields->player2->setColor(GM->colorForIdx(SDI_GET_VALUE(int64_t, "color1", 0)));
-            m_fields->player2->setSecondColor(GM->colorForIdx(SDI_GET_VALUE(int64_t, "color2", 0)));
-            m_fields->player2->enableCustomGlowColor(GM->colorForIdx(SDI_GET_VALUE(int64_t, "colorglow", 0)));
+            int col2idx = SDI_GET_VALUE(int64_t, "color2", 0);
+            int glowidx = SDI_GET_VALUE(int64_t, "colorglow", 0);
+            m_fields->player2->setSecondColor(GM->colorForIdx(col2idx));
+            m_fields->player2->enableCustomGlowColor(GM->colorForIdx((glowidx == -1) ? col2idx : glowidx));
             m_fields->player2->m_hasGlowOutline = SDI_GET_VALUE(bool, "glow", false);
             m_fields->player2->updateColors();
         }

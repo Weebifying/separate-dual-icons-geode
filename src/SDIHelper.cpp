@@ -305,9 +305,20 @@ bool SDIHelper::getGlow(bool isP2) {
 }
 
 int SDIHelper::getGlowColor(bool isP2) {
-    return m_isP2Main != isP2
-        ? SDI_GET_VALUE(int64_t, "colorglow", 0)
-        : GameManager::get()->getPlayerGlowColor();
+    if (m_isP2Main != isP2) {
+        int64_t colorglow = SDI_GET_VALUE(int64_t, "colorglow", 0);
+        // vanilla behavior when glow color is -1
+        if (colorglow == -1) {
+            return SDI_GET_VALUE(int64_t, "color2", 0);
+        }
+        return colorglow;
+    } else {
+        int colorglow = GameManager::get()->getPlayerGlowColor();
+        if (colorglow == -1) {
+            return GameManager::get()->getPlayerColor2();
+        }
+        return colorglow;
+    }
 }
 
 void SDIHelper::logAll() {
