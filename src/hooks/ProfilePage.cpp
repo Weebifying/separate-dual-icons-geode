@@ -10,6 +10,11 @@ class $modify(MyProfilePage, ProfilePage) {
         bool hasLoaded = false;
     };
 
+    static void onModify(auto& self) {
+        Result<> result = self.setHookPriorityBefore("ProfilePage::loadPageFromUserInfo", "rynat.better_unlock_info");
+        if (!result && *result.err() != "Mod not found") log::error("Failed to set hook priority. Glow colors may break on the jetpack with Better Unlock Info.");
+    }
+
     void toggleShip(CCObject* sender) {
         ProfilePage::toggleShip(sender);
 
@@ -299,6 +304,16 @@ class $modify(MyProfilePage, ProfilePage) {
                     player->enableCustomGlowColor(GM->colorForIdx(glowidx));
                     player->m_hasGlowOutline = GM->getPlayerGlow();
                     player->updateColors();
+                }
+                // BUI added
+                auto jetpack = menu->getChildByID("player-jetpack") ? getPlayer(menu->getChildByID("player-jetpack")) : nullptr;
+                if (jetpack) {
+                    jetpack->updatePlayerFrame(GM->getPlayerJetpack(), IconType::Jetpack);
+                    jetpack->setColor(GM->colorForIdx(GM->getPlayerColor()));
+                    jetpack->setSecondColor(GM->colorForIdx(GM->getPlayerColor2()));
+                    jetpack->enableCustomGlowColor(GM->colorForIdx(glowidx));
+                    jetpack->m_hasGlowOutline = GM->getPlayerGlow();
+                    jetpack->updateColors();
                 }
             }
         }
