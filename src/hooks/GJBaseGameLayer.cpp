@@ -31,6 +31,7 @@ class $modify(MyBaseGameLayer, GJBaseGameLayer) {
 
     void playExitDualEffect(PlayerObject* p0) {
         GJBaseGameLayer::playExitDualEffect(p0);
+        if (p0 && !p0->isVanillaPlayer()) return;
 
         auto GM = GameManager::get();
         auto SDI = SDIHelper::get();
@@ -88,5 +89,11 @@ class $modify(MyBaseGameLayer, GJBaseGameLayer) {
                 }
             }
         }
+    }
+
+    void createPlayer() {
+        SDIHelper::get()->m_insideCreatePlayer = true;
+        GJBaseGameLayer::createPlayer();
+        SDIHelper::get()->m_insideCreatePlayer = false;
     }
 };

@@ -5,6 +5,7 @@ using namespace geode::prelude;
 
 class $modify(PlayLayer) {
     void destroyPlayer(PlayerObject* player, GameObject* object) {
+        if (player && !player->isVanillaPlayer()) return PlayLayer::destroyPlayer(player, object);
         SDIHelper::get()->m_shouldSwap = false;
         PlayLayer::destroyPlayer(player, object);
         SDIHelper::get()->m_shouldSwap = true;
