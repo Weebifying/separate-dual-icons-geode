@@ -6,6 +6,8 @@ using namespace geode::prelude;
 
 class SDIHelper {
 public:
+    bool m_insideCreatePlayer = false;
+
     bool m_incompatFound = false;
     std::string m_incompatMod = "";
     bool m_shouldWarnIncompat = false;
