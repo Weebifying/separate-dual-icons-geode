@@ -39,7 +39,7 @@ jobs:
       - name: Build the mod
         uses: geode-sdk/build-geode-mod@main
         with:
-          bindings: weebifying/bindings
+          # bindings: weebifying/bindings
           build-config: RelWithDebInfo
           export-pdb: true
           combine: true
