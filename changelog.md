@@ -1,5 +1,7 @@
+## v1.4.2
+- Yet another incompatibility fix for Globed, courtesy to Erymanthus!!
 ## v1.4.1
-- Fixed incompatability with Globed v2
+- Fixed incompatibility with Globed v2
 ## v1.4.0
 - Updated for GD 2.2081/Geode 5.0.0
 - Added a new setting: Exit Dual Switch (read setting description idk its hard to explain)
